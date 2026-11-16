@@ -210,6 +210,7 @@ Training, stages/stage0-720.def, order=0, ordersurvival=0, exclude=1
 tinker, stages/stage0-720.def
 grapeman, stages/stage0-720.def
 juanana, stages/stage0-720.def
+cuddlepuss, stages/stage0-720.def
 randomselect
 
 ;-------------------------------------------------------------------------------

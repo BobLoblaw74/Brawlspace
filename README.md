@@ -15,6 +15,7 @@ This is the base for building new fighters. The starting roster is deliberately 
 | `tinker` (Tinker) | Gadgeteer with a radar gauntlet, generated from a single illustration (see below) |
 | `grapeman` (GrapeMan) | Grape-costumed bruiser who fires grapes, also generated from one illustration |
 | `juanana` (Juanana) | Banana-suited raver: glow-stick projectiles, a banana-peel trap, and the Rave Barrage super |
+| `cuddlepuss` (CuddlePuss) | Cat-suited bruiser (1100 life, slow walk) who coughs up Hairball projectiles |
 | `Training` | Training dummy, excluded from random and arcade picks |
 
 ## Build and run locally
@@ -55,7 +56,7 @@ From there, make the character your own:
 To add a stage, put its `.def` and `.sff` in `content/stages/`, then list it under `[ExtraStages]`
 in `content/data/select.def`.
 
-## Fighters built from one drawing (Tinker, GrapeMan, Juanana)
+## Fighters built from one drawing (Tinker, GrapeMan, Juanana, CuddlePuss)
 
 Each of these fighters lives in `tools/fighters/<id>/`:
 
@@ -86,6 +87,7 @@ python3 -I tools/fighters/tinker/build.py            # repack art/ and rebuild t
 python3 -I tools/fighters/tinker/build.py --frames   # regenerate art/ from source.png first (~1 min)
 python3 -I tools/fighters/grapeman/build.py --frames # same for GrapeMan (Grape Shot: ↓↘→ + P)
 python3 -I tools/fighters/juanana/build.py --frames  # same for Juanana (Glow Stick Toss, Banana Peel: ↓↙← + K)
+python3 -I tools/fighters/cuddlepuss/build.py --frames # same for CuddlePuss (Hairball: ↓↘→ + P)
 ```
 
 To upgrade the animation, drop a hand-drawn PNG into `tools/fighters/tinker/art/` with the same name
