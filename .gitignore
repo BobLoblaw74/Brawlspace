@@ -11,3 +11,4 @@ web/__pycache__/
 tools/logo/out/.chrome-profile/
 tools/logo/out/*.html
 tools/logo/out/preview.png
+tools/fighters/*/cutout.png

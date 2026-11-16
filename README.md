@@ -12,6 +12,7 @@ This is the base for building new fighters. The starting roster is deliberately 
 | Fighter | Purpose |
 |---|---|
 | `kfm720` (Kung Fu Man) | Playable fighter and the template new characters are copied from |
+| `tinker` (Tinker) | Gadgeteer with a radar gauntlet, generated from a single illustration (see below) |
 | `Training` | Training dummy, excluded from random and arcade picks |
 
 ## Build and run locally
@@ -51,6 +52,24 @@ From there, make the character your own:
 
 To add a stage, put its `.def` and `.sff` in `content/stages/`, then list it under `[ExtraStages]`
 in `content/data/select.def`.
+
+## Tinker (built from one drawing)
+
+Tinker's frames are generated from `tools/fighters/tinker/source.png`:
+
+1. The script cuts the figure out of the white background.
+2. It splits him at the belt.
+3. It poses the two halves (lean, lunge, squash, swing, tumble) to produce a frame for every sprite number KFM 720 uses.
+
+He therefore runs on KFM's animations, timing and hitboxes, plus his own **Radar Pulse** projectile (↓↘→ + P).
+
+```sh
+python3 -I tools/fighters/tinker/build.py            # repack art/ and rebuild the character files
+python3 -I tools/fighters/tinker/build.py --frames   # regenerate art/ from source.png first (~1 min)
+```
+
+To upgrade the animation, drop a hand-drawn PNG into `tools/fighters/tinker/art/` with the same name
+(for example `210_20.png`) and rebuild without `--frames`. Keep `axis.txt` in step if the anchor moves.
 
 ## Title logo
 

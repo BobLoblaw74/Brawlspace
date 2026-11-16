@@ -206,7 +206,8 @@
  ;Insert your characters below.
 
 kfm720, stages/stage0-720.def
-Training, stages/stage0-720.def, exclude=1
+Training, stages/stage0-720.def, order=0, ordersurvival=0, exclude=1
+tinker, stages/stage0-720.def
 randomselect
 
 ;-------------------------------------------------------------------------------
