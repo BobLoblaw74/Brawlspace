@@ -75,6 +75,8 @@ function main.f_btnPalNo(p)
 	for i, k in ipairs({'a', 'b', 'c', 'x', 'y', 'z'}) do
 		if commandGetState(p, k) then return i + s end
 	end
+	-- Brawlspace: Start (Enter) alone also confirms character select, using palette 1
+	if commandGetState(p, 's') then return 1 end
 	return 0
 end
 
