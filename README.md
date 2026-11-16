@@ -91,6 +91,19 @@ python3 -I tools/fighters/juanana/build.py --frames  # same for Juanana (Glow St
 To upgrade the animation, drop a hand-drawn PNG into `tools/fighters/tinker/art/` with the same name
 (for example `210_20.png`) and rebuild without `--frames`. Keep `axis.txt` in step if the anchor moves.
 
+## Stages
+
+| Stage | Source |
+|---|---|
+| `stage0-720` (Training Room HD) | Stock |
+| `sluttywood` (SluttyWood) | Generated from one illustration by `tools/stages/sluttywood/make_stage.py` |
+
+For SluttyWood, the script scales `source.jpg` to fill a 720p screen and sets the ground line on the street.
+It also adds a softly pulsing glow layer built from the neon signs and string lights, plus the stage-select thumbnail (sprite 9000,1).
+
+Stages listed under `[ExtraStages]` in `content/data/select.def` can be picked in modes with stage select (VS, Quick Match, Training).
+Arcade uses each fighter's home stage: the second item on that fighter's `[Characters]` line.
+
 ## Title logo
 
 The title-screen logo is generated, not hand-drawn:
