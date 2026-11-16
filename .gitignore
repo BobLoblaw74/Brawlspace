@@ -8,3 +8,6 @@ web/test/boot/lastlog.txt
 web/test/loader/shots/
 web/test/loader/fixture/
 web/__pycache__/
+tools/logo/out/.chrome-profile/
+tools/logo/out/*.html
+tools/logo/out/preview.png

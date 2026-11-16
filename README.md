@@ -52,6 +52,14 @@ From there, make the character your own:
 To add a stage, put its `.def` and `.sff` in `content/stages/`, then list it under `[ExtraStages]`
 in `content/data/select.def`.
 
+## Title logo
+
+The title-screen logo is generated, not hand-drawn:
+
+1. Edit `tools/logo/make_logo.py` (it draws the logo as SVG).
+2. Run `python3 -I tools/logo/make_logo.py`, which renders four transparent 699×257 layers with headless Chrome.
+3. Run `python3 -I tools/logo/patch_sff.py`, which swaps them into sprites 0,0–0,3 of `content/data/ikemen1/system.sff`. It's safe to re-run.
+
 Anything under `content/` overrides the engine's stock data, including the screenpack in
 `content/data/ikemen1/`.
 

@@ -140,6 +140,7 @@ loading.text = NOW LOADING...
 footer.title.font = default-3x5.def, 0, 1, 191, 191, 191, 255, -1
 footer.title.offset = 5, 721
 footer.title.scale = 3,3
+footer.title.text = BRAWLSPACE
 
 footer.info.font = default-3x5.def, 0, 0, 191, 191, 191, 255, -1
 footer.info.offset = 640, 721
@@ -208,7 +209,7 @@ menu.itemname.storymode = STORY MODE
 menu.itemname.storymode.back = BACK
 
 ; Submenu: Network
-menu.itemname.menunetwork = NETWORK
+menu.itemname.menunetwork =               ;Brawlspace: hidden - netplay needs raw sockets, unavailable in browsers
 menu.itemname.menunetwork.serverhost = HOST GAME
 menu.itemname.menunetwork.serverjoin = JOIN GAME
 menu.itemname.menunetwork.back = BACK
@@ -354,14 +355,13 @@ overlay.alpha = 0, 128
 
 ;----------------------------
 [Infobox Text]
-Welcome to I.K.E.M.E.N GO engine! (%s - %s)
+Welcome to BRAWLSPACE!
 
-* This is a public development release, for testing purposes.
-* This build may contain bugs and incomplete features.
-* Your help and cooperation are appreciated!
-* Source code: https://github.com/ikemen-engine/Ikemen-GO
-* Bug reports: https://github.com/ikemen-engine/Ikemen-GO/issues
-* Docs: https://github.com/ikemen-engine/Ikemen-GO/wiki
+* A browser fighting game - pick a fighter and brawl.
+* Keyboard, gamepad and touch controls are supported.
+* Change your controls any time under OPTIONS.
+* Press F1 to show this box again.
+* Powered by the Ikemen GO engine: https://github.com/ikemen-engine/Ikemen-GO
 
 ;-------------------------------------------------------------------
 ;Character select definition
