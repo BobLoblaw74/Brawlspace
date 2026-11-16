@@ -16,6 +16,7 @@ This is the base for building new fighters. The starting roster is deliberately 
 | `grapeman` (GrapeMan) | Grape-costumed bruiser who fires grapes, also generated from one illustration |
 | `juanana` (Juanana) | Banana-suited raver: glow-stick projectiles, a banana-peel trap, and the Rave Barrage super |
 | `cuddlepuss` (CuddlePuss) | Cat-suited bruiser (1100 life, slow walk) who coughs up Hairball projectiles |
+| `hotnight` (HotNight) | Throws water bottles, heals with Hydrate, wallops with her tote bag; Bulk Buy Barrage super |
 | `Training` | Training dummy, excluded from random and arcade picks |
 
 ## Build and run locally
@@ -56,7 +57,7 @@ From there, make the character your own:
 To add a stage, put its `.def` and `.sff` in `content/stages/`, then list it under `[ExtraStages]`
 in `content/data/select.def`.
 
-## Fighters built from one drawing (Tinker, GrapeMan, Juanana, CuddlePuss)
+## Fighters built from one drawing (Tinker, GrapeMan, Juanana, CuddlePuss, HotNight)
 
 Each of these fighters lives in `tools/fighters/<id>/`:
 
@@ -70,6 +71,7 @@ Each of these fighters lives in `tools/fighters/<id>/`:
 The shared pipeline is `tools/fighters/cutout.py`, which poses the art, and `tools/fighters/assemble.py`, which builds the character files.
 
 Source images can have a plain white background or a painted grey/white checkerboard (`"background": "checker"`).
+Use `"holes"` to clear small white gaps the automatic cut-out keeps, such as between an arm and the body.
 Use `"leg_shapes"` to trace the legs exactly when capes or props hang over them (see Juanana).
 
 To add another fighter, copy `tools/fighters/grapeman/`, swap in the new image, update the landmarks in `make_frames.py`, and rename things in `build.py`.
@@ -88,6 +90,7 @@ python3 -I tools/fighters/tinker/build.py --frames   # regenerate art/ from sour
 python3 -I tools/fighters/grapeman/build.py --frames # same for GrapeMan (Grape Shot: ↓↘→ + P)
 python3 -I tools/fighters/juanana/build.py --frames  # same for Juanana (Glow Stick Toss, Banana Peel: ↓↙← + K)
 python3 -I tools/fighters/cuddlepuss/build.py --frames # same for CuddlePuss (Hairball: ↓↘→ + P)
+python3 -I tools/fighters/hotnight/build.py --frames   # same for HotNight (Water Bottle Toss, Hydrate, Tote Bag Swing)
 ```
 
 To upgrade the animation, drop a hand-drawn PNG into `tools/fighters/tinker/art/` with the same name

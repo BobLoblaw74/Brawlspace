@@ -1,0 +1,407 @@
+
+;===========================================================================
+;                       HOTNIGHT - ORIGINAL MOVES
+;===========================================================================
+
+;---------------------------------------------------------------------------
+; Water Bottle Toss (QCF+P) - hurls a full bottle of water end over end; it bursts in a splash
+; 1500 = light (slow), 1510 = strong (fast), 1520 = EX Two-Pack (2 hits, 1/3 bar)
+;---------------------------------------------------------------------------
+[Statedef 1500]
+type    = S
+movetype= A
+physics = S
+juggle  = 4
+poweradd= 50
+velset = 0,0
+anim = 1000
+ctrl = 0
+sprpriority = 2
+
+[State 1500, Voice]
+type = PlaySnd
+trigger1 = Time = 6
+value = 0, 3
+
+[State 1500, Bottle]
+type = Projectile
+trigger1 = AnimElem = 5
+projid = 1500
+projanim = 1590
+projhitanim = 1591
+projremanim = 1591
+projcancelanim = 1591
+projpriority = 1
+projsprpriority = 3
+offset = 70, -320
+velocity = 16, 0
+attr = S, SP
+damage = 60, 6
+animtype = Medium
+guardflag = MA
+hitflag = MAF
+pausetime = 0, 12
+sparkno = -1
+hitsound = 5, 2
+guardsound = 6, 0
+ground.type = High
+ground.slidetime = 12
+ground.hittime = 16
+ground.velocity = -18
+air.velocity = -12, -12
+air.fall = 1
+palfx.time = 8
+palfx.add = 40, 80, 140
+
+[State 1500, End]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
+
+;---------------------------------------------------------------------------
+[Statedef 1510]
+type    = S
+movetype= A
+physics = S
+juggle  = 4
+poweradd= 50
+velset = 0,0
+anim = 1000
+ctrl = 0
+sprpriority = 2
+
+[State 1510, Voice]
+type = PlaySnd
+trigger1 = Time = 6
+value = 0, 3
+
+[State 1510, Bottle]
+type = Projectile
+trigger1 = AnimElem = 5
+projid = 1500
+projanim = 1590
+projhitanim = 1591
+projremanim = 1591
+projcancelanim = 1591
+projpriority = 1
+projsprpriority = 3
+offset = 70, -320
+velocity = 27, 0
+attr = S, SP
+damage = 65, 7
+animtype = Medium
+guardflag = MA
+hitflag = MAF
+pausetime = 0, 12
+sparkno = -1
+hitsound = 5, 2
+guardsound = 6, 0
+ground.type = High
+ground.slidetime = 12
+ground.hittime = 16
+ground.velocity = -22
+air.velocity = -12, -12
+air.fall = 1
+palfx.time = 8
+palfx.add = 40, 80, 140
+
+[State 1510, End]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
+
+;---------------------------------------------------------------------------
+[Statedef 1520]
+type    = S
+movetype= A
+physics = S
+juggle  = 4
+poweradd= -330
+velset = 0,0
+anim = 1000
+ctrl = 0
+sprpriority = 2
+
+[State 1520, Flash]
+type = SuperPause
+trigger1 = Time = 0
+time = 8
+movetime = 8
+darken = 0
+anim = -1
+sound = -1
+
+[State 1520, Voice]
+type = PlaySnd
+trigger1 = Time = 6
+value = 0, 3
+
+[State 1520, Bottles]
+type = Projectile
+trigger1 = AnimElem = 5
+projid = 1500
+projanim = 1592
+projhitanim = 1591
+projremanim = 1591
+projcancelanim = 1591
+projpriority = 2
+projsprpriority = 3
+projhits = 2
+projmisstime = 8
+offset = 70, -320
+velocity = 23, 0
+attr = S, SP
+damage = 48, 5
+animtype = Hard
+guardflag = MA
+hitflag = MAF
+pausetime = 0, 10
+sparkno = -1
+hitsound = 5, 3
+guardsound = 6, 0
+ground.type = High
+ground.slidetime = 10
+ground.hittime = 14
+ground.velocity = -12
+air.velocity = -14, -16
+air.fall = 1
+fall = 1
+palfx.time = 8
+palfx.add = 40, 80, 140
+
+[State 1520, End]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
+
+
+;---------------------------------------------------------------------------
+; Hydrate (QCB+A) - a long swig of water: recovers 70 life and 150 power.
+; Slow and fully punishable; only from neutral.
+;---------------------------------------------------------------------------
+[Statedef 1600]
+type    = S
+movetype= I
+physics = S
+velset = 0,0
+anim = 1650
+ctrl = 0
+sprpriority = 2
+
+[State 1600, Sparkle]
+type = Explod
+trigger1 = Time = 8
+anim = 1660
+pos = 0, -300
+postype = p1
+bindtime = -1
+removetime = 40
+sprpriority = 3
+ownpal = 1
+
+[State 1600, Glow]
+type = PalFX
+trigger1 = Time = 8
+time = 40
+add = 20, 60, 120
+sinadd = 30, 40, 60, 10
+
+[State 1600, Drink]
+type = LifeAdd
+trigger1 = Time = 36
+value = 70
+
+[State 1600, Energy]
+type = PowerAdd
+trigger1 = Time = 36
+value = 150
+
+[State 1600, End]
+type = ChangeState
+trigger1 = Time >= 54
+value = 0
+ctrl = 1
+
+;---------------------------------------------------------------------------
+; Tote Bag Swing (QCB+B) - lunges and wallops with the grocery bag (knockdown)
+;---------------------------------------------------------------------------
+[Statedef 1610]
+type    = S
+movetype= A
+physics = S
+juggle  = 4
+poweradd= 60
+velset = 0,0
+anim = 1680
+ctrl = 0
+sprpriority = 2
+
+[State 1610, Voice]
+type = PlaySnd
+trigger1 = Time = 4
+value = 0, 3
+
+[State 1610, Lunge]
+type = VelSet
+trigger1 = AnimElem = 2
+x = 22
+
+[State 1610, Wallop]
+type = HitDef
+trigger1 = Time = 0
+attr = S, SA
+animtype = Heavy
+damage = 95, 10
+guardflag = MA
+hitflag = MAF
+priority = 4
+pausetime = 14, 16
+sparkno = 3
+sparkxy = -40, -230
+hitsound = 5, 3
+guardsound = 6, 0
+ground.type = High
+ground.slidetime = 14
+ground.hittime = 20
+ground.velocity = -14, -26
+air.velocity = -14, -22
+fall = 1
+fall.recover = 0
+
+[State 1610, End]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
+
+;---------------------------------------------------------------------------
+; Bulk Buy Barrage (QCF,QCF+P, 1 bar) - three jumbo bottles, high / mid / low
+;---------------------------------------------------------------------------
+[Statedef 3100]
+type    = S
+movetype= A
+physics = S
+juggle  = 4
+velset = 0,0
+anim = 3100
+ctrl = 0
+sprpriority = 2
+
+[State 3100, Super]
+type = SuperPause
+trigger1 = Time = 0
+pos = -40, -330
+anim = 100
+sound = 20, 0
+poweradd = -1000
+
+[State 3100, Armor]
+type = NotHitBy
+trigger1 = Time < 12
+value = SCA
+time = 1
+
+[State 3100, Voice]
+type = PlaySnd
+trigger1 = AnimElem = 2
+trigger2 = AnimElem = 5
+trigger3 = AnimElem = 8
+value = 0, 3
+
+[State 3100, High]
+type = Projectile
+trigger1 = AnimElem = 2
+projid = 3100
+projanim = 1592
+projhitanim = 1591
+projremanim = 1591
+projcancelanim = 1591
+projpriority = 3
+projsprpriority = 3
+offset = 70, -340
+velocity = 30, -4
+attr = S, HP
+damage = 95, 10
+animtype = Hard
+guardflag = MA
+hitflag = MAFD
+pausetime = 0, 10
+sparkno = -1
+hitsound = 5, 3
+guardsound = 6, 0
+ground.type = High
+ground.slidetime = 10
+ground.hittime = 18
+ground.velocity = -10
+air.velocity = -10, -14
+air.fall = 1
+fall = 1
+
+[State 3100, Mid]
+type = Projectile
+trigger1 = AnimElem = 5
+projid = 3100
+projanim = 1592
+projhitanim = 1591
+projremanim = 1591
+projcancelanim = 1591
+projpriority = 3
+projsprpriority = 3
+offset = 70, -320
+velocity = 32, 0
+attr = S, HP
+damage = 95, 10
+animtype = Hard
+guardflag = MA
+hitflag = MAFD
+pausetime = 0, 10
+sparkno = -1
+hitsound = 5, 3
+guardsound = 6, 0
+ground.type = High
+ground.slidetime = 10
+ground.hittime = 18
+ground.velocity = -10
+air.velocity = -10, -14
+air.fall = 1
+fall = 1
+
+[State 3100, Low]
+type = Projectile
+trigger1 = AnimElem = 8
+projid = 3100
+projanim = 1592
+projhitanim = 1591
+projremanim = 1591
+projcancelanim = 1591
+projpriority = 3
+projsprpriority = 3
+offset = 70, -300
+velocity = 30, 3
+attr = S, HP
+damage = 95, 10
+animtype = Hard
+guardflag = MA
+hitflag = MAFD
+pausetime = 0, 10
+sparkno = -1
+hitsound = 5, 3
+guardsound = 6, 0
+ground.type = High
+ground.slidetime = 10
+ground.hittime = 18
+ground.velocity = -10
+air.velocity = -10, -14
+air.fall = 1
+fall = 1
+down.velocity = -8, -12
+down.hittime = 20
+
+[State 3100, End]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1

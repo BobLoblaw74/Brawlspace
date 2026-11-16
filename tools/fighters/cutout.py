@@ -10,6 +10,8 @@ animations, timings and hitboxes drive the new art.
 Config keys (all coordinates are pixels in the source image, after mirroring):
   source        path to the PNG (figure on a white background)
   background    "white" (default) or "checker" for a painted grey/white checkerboard
+  holes         optional points inside small enclosed background gaps (e.g. between an
+                arm and the body) that the automatic cut-out kept; they are cleared
   mirror        True if the figure faces left in the source (fighters face right)
   prescale      optional resize applied after mirroring; landmarks are in the
                 prescaled image's pixels
@@ -391,6 +393,12 @@ def generate(cfg, out_dir):
         src = cut_out_checker(img)
     else:
         src = cut_out(img)
+    for pt in cfg.get("holes", []):  # small enclosed gaps the automatic pass kept
+        marked = img.copy()
+        ImageDraw.floodfill(marked, pt, (255, 0, 255), thresh=40)
+        gap = ImageChops.difference(marked, img).convert("L").point(lambda v: 255 if v else 0)
+        gap = gap.filter(ImageFilter.MaxFilter(3))
+        src.putalpha(ImageChops.subtract(src.getchannel("A"), gap))
     if cfg.get("prescale"):
         f = cfg["prescale"]
         src = src.resize((int(src.width * f), int(src.height * f)), Image.LANCZOS)
