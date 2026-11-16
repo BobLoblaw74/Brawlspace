@@ -13,6 +13,7 @@ This is the base for building new fighters. The starting roster is deliberately 
 |---|---|
 | `kfm720` (Kung Fu Man) | Playable fighter and the template new characters are copied from |
 | `tinker` (Tinker) | Gadgeteer with a radar gauntlet, generated from a single illustration (see below) |
+| `grapeman` (GrapeMan) | Grape-costumed bruiser who fires grapes, also generated from one illustration |
 | `Training` | Training dummy, excluded from random and arcade picks |
 
 ## Build and run locally
@@ -53,7 +54,20 @@ From there, make the character your own:
 To add a stage, put its `.def` and `.sff` in `content/stages/`, then list it under `[ExtraStages]`
 in `content/data/select.def`.
 
-## Tinker (built from one drawing)
+## Fighters built from one drawing (Tinker, GrapeMan)
+
+Each of these fighters lives in `tools/fighters/<id>/`:
+
+| File | Purpose |
+|---|---|
+| `source.png` | The illustration |
+| `make_frames.py` | Landmarks plus the projectile art |
+| `<id>_states.cns`, `<id>_anims.air` | Projectile move and animations |
+| `build.py` | Stats, quotes and move list |
+
+The shared pipeline is `tools/fighters/cutout.py`, which poses the art, and `tools/fighters/assemble.py`, which builds the character files.
+
+To add another fighter, copy `tools/fighters/grapeman/`, swap in the new image, update the landmarks in `make_frames.py`, and rename things in `build.py`.
 
 Tinker's frames are generated from `tools/fighters/tinker/source.png`:
 
@@ -66,6 +80,7 @@ He therefore runs on KFM's animations, timing and hitboxes, plus his own **Radar
 ```sh
 python3 -I tools/fighters/tinker/build.py            # repack art/ and rebuild the character files
 python3 -I tools/fighters/tinker/build.py --frames   # regenerate art/ from source.png first (~1 min)
+python3 -I tools/fighters/grapeman/build.py --frames # same for GrapeMan (Grape Shot: ↓↘→ + P)
 ```
 
 To upgrade the animation, drop a hand-drawn PNG into `tools/fighters/tinker/art/` with the same name

@@ -1,0 +1,93 @@
+"""Generate GrapeMan's sprite frames from source.png (see tools/fighters/cutout.py).
+
+Usage (repo root):
+    python3 -I tools/fighters/grapeman/make_frames.py [<out_art_dir>]
+
+The source faces left, so it is mirrored. Effects: a spinning grape projectile
+(group 6000) and a juice splat for when it lands (group 6001).
+"""
+import math
+import os
+import sys
+
+from PIL import Image, ImageDraw, ImageFilter
+
+HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, os.path.dirname(HERE))
+import cutout  # noqa: E402
+
+INK = (38, 12, 52, 255)
+
+
+def grape(angle, size=110, r=34):
+    """One shiny grape with a stem and leaf, rotated by `angle` degrees."""
+    ss = 4  # supersample for smooth edges
+    S, R, c = size * ss, r * ss, size * ss // 2
+    im = Image.new("RGBA", (S, S))
+    d = ImageDraw.Draw(im)
+    # stem + leaf (drawn upright, the whole grape rotates)
+    d.line([(c, c - R + 6 * ss), (c + 4 * ss, c - R - 12 * ss)], fill=(92, 60, 30, 255), width=5 * ss)
+    d.ellipse([c + 2 * ss, c - R - 20 * ss, c + 24 * ss, c - R - 6 * ss], fill=(86, 160, 60, 255), outline=INK, width=2 * ss)
+    # body: dark rim -> purple core
+    d.ellipse([c - R, c - R, c + R, c + R], fill=INK)
+    for i, col in enumerate([(78, 26, 108), (104, 40, 140), (126, 58, 168), (146, 78, 190)]):
+        rr = R - 3 * ss - i * 5 * ss
+        off = i * 3 * ss
+        d.ellipse([c - rr - off, c - rr - off, c + rr - off, c + rr - off], fill=col + (255,))
+    # glossy highlights
+    d.ellipse([c - R * 0.55, c - R * 0.6, c - R * 0.1, c - R * 0.25], fill=(235, 215, 255, 220))
+    d.ellipse([c + R * 0.25, c + R * 0.3, c + R * 0.45, c + R * 0.5], fill=(200, 170, 240, 160))
+    im = im.rotate(angle, resample=Image.BICUBIC)
+    return im.resize((size, size), Image.LANCZOS)
+
+
+def splat(k, size=180):
+    """Juice burst frame k of 4: droplets fly out and fade."""
+    im = Image.new("RGBA", (size, size))
+    d = ImageDraw.Draw(im)
+    c = size // 2
+    fade = 1.0 - k * 0.22
+    blob = 26 + k * 8
+    d.ellipse([c - blob, c - blob * 0.8, c + blob, c + blob * 0.8], fill=(110, 30, 140, int(200 * fade)))
+    for i in range(10):
+        a = math.radians(i * 36 + 13)
+        dist = 30 + k * 18 + (i % 3) * 8
+        x, y = c + math.cos(a) * dist, c + math.sin(a) * dist * 0.85
+        rr = max(3, 9 - k * 2 - (i % 2) * 2)
+        d.ellipse([x - rr, y - rr, x + rr, y + rr], fill=(150, 60, 190, int(255 * fade)))
+    d.ellipse([c - 10, c - 14, c + 4, c - 2], fill=(230, 200, 255, int(180 * fade)))
+    return im.filter(ImageFilter.SMOOTH)
+
+
+def effects(out_dir, axes):
+    for k in range(6):  # 6000: grape spinning (60 degrees per frame)
+        grape(-k * 60).save(os.path.join(out_dir, "6000_%d.png" % k), optimize=True)
+        axes.append("6000_%d 55 55" % k)
+    for k in range(4):  # 6001: splat
+        splat(k).save(os.path.join(out_dir, "6001_%d.png" % k), optimize=True)
+        axes.append("6001_%d 90 90" % k)
+
+
+CONFIG = {
+    "source": os.path.join(HERE, "source.png"),
+    "mirror": True,               # drawn facing left; fighters face right
+    "hip": (410, 400),
+    "ground": 560,
+    "feet_x": 440,
+    "split_upper": 395,
+    "split_lower": 385,
+    "x_range": (190, 750),
+    "top": 0,
+    "torso_boxes": [(335, 380, 472, 448)],  # bottom of the grape bunch hangs between the legs
+    "glow_point": (712, 222),     # forward (clawed) hand
+    "glow_color": (190, 90, 255),
+    "scale": 0.76,
+    "head_box": (410, 85, 560, 235),
+    "bust_box": (215, 0, 695, 560),
+    "icon_bg": (40, 20, 52),
+    "effects": effects,
+    "lunge": 0.4,                 # legs join under the bunch: slide less, lean more
+}
+
+if __name__ == "__main__":
+    cutout.generate(CONFIG, sys.argv[1] if len(sys.argv) > 1 else os.path.join(HERE, "art"))
