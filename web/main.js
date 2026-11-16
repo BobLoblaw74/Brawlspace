@@ -39,13 +39,23 @@ window.__ikemenBootLog = [];
 		// first played. ?eager=1 forces the old full download (debug/escape
 		// hatch); hosts without HTTP Range support fall back to it anyway.
 		let mode = "eager";
+		// Brawlspace: key content.zip by build stamp. Its byte ranges are
+		// cached per URL, so after a redeploy a browser could otherwise read
+		// the index of one build and file bytes of another ("bad local header
+		// ... (changed archive?)"). A fresh URL per build can never mix.
+		let contentUrl = "content.zip";
+		try {
+			const vr = await fetch("version.txt", { cache: "no-store" });
+			const stamp = vr.ok ? (await vr.text()).trim() : "";
+			if (stamp) contentUrl = "content.zip?v=" + encodeURIComponent(stamp);
+		} catch (e) { /* no stamp (bare static host): plain URL */ }
 		if (new URLSearchParams(location.search).get("eager") === "1") {
 			setStatus("Downloading content…");
-			await mountZip("content.zip", "/ikemen", dlProgress);
+			await mountZip(contentUrl, "/ikemen", dlProgress);
 			console.log("fs: eager mode forced (?eager=1)");
 		} else {
 			setStatus("Fetching content index…");
-			const res = await mountZipIndex("content.zip", "/ikemen", { onProgress: dlProgress });
+			const res = await mountZipIndex(contentUrl, "/ikemen", { onProgress: dlProgress });
 			if (res.lazy) {
 				mode = "lazy";
 				console.log("fs: lazy index mounted, " + res.files + " files");
