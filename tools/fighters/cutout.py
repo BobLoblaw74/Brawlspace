@@ -26,6 +26,11 @@ Config keys (all coordinates are pixels in the source image, after mirroring):
   bust_box      6:7 crop for the 480x560 large portrait
   icon_bg       (r, g, b) background behind the select icon
   effects       callable(out_dir, axes) that writes projectile/effect sprites
+  leg_polys     polygons above split_lower copied into the legs layer as an underlay
+                (thigh tops that disappear under a costume); the torso layer is drawn
+                over them unchanged, so moving the torso never exposes a gap
+  leg_cut       polygons of thigh that is visible above split_upper: moved from the
+                torso layer to the legs layer (prevents a doubled, jagged thigh edge)
   lunge         optional multiplier for forward torso slides (default 1.0); lower it
                 when the legs join the body under a costume that would expose a gap
 """
@@ -166,20 +171,32 @@ class Rig:
         x0, x1 = cfg["x_range"]
         top = cfg["top"]
         boxes = cfg.get("torso_boxes", [])
+        cuts = cfg.get("leg_cut", [])
+        polys = cfg.get("leg_polys", []) + cuts
         upper_bottom = max([cfg["split_upper"]] + [b[3] for b in boxes])
+        lower_top = min([cfg["split_lower"]] + [y for poly in polys for _, y in poly])
         self.upper_box = (x0, top, x1, upper_bottom)
-        self.lower_box = (x0, cfg["split_lower"], x1, src.height)
+        self.lower_box = (x0, lower_top, x1, src.height)
         upper, lower = src.crop(self.upper_box), src.crop(self.lower_box)
         um = Image.new("L", upper.size, 0)
         ImageDraw.Draw(um).rectangle([0, 0, upper.width, cfg["split_upper"] - top], fill=255)
-        lm = Image.new("L", lower.size, 255)
+        lm = Image.new("L", lower.size, 0)
+        ImageDraw.Draw(lm).rectangle([0, cfg["split_lower"] - lower_top, lower.width, lower.height], fill=255)
         for b in boxes:
             ImageDraw.Draw(um).rectangle([b[0] - x0, b[1] - top, b[2] - x0, b[3] - top], fill=255)
-            ImageDraw.Draw(lm).rectangle([b[0] - x0, b[1] - cfg["split_lower"],
-                                          b[2] - x0, b[3] - cfg["split_lower"]], fill=0)
+            ImageDraw.Draw(lm).rectangle([b[0] - x0, b[1] - lower_top, b[2] - x0, b[3] - lower_top], fill=0)
+        ul = Image.new("L", lower.size, 0)
+        for poly in cfg.get("leg_polys", []):  # hidden thigh tops: non-rotating underlay
+            ImageDraw.Draw(ul).polygon([(x - x0, y - lower_top) for x, y in poly], fill=255)
+        for poly in cuts:   # visible thigh: legs layer only (swings with the leg)
+            ImageDraw.Draw(lm).polygon([(x - x0, y - lower_top) for x, y in poly], fill=255)
+            ImageDraw.Draw(um).polygon([(x - x0, y - top) for x, y in poly], fill=0)
+        underlay = lower.copy()
+        underlay.putalpha(ImageChops.multiply(lower.getchannel("A"), ul))
         upper.putalpha(ImageChops.multiply(upper.getchannel("A"), um))
         lower.putalpha(ImageChops.multiply(lower.getchannel("A"), lm))
         self.upper, self.lower = upper, lower
+        self.underlay = underlay if ul.getbbox() else None
 
     @staticmethod
     def layer(part, box, dx, dy):
@@ -201,12 +218,17 @@ class Rig:
     def compose(self, p):
         c = self.c
         hip, ground, feet_x = c["hip"], c["ground"], c["feet_x"]
-        lower = self.lower
-        if p.sy != 1.0:  # legs: squash toward the ground...
-            lower = lower.resize((lower.width, max(1, int(lower.height * p.sy))), Image.BICUBIC)
-        l_top = self.src.height - lower.height  # keep the soles planted
-        hip_y = ground - (ground - hip[1]) * p.sy
-        low = self.layer(lower, (self.lower_box[0], l_top), 0, 0)
+        # hips follow the torso vertically: crouch squashes the legs, a rising torso stretches them
+        hip_y = ground - (ground - hip[1]) * p.sy + p.udy
+        leg_sy = (ground - hip_y) / float(ground - hip[1])
+
+        def legs_layer(part):
+            if leg_sy != 1.0:  # squash/stretch toward the ground, soles planted
+                part = part.resize((part.width, max(1, int(round(part.height * leg_sy)))), Image.BICUBIC)
+            return self.layer(part, (self.lower_box[0], self.src.height - part.height), 0, 0)
+
+        low = legs_layer(self.lower)
+        under = legs_layer(self.underlay) if self.underlay is not None else None
         if p.la:  # ...then swing the front leg around the hip (back leg counters slightly)
             pivot = (hip[0] + OX, hip_y + OY)
             split_x = int(hip[0] + OX)
@@ -217,8 +239,14 @@ class Rig:
             low = Image.alpha_composite(back.rotate(-0.3 * p.la, resample=Image.BICUBIC, center=pivot),
                                         front.rotate(p.la, resample=Image.BICUBIC, center=pivot))
 
-        up_dy = (hip_y - hip[1]) + p.udy  # torso follows the hip, then leans / lunges
+        if under is not None:  # the underlay sits beneath the legs and never rotates
+            low = Image.alpha_composite(under, low)
+        up_dy = hip_y - hip[1]  # torso follows the hip, then leans / lunges
         udx = p.udx * c.get("lunge", 1.0)
+        if udx:  # shear the legs so the hips travel with the torso while the feet stay planted
+            g_y, h_y = ground + OY, hip_y + OY
+            k = udx / float(g_y - h_y)
+            low = low.transform((CW, CH), Image.AFFINE, (1, k, -k * g_y, 0, 1, 0), resample=Image.BICUBIC)
         up = self.layer(self.upper, self.upper_box, udx, up_dy)
         gp = c["glow_point"]
         up = self.add_glow(up, gp[0] + OX + udx, gp[1] + OY + up_dy, p.glow)

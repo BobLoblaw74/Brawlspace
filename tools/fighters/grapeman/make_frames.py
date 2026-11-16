@@ -79,6 +79,14 @@ CONFIG = {
     "x_range": (190, 750),
     "top": 0,
     "torso_boxes": [(335, 380, 472, 448)],  # bottom of the grape bunch hangs between the legs
+    "leg_polys": [  # thigh tops emerge from under the bunch at y~365: underlay so lunges never show a gap
+        [(258, 404), (300, 378), (332, 368), (346, 352), (380, 350), (386, 392), (372, 412), (258, 430)],
+        [(458, 360), (520, 348), (566, 358), (578, 404), (458, 404)],
+    ],
+    "leg_cut": [  # the visible part of each thigh above split_upper
+        [(250, 397), (300, 376), (345, 367), (374, 372), (380, 397)],
+        [(468, 376), (520, 366), (565, 372), (580, 397), (468, 397)],
+    ],
     "glow_point": (712, 222),     # forward (clawed) hand
     "glow_color": (190, 90, 255),
     "scale": 0.76,
