@@ -1,0 +1,413 @@
+
+;===========================================================================
+;                       JUANANA - ORIGINAL MOVES
+;===========================================================================
+
+;---------------------------------------------------------------------------
+; Glow Stick Toss (QCF+P) - hurls a crackling glow stick end over end
+; 1500 = light (slow), 1510 = strong (fast), 1520 = EX Twin Sticks (2 hits, 1/3 bar)
+;---------------------------------------------------------------------------
+[Statedef 1500]
+type    = S
+movetype= A
+physics = S
+juggle  = 4
+poweradd= 50
+velset = 0,0
+anim = 1000
+ctrl = 0
+sprpriority = 2
+
+[State 1500, Voice]
+type = PlaySnd
+trigger1 = Time = 6
+value = 0, 3
+
+[State 1500, Stick]
+type = Projectile
+trigger1 = AnimElem = 5
+projid = 1500
+projanim = 1590
+projhitanim = 1591
+projremanim = 1591
+projcancelanim = 1591
+projpriority = 1
+projsprpriority = 3
+offset = 165, -210
+velocity = 16, 0
+attr = S, SP
+damage = 60, 6
+animtype = Medium
+guardflag = MA
+hitflag = MAF
+pausetime = 0, 12
+sparkno = -1
+hitsound = 5, 2
+guardsound = 6, 0
+ground.type = High
+ground.slidetime = 12
+ground.hittime = 16
+ground.velocity = -18
+air.velocity = -12, -12
+air.fall = 1
+palfx.time = 10
+palfx.add = 60, 100, 200
+palfx.sinadd = 60, 60, 60, 3
+
+[State 1500, End]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
+
+;---------------------------------------------------------------------------
+[Statedef 1510]
+type    = S
+movetype= A
+physics = S
+juggle  = 4
+poweradd= 50
+velset = 0,0
+anim = 1000
+ctrl = 0
+sprpriority = 2
+
+[State 1510, Voice]
+type = PlaySnd
+trigger1 = Time = 6
+value = 0, 3
+
+[State 1510, Stick]
+type = Projectile
+trigger1 = AnimElem = 5
+projid = 1500
+projanim = 1590
+projhitanim = 1591
+projremanim = 1591
+projcancelanim = 1591
+projpriority = 1
+projsprpriority = 3
+offset = 165, -210
+velocity = 27, 0
+attr = S, SP
+damage = 65, 7
+animtype = Medium
+guardflag = MA
+hitflag = MAF
+pausetime = 0, 12
+sparkno = -1
+hitsound = 5, 2
+guardsound = 6, 0
+ground.type = High
+ground.slidetime = 12
+ground.hittime = 16
+ground.velocity = -22
+air.velocity = -12, -12
+air.fall = 1
+palfx.time = 10
+palfx.add = 60, 100, 200
+palfx.sinadd = 60, 60, 60, 3
+
+[State 1510, End]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
+
+;---------------------------------------------------------------------------
+[Statedef 1520]
+type    = S
+movetype= A
+physics = S
+juggle  = 4
+poweradd= -330
+velset = 0,0
+anim = 1000
+ctrl = 0
+sprpriority = 2
+
+[State 1520, Flash]
+type = SuperPause
+trigger1 = Time = 0
+time = 8
+movetime = 8
+darken = 0
+anim = -1
+sound = -1
+
+[State 1520, Voice]
+type = PlaySnd
+trigger1 = Time = 6
+value = 0, 3
+
+[State 1520, Sticks]
+type = Projectile
+trigger1 = AnimElem = 5
+projid = 1500
+projanim = 1592
+projhitanim = 1591
+projremanim = 1591
+projcancelanim = 1591
+projpriority = 2
+projsprpriority = 3
+projhits = 2
+projmisstime = 8
+offset = 165, -210
+velocity = 23, 0
+attr = S, SP
+damage = 48, 5
+animtype = Hard
+guardflag = MA
+hitflag = MAF
+pausetime = 0, 10
+sparkno = -1
+hitsound = 5, 3
+guardsound = 6, 0
+ground.type = High
+ground.slidetime = 10
+ground.hittime = 14
+ground.velocity = -12
+air.velocity = -14, -16
+air.fall = 1
+fall = 1
+palfx.time = 14
+palfx.add = 80, 120, 230
+palfx.sinadd = 70, 70, 70, 3
+
+[State 1520, End]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
+
+;---------------------------------------------------------------------------
+; Banana Peel (QCB+K) - leaves a peel on the floor that trips whoever steps on it
+; 1600 = A: drops it just ahead, 1610 = B: slides it far across the floor.
+; Stays for 4 seconds, one at a time. Must be blocked crouching; jump over it.
+;---------------------------------------------------------------------------
+[Statedef 1600]
+type    = S
+movetype= A
+physics = S
+juggle  = 4
+poweradd= 40
+velset = 0,0
+anim = 1000
+ctrl = 0
+sprpriority = 2
+
+[State 1600, Peel]
+type = Projectile
+trigger1 = AnimElem = 4
+projid = 1600
+projanim = 1690
+projhitanim = 1691
+projremanim = 1692
+projcancelanim = 1692
+projremovetime = 240
+projpriority = 0
+projsprpriority = 1
+offset = 140, 0
+velocity = 9, 0
+velmul = 0.88, 1
+attr = S, SP
+damage = 45, 0
+animtype = Light
+guardflag = L
+hitflag = M
+pausetime = 0, 10
+sparkno = -1
+hitsound = 5, 1
+guardsound = 6, 0
+ground.type = Trip
+ground.hittime = 20
+ground.velocity = -4, -22
+fall = 1
+
+[State 1600, End]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
+
+;---------------------------------------------------------------------------
+[Statedef 1610]
+type    = S
+movetype= A
+physics = S
+juggle  = 4
+poweradd= 40
+velset = 0,0
+anim = 1000
+ctrl = 0
+sprpriority = 2
+
+[State 1610, Peel]
+type = Projectile
+trigger1 = AnimElem = 4
+projid = 1600
+projanim = 1690
+projhitanim = 1691
+projremanim = 1692
+projcancelanim = 1692
+projremovetime = 240
+projpriority = 0
+projsprpriority = 1
+offset = 140, 0
+velocity = 24, 0
+velmul = 0.93, 1
+attr = S, SP
+damage = 45, 0
+animtype = Light
+guardflag = L
+hitflag = M
+pausetime = 0, 10
+sparkno = -1
+hitsound = 5, 1
+guardsound = 6, 0
+ground.type = Trip
+ground.hittime = 20
+ground.velocity = -4, -22
+fall = 1
+
+[State 1610, End]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
+
+;---------------------------------------------------------------------------
+; Rave Barrage (QCF,QCF+P, 1 bar) - a fan of three giant glow sticks
+;---------------------------------------------------------------------------
+[Statedef 3100]
+type    = S
+movetype= A
+physics = S
+juggle  = 4
+velset = 0,0
+anim = 3100
+ctrl = 0
+sprpriority = 2
+
+[State 3100, Super]
+type = SuperPause
+trigger1 = Time = 0
+pos = 100, -230
+anim = 100
+sound = 20, 0
+poweradd = -1000
+
+[State 3100, Strobe]
+type = PalFX
+trigger1 = Time = 0
+time = 50
+add = 40, 80, 180
+sinadd = 60, 60, 80, 6
+
+[State 3100, Armor]
+type = NotHitBy
+trigger1 = Time < 12
+value = SCA
+time = 1
+
+[State 3100, Voice]
+type = PlaySnd
+trigger1 = AnimElem = 2
+trigger2 = AnimElem = 5
+trigger3 = AnimElem = 8
+value = 0, 3
+
+[State 3100, High]
+type = Projectile
+trigger1 = AnimElem = 2
+projid = 3100
+projanim = 1592
+projhitanim = 1591
+projremanim = 1591
+projcancelanim = 1591
+projpriority = 3
+projsprpriority = 3
+offset = 165, -230
+velocity = 30, -4
+attr = S, HP
+damage = 95, 10
+animtype = Hard
+guardflag = MA
+hitflag = MAFD
+pausetime = 0, 10
+sparkno = -1
+hitsound = 5, 3
+guardsound = 6, 0
+ground.type = High
+ground.slidetime = 10
+ground.hittime = 18
+ground.velocity = -10
+air.velocity = -10, -14
+air.fall = 1
+fall = 1
+
+[State 3100, Mid]
+type = Projectile
+trigger1 = AnimElem = 5
+projid = 3100
+projanim = 1592
+projhitanim = 1591
+projremanim = 1591
+projcancelanim = 1591
+projpriority = 3
+projsprpriority = 3
+offset = 165, -210
+velocity = 32, 0
+attr = S, HP
+damage = 95, 10
+animtype = Hard
+guardflag = MA
+hitflag = MAFD
+pausetime = 0, 10
+sparkno = -1
+hitsound = 5, 3
+guardsound = 6, 0
+ground.type = High
+ground.slidetime = 10
+ground.hittime = 18
+ground.velocity = -10
+air.velocity = -10, -14
+air.fall = 1
+fall = 1
+
+[State 3100, Low]
+type = Projectile
+trigger1 = AnimElem = 8
+projid = 3100
+projanim = 1592
+projhitanim = 1591
+projremanim = 1591
+projcancelanim = 1591
+projpriority = 3
+projsprpriority = 3
+offset = 165, -190
+velocity = 30, 3
+attr = S, HP
+damage = 95, 10
+animtype = Hard
+guardflag = MA
+hitflag = MAFD
+pausetime = 0, 10
+sparkno = -1
+hitsound = 5, 3
+guardsound = 6, 0
+ground.type = High
+ground.slidetime = 10
+ground.hittime = 18
+ground.velocity = -10
+air.velocity = -10, -14
+air.fall = 1
+fall = 1
+down.velocity = -8, -12
+down.hittime = 20
+
+[State 3100, End]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1

@@ -9,7 +9,10 @@ animations, timings and hitboxes drive the new art.
 
 Config keys (all coordinates are pixels in the source image, after mirroring):
   source        path to the PNG (figure on a white background)
+  background    "white" (default) or "checker" for a painted grey/white checkerboard
   mirror        True if the figure faces left in the source (fighters face right)
+  prescale      optional resize applied after mirroring; landmarks are in the
+                prescaled image's pixels
   hip           (x, y) pivot between the halves
   ground        y of the soles
   feet_x        x of the anchor point between the feet
@@ -31,6 +34,9 @@ Config keys (all coordinates are pixels in the source image, after mirroring):
                 over them unchanged, so moving the torso never exposes a gap
   leg_cut       polygons of thigh that is visible above split_upper: moved from the
                 torso layer to the legs layer (prevents a doubled, jagged thigh edge)
+  leg_shapes    optional polygons tracing each leg exactly; when given, the legs layer
+                is just these shapes and everything else (capes, props, costume tips)
+                stays with the torso. Replaces split rows / torso_boxes / leg_* keys
   lunge         optional multiplier for forward torso slides (default 1.0); lower it
                 when the legs join the body under a costume that would expose a gap
 """
@@ -95,6 +101,63 @@ def cut_out(img):
             if wpx[x, y] == key:
                 mpx[x, y] = 0
     mask = mask.filter(ImageFilter.MinFilter(3))  # eat the 1 px white fringe
+    out = rgb.convert("RGBA")
+    out.putalpha(mask)
+    return out
+
+
+def cut_out_checker(img):
+    """Remove a checkerboard painted into the pixels (fake transparency).
+
+    Background = light, colour-neutral pixels connected to the border, plus
+    enclosed neutral regions that contain both checker tones (so bright but
+    uniform areas such as glowing highlights are kept).
+    """
+    rgb = img.convert("RGB")
+    w, h = rgb.size
+    data = rgb.tobytes()
+    cand = bytearray(w * h)
+    tone = bytearray(w * h)  # 1 = light square, 2 = grey square
+    for i in range(w * h):
+        r, g, b = data[3 * i], data[3 * i + 1], data[3 * i + 2]
+        hi, lo = max(r, g, b), min(r, g, b)
+        if hi - lo <= 14 and lo >= 172:
+            cand[i] = 1
+            tone[i] = 1 if lo >= 230 else (2 if 180 <= hi <= 212 else 0)
+    bg = bytearray(w * h)
+    seen = bytearray(w * h)
+
+    def flood(start):
+        stack, comp = [start], []
+        seen[start] = 1
+        while stack:
+            i = stack.pop()
+            comp.append(i)
+            x, y = i % w, i // w
+            for j in ((i - 1) if x > 0 else -1, (i + 1) if x < w - 1 else -1,
+                      (i - w) if y > 0 else -1, (i + w) if y < h - 1 else -1):
+                if j >= 0 and cand[j] and not seen[j]:
+                    seen[j] = 1
+                    stack.append(j)
+        return comp
+
+    border = [x for x in range(w)] + [(h - 1) * w + x for x in range(w)] + \
+             [y * w for y in range(h)] + [y * w + w - 1 for y in range(h)]
+    for i in border:
+        if cand[i] and not seen[i]:
+            for j in flood(i):
+                bg[j] = 1
+    for i in range(w * h):  # enclosed gaps (between arms/legs): must look like checker
+        if cand[i] and not seen[i]:
+            comp = flood(i)
+            if len(comp) > 300:
+                n1 = sum(1 for j in comp if tone[j] == 1)
+                n2 = sum(1 for j in comp if tone[j] == 2)
+                if n1 > 0.15 * len(comp) and n2 > 0.15 * len(comp):
+                    for j in comp:
+                        bg[j] = 1
+    mask = Image.frombytes("L", (w, h), bytes(0 if v else 255 for v in bg))
+    mask = mask.filter(ImageFilter.MinFilter(3))
     out = rgb.convert("RGBA")
     out.putalpha(mask)
     return out
@@ -193,6 +256,21 @@ class Rig:
             ImageDraw.Draw(um).polygon([(x - x0, y - top) for x, y in poly], fill=0)
         underlay = lower.copy()
         underlay.putalpha(ImageChops.multiply(lower.getchannel("A"), ul))
+        shapes = cfg.get("leg_shapes")
+        if shapes:  # exact leg outlines: override the row-based split
+            lower_top = min(y for poly in shapes for _, y in poly)
+            self.upper_box = (x0, top, x1, src.height)
+            self.lower_box = (x0, lower_top, x1, src.height)
+            upper, lower = src.crop(self.upper_box), src.crop(self.lower_box)
+            um = Image.new("L", upper.size, 255)
+            lm = Image.new("L", lower.size, 0)
+            ul = Image.new("L", lower.size, 0)
+            grow = cfg.get("leg_shape_grow", 7)  # px; pulls the legs' ink outline in with them
+            for poly in shapes:
+                ImageDraw.Draw(lm).polygon([(x - x0, y - lower_top) for x, y in poly], fill=255)
+            if grow > 1:
+                lm = lm.filter(ImageFilter.MaxFilter(grow | 1))
+            um.paste(ImageChops.invert(lm), (0, lower_top - top))
         upper.putalpha(ImageChops.multiply(upper.getchannel("A"), um))
         lower.putalpha(ImageChops.multiply(lower.getchannel("A"), lm))
         self.upper, self.lower = upper, lower
@@ -306,10 +384,16 @@ def portraits(cfg, src, out_dir, axes):
 
 def generate(cfg, out_dir):
     os.makedirs(out_dir, exist_ok=True)
-    img = Image.open(cfg["source"])
+    img = Image.open(cfg["source"]).convert("RGB")
     if cfg.get("mirror"):
-        img = ImageOps.mirror(img.convert("RGB"))
-    src = cut_out(img)
+        img = ImageOps.mirror(img)
+    if cfg.get("background") == "checker":
+        src = cut_out_checker(img)
+    else:
+        src = cut_out(img)
+    if cfg.get("prescale"):
+        f = cfg["prescale"]
+        src = src.resize((int(src.width * f), int(src.height * f)), Image.LANCZOS)
     src.save(os.path.join(os.path.dirname(cfg["source"]), "cutout.png"))
     rig = Rig(cfg, src)
     axes = ["# generated by the cut-out pipeline: <group>_<item> <axis x> <axis y>"]

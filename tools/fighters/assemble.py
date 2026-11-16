@@ -36,7 +36,7 @@ def sub1(pattern, repl, s, flags=0):
     return new
 
 
-def assemble(fid, name, here, projectile, stats, quotes, movelist, argv):
+def assemble(fid, name, here, projectile, stats, quotes, movelist, argv, cmd_hook=None):
     out = os.path.join(ROOT, "content", "chars", fid)
     art = os.path.join(here, "art")
     if not os.path.isdir(out):
@@ -49,6 +49,8 @@ def assemble(fid, name, here, projectile, stats, quotes, movelist, argv):
         cmd = sub1(r"\[State -1, %s Kung Fu Palm\]\s*\ntype = ChangeState\s*\nvalue = %s\s*\n" % (label, old),
                    "[State -1, %s %s]\ntype = ChangeState\nvalue = %s\n"
                    "triggerall = NumProjID(1500) = 0\n" % (label, projectile, new), cmd)
+    if cmd_hook:  # fighter-specific inputs (extra specials, remapped supers)
+        cmd = cmd_hook(cmd)
     wr(os.path.join(out, fid + ".cmd"), cmd)
 
     cns = rd(os.path.join(KFM, "kfm720.cns"))
