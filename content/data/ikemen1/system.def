@@ -727,7 +727,7 @@ teammenu.itemname.simul = Simul
 teammenu.itemname.tag = Tag
 teammenu.itemname.turns = Turns
 
-paletteselect = 3
+paletteselect = 0
 ; Enables or disables palette selection menu in select screen. Accepted values:
 ; 0 - Palette menu disabled. Palette corresponds to key pressed when selecting character
 ; 1 - Palette menu enabled. Initial selected palette is 1
