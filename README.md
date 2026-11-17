@@ -107,6 +107,7 @@ To upgrade the animation, drop a hand-drawn PNG into `tools/fighters/tinker/art/
 | `bananaisland` (Banana Island) | One illustration: 3 parallax layers plus 5 moving elements. Juanana's home stage |
 | `nasajpl` (NASA JPL) | One illustration: 3 parallax layers; the satellite dishes slowly pan. Tinker's home stage |
 | `indiodates` (Indio Dates Paradise) | One illustration: back wall, then floor and fixtures (which move with the fighters), then foreground trash cans; the hanging signs sway. Pooja's home stage |
+| `catpad` (Cat Pad) | One illustration: the room with its windows, then the floor with the cat tree and furniture, then foreground plants; the pendant lamps swing and the palm outside sways. CuddlePuss's home stage |
 
 Generated stages come from one generic tool, `tools/stages/stagegen.py`.
 Each stage has a folder, `tools/stages/<id>/`, holding a `source` image and a short `make_stage.py` config.

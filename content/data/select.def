@@ -210,7 +210,7 @@ Training, stages/stage0-720.def, order=0, ordersurvival=0, exclude=1
 tinker, stages/nasajpl.def
 grapeman, stages/stage0-720.def
 juanana, stages/bananaisland.def
-cuddlepuss, stages/stage0-720.def
+cuddlepuss, stages/catpad.def
 hotnight, stages/stage0-720.def
 pooja, stages/indiodates.def
 randomselect
@@ -290,6 +290,7 @@ stages/sluttywood.def
 stages/bananaisland.def
 stages/nasajpl.def
 stages/indiodates.def
+stages/catpad.def
 ;-------------------------------------------------------------------------------
 [Options]
  ;Here you set the maximum number of matches to fight before the game ends in
