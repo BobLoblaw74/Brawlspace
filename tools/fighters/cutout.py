@@ -260,7 +260,8 @@ class Rig:
         underlay.putalpha(ImageChops.multiply(lower.getchannel("A"), ul))
         shapes = cfg.get("leg_shapes")
         if shapes:  # exact leg outlines: override the row-based split
-            lower_top = min(y for poly in shapes for _, y in poly)
+            under_polys = cfg.get("leg_polys", [])
+            lower_top = min(y for poly in shapes + under_polys for _, y in poly)
             self.upper_box = (x0, top, x1, src.height)
             self.lower_box = (x0, lower_top, x1, src.height)
             upper, lower = src.crop(self.upper_box), src.crop(self.lower_box)
@@ -273,6 +274,12 @@ class Rig:
             if grow > 1:
                 lm = lm.filter(ImageFilter.MaxFilter(grow | 1))
             um.paste(ImageChops.invert(lm), (0, lower_top - top))
+            # leg_polys here = cloth hidden under a costume: a non-rotating underlay
+            # beneath the legs, so a sliding torso uncovers cloth instead of a hole
+            for poly in under_polys:
+                ImageDraw.Draw(ul).polygon([(x - x0, y - lower_top) for x, y in poly], fill=255)
+            underlay = lower.copy()
+            underlay.putalpha(ImageChops.multiply(lower.getchannel("A"), ul))
         upper.putalpha(ImageChops.multiply(upper.getchannel("A"), um))
         lower.putalpha(ImageChops.multiply(lower.getchannel("A"), lm))
         self.upper, self.lower = upper, lower
