@@ -5,7 +5,8 @@ Used by each fighter's build.py. Steps:
   2. regenerate art/ with the fighter's make_frames.py (with --frames, or if art/ is missing)
   3. <id>.cmd: KFM's Kung Fu Palm inputs -> the fighter's projectile states 1500/1510/1520
   4. <id>.cns: KFM states + stat changes + quotes + the fighter's <id>_states.cns
-  5. <id>.air: KFM animations + the fighter's <id>_anims.air
+  5. <id>.air: KFM animations + the fighter's <id>_anims.air (an action the fighter
+     defines replaces KFM's: the engine keeps the first of two duplicates)
   6. .def (single palette), movelist.dat, and <id>.sff packed from art/
 """
 import os
@@ -36,6 +37,25 @@ def sub1(pattern, repl, s, flags=0):
     return new
 
 
+ACTION = re.compile(r"(?mi)^\s*\[\s*Begin\s+Action\s+(-?\d+)\s*\]")
+
+
+def action_numbers(air):
+    return {int(m.group(1)) for m in ACTION.finditer(air)}
+
+
+def drop_actions(air, numbers):
+    """Remove the [Begin Action n] blocks (up to the next action) whose n is in numbers."""
+    heads = list(ACTION.finditer(air))
+    out, pos = [], 0
+    for i, m in enumerate(heads):
+        if int(m.group(1)) in numbers:
+            out.append(air[pos:m.start()])
+            pos = heads[i + 1].start() if i + 1 < len(heads) else len(air)
+    out.append(air[pos:])
+    return "".join(out)
+
+
 def assemble(fid, name, here, projectile, stats, quotes, movelist, argv, cmd_hook=None):
     out = os.path.join(ROOT, "content", "chars", fid)
     art = os.path.join(here, "art")
@@ -63,7 +83,8 @@ def assemble(fid, name, here, projectile, stats, quotes, movelist, argv, cmd_hoo
     cns += rd(os.path.join(here, fid + "_states.cns"))
     wr(os.path.join(out, fid + ".cns"), cns)
 
-    wr(os.path.join(out, fid + ".air"), rd(os.path.join(KFM, "kfm720.air")) + rd(os.path.join(here, fid + "_anims.air")))
+    anims = rd(os.path.join(here, fid + "_anims.air"))
+    wr(os.path.join(out, fid + ".air"), drop_actions(rd(os.path.join(KFM, "kfm720.air")), action_numbers(anims)) + anims)
 
     defp = os.path.join(out, fid + ".def")
     d = rd(defp)

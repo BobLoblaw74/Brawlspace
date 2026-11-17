@@ -35,3 +35,85 @@ Clsn1Default: 1
 6000,3, 0,0, 2, , , 1.55, 1.55
 6000,4, 0,0, 2, , , 1.55, 1.55
 6000,5, 0,0, 2, , , 1.55, 1.55
+
+;---------------------------------------------------------------------------
+; Jump (hand-drawn sheet jump.png -> sprites 7040,0-7). These replace KFM's
+; actions 40/41/42/43/47; assemble.py drops the KFM versions.
+; Airborne frames are anchored at the feet: physics supplies the height.
+; A neutral jump is ~38 ticks (jump.neu y -33.6, yaccel 1.76), apex at ~19.
+;---------------------------------------------------------------------------
+
+; Jump start (state 40 takes off when this ends: keep it 3 ticks)
+[Begin Action 40]
+Clsn2Default: 2
+ Clsn2[0] = -60,0,64,-268
+ Clsn2[1] =  -4,-332,52,-268
+7040,1, 0,0, 1
+7040,2, 0,0, 2
+
+; Neutral jump: rise, tuck at the apex, drop, reach for the floor
+[Begin Action 41]
+Clsn2: 2
+ Clsn2[0] = -40,-30,64,-330
+ Clsn2[1] =   4,-400,60,-330
+7040,3, 0,0, 10
+Clsn2: 2
+ Clsn2[0] = -44,-60,64,-320
+ Clsn2[1] =   0,-380,56,-320
+7040,4, 0,0, 11
+Clsn2: 2
+ Clsn2[0] = -44,-20,64,-350
+ Clsn2[1] =   0,-410,56,-350
+7040,5, 0,0, 7
+Loopstart
+Clsn2Default: 2
+ Clsn2[0] = -56,0,64,-320
+ Clsn2[1] =   0,-380,56,-320
+7040,6, 0,0, 4
+
+; Forward and back jumps use the same drawing
+[Begin Action 42]
+Clsn2: 2
+ Clsn2[0] = -40,-30,64,-330
+ Clsn2[1] =   4,-400,60,-330
+7040,3, 0,0, 10
+Clsn2: 2
+ Clsn2[0] = -44,-60,64,-320
+ Clsn2[1] =   0,-380,56,-320
+7040,4, 0,0, 11
+Clsn2: 2
+ Clsn2[0] = -44,-20,64,-350
+ Clsn2[1] =   0,-410,56,-350
+7040,5, 0,0, 7
+Loopstart
+Clsn2Default: 2
+ Clsn2[0] = -56,0,64,-320
+ Clsn2[1] =   0,-380,56,-320
+7040,6, 0,0, 4
+
+[Begin Action 43]
+Clsn2: 2
+ Clsn2[0] = -40,-30,64,-330
+ Clsn2[1] =   4,-400,60,-330
+7040,3, 0,0, 10
+Clsn2: 2
+ Clsn2[0] = -44,-60,64,-320
+ Clsn2[1] =   0,-380,56,-320
+7040,4, 0,0, 11
+Clsn2: 2
+ Clsn2[0] = -44,-20,64,-350
+ Clsn2[1] =   0,-410,56,-350
+7040,5, 0,0, 7
+Loopstart
+Clsn2Default: 2
+ Clsn2[0] = -56,0,64,-320
+ Clsn2[1] =   0,-380,56,-320
+7040,6, 0,0, 4
+
+; Landing: absorb, then settle back into the stance
+[Begin Action 47]
+Clsn2Default: 2
+ Clsn2[0] = -60,0,64,-272
+ Clsn2[1] =  -4,-332,52,-272
+7040,2, 0,0, 2
+7040,7, 0,0, 2

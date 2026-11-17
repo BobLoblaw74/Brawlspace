@@ -6,6 +6,11 @@ Usage (repo root):
 The source faces left on white, so it is mirrored. Effects:
   6000  hairball, spinning, with stray hairs (6 frames)
   6001  puff of fur when it lands (4 frames)
+Hand-drawn sheets:
+  7040  jump, from jump.png (8 frames; actions 40/41/42/43/47 in cuddlepuss_anims.air)
+
+  python3 -I tools/fighters/cuddlepuss/make_frames.py --jump [<art_dir>]
+re-slices only jump.png into an existing art/ (keeps everything else).
 """
 import math
 import os
@@ -76,7 +81,32 @@ def fur_puff(k, size=170):
     return im
 
 
+JUMP_SHEET = os.path.join(HERE, "jump.png")
+JUMP_CELL = 640          # 8 cells of 640x640, drawn facing left on transparent
+JUMP_GROUND = 618        # feet line of the standing cells
+JUMP_SCALE = 420 / 313   # sheet stance is 313 px tall; the game idle is 420
+JUMP_AIR = (3, 4, 5, 6)  # airborne cells: anchored at their own feet (physics sets the height)
+
+
+def jump_frames(out_dir, axes):
+    sheet = Image.open(JUMP_SHEET).convert("RGBA")
+    n = sheet.width // JUMP_CELL
+    for k in range(n):
+        cell = sheet.crop((k * JUMP_CELL, 0, (k + 1) * JUMP_CELL, JUMP_CELL)).transpose(Image.FLIP_LEFT_RIGHT)
+        alpha = cell.getchannel("A").point(lambda v: 255 if v > 40 else 0)
+        bb = alpha.getbbox()
+        ground = bb[3] if k in JUMP_AIR else JUMP_GROUND
+        cell = cell.resize((round(JUMP_CELL * JUMP_SCALE),) * 2, Image.LANCZOS)
+        bb = cell.getbbox()
+        cell = cell.crop(bb)
+        ax = round(JUMP_CELL / 2 * JUMP_SCALE) - bb[0]
+        ay = round(ground * JUMP_SCALE) - bb[1]
+        cutout.save_png(cell, os.path.join(out_dir, "7040_%d.png" % k))
+        axes.append("7040_%d %d %d" % (k, ax, ay))
+
+
 def effects(out_dir, axes):
+    jump_frames(out_dir, axes)
     for k in range(6):
         hairball(k).save(os.path.join(out_dir, "6000_%d.png" % k), optimize=True)
         axes.append("6000_%d 55 55" % k)
@@ -105,5 +135,19 @@ CONFIG = {
     "effects": effects,
 }
 
-if __name__ == "__main__":
+def jump_only(out_dir):
+    """Re-slice jump.png into an existing art dir, replacing its 7040 lines in axis.txt."""
+    axes = []
+    jump_frames(out_dir, axes)
+    path = os.path.join(out_dir, "axis.txt")
+    with open(path) as f:
+        kept = [l for l in f.read().splitlines() if not l.startswith("7040_")]
+    with open(path, "w") as f:
+        f.write("\n".join(kept + axes) + "\n")
+
+
+if __name__ == "__main__" and "--jump" in sys.argv:
+    args = [a for a in sys.argv[1:] if a != "--jump"]
+    jump_only(args[0] if args else os.path.join(HERE, "art"))
+elif __name__ == "__main__":
     cutout.generate(CONFIG, sys.argv[1] if len(sys.argv) > 1 else os.path.join(HERE, "art"))
