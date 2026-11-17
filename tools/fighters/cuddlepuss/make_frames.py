@@ -6,11 +6,12 @@ Usage (repo root):
 The source faces left on white, so it is mirrored. Effects:
   6000  hairball, spinning, with stray hairs (6 frames)
   6001  puff of fur when it lands (4 frames)
-Hand-drawn sheets:
-  7040  jump, from jump.png (8 frames; actions 40/41/42/43/47 in cuddlepuss_anims.air)
+Hand-drawn sheets (see SHEETS; animated in cuddlepuss_anims.air):
+  7040  jump, from jump.png (8 frames; actions 40/41/42/43/47)
+  7200  standing light punch, from punch.png (8 frames; action 200)
 
-  python3 -I tools/fighters/cuddlepuss/make_frames.py --jump [<art_dir>]
-re-slices only jump.png into an existing art/ (keeps everything else).
+  python3 -I tools/fighters/cuddlepuss/make_frames.py --sheets [<art_dir>]
+re-slices only the sheets into an existing art/ (keeps everything else).
 """
 import math
 import os
@@ -81,32 +82,41 @@ def fur_puff(k, size=170):
     return im
 
 
-JUMP_SHEET = os.path.join(HERE, "jump.png")
-JUMP_CELL = 640          # 8 cells of 640x640, drawn facing left on transparent
-JUMP_GROUND = 618        # feet line of the standing cells
-JUMP_SCALE = 420 / 313   # sheet stance is 313 px tall; the game idle is 420
-JUMP_AIR = (3, 4, 5, 6)  # airborne cells: anchored at their own feet (physics sets the height)
+# Hand-drawn sheets: <file>: (sprite group, airborne cells, cells already facing right).
+# Every sheet is a row of 640x640 cells drawn facing left on transparent, feet on the
+# same ground line; the odd cell drawn facing right is left unmirrored.
+SHEETS = {
+    "jump.png": (7040, (3, 4, 5, 6), ()),
+    "punch.png": (7200, (), (5,)),
+}
+SHEET_CELL = 640
+SHEET_GROUND = 618        # feet line of the standing cells
+SHEET_SCALE = 420 / 313   # sheet stance is 313 px tall; the game idle is 420
 
 
-def jump_frames(out_dir, axes):
-    sheet = Image.open(JUMP_SHEET).convert("RGBA")
-    n = sheet.width // JUMP_CELL
-    for k in range(n):
-        cell = sheet.crop((k * JUMP_CELL, 0, (k + 1) * JUMP_CELL, JUMP_CELL)).transpose(Image.FLIP_LEFT_RIGHT)
-        alpha = cell.getchannel("A").point(lambda v: 255 if v > 40 else 0)
-        bb = alpha.getbbox()
-        ground = bb[3] if k in JUMP_AIR else JUMP_GROUND
-        cell = cell.resize((round(JUMP_CELL * JUMP_SCALE),) * 2, Image.LANCZOS)
+def sheet_frames(name, out_dir, axes):
+    """Slice one sheet into <group>_<k>.png. Airborne cells are anchored at their own
+    feet (physics sets the height); the rest on the shared ground line."""
+    group, air, facing_right = SHEETS[name]
+    sheet = Image.open(os.path.join(HERE, name)).convert("RGBA")
+    for k in range(sheet.width // SHEET_CELL):
+        cell = sheet.crop((k * SHEET_CELL, 0, (k + 1) * SHEET_CELL, SHEET_CELL))
+        if k not in facing_right:
+            cell = cell.transpose(Image.FLIP_LEFT_RIGHT)
+        bb = cell.getchannel("A").point(lambda v: 255 if v > 40 else 0).getbbox()
+        ground = bb[3] if k in air else SHEET_GROUND
+        cell = cell.resize((round(SHEET_CELL * SHEET_SCALE),) * 2, Image.LANCZOS)
         bb = cell.getbbox()
         cell = cell.crop(bb)
-        ax = round(JUMP_CELL / 2 * JUMP_SCALE) - bb[0]
-        ay = round(ground * JUMP_SCALE) - bb[1]
-        cutout.save_png(cell, os.path.join(out_dir, "7040_%d.png" % k))
-        axes.append("7040_%d %d %d" % (k, ax, ay))
+        ax = round(SHEET_CELL / 2 * SHEET_SCALE) - bb[0]
+        ay = round(ground * SHEET_SCALE) - bb[1]
+        cutout.save_png(cell, os.path.join(out_dir, "%d_%d.png" % (group, k)))
+        axes.append("%d_%d %d %d" % (group, k, ax, ay))
 
 
 def effects(out_dir, axes):
-    jump_frames(out_dir, axes)
+    for name in SHEETS:
+        sheet_frames(name, out_dir, axes)
     for k in range(6):
         hairball(k).save(os.path.join(out_dir, "6000_%d.png" % k), optimize=True)
         axes.append("6000_%d 55 55" % k)
@@ -135,19 +145,21 @@ CONFIG = {
     "effects": effects,
 }
 
-def jump_only(out_dir):
-    """Re-slice jump.png into an existing art dir, replacing its 7040 lines in axis.txt."""
+def sheets_only(out_dir):
+    """Re-slice the hand-drawn sheets into an existing art dir, replacing their axis.txt lines."""
     axes = []
-    jump_frames(out_dir, axes)
+    for name in SHEETS:
+        sheet_frames(name, out_dir, axes)
+    groups = tuple("%d_" % g for g, _, _ in SHEETS.values())
     path = os.path.join(out_dir, "axis.txt")
     with open(path) as f:
-        kept = [l for l in f.read().splitlines() if not l.startswith("7040_")]
+        kept = [l for l in f.read().splitlines() if not l.startswith(groups)]
     with open(path, "w") as f:
         f.write("\n".join(kept + axes) + "\n")
 
 
-if __name__ == "__main__" and "--jump" in sys.argv:
-    args = [a for a in sys.argv[1:] if a != "--jump"]
-    jump_only(args[0] if args else os.path.join(HERE, "art"))
+if __name__ == "__main__" and "--sheets" in sys.argv:
+    args = [a for a in sys.argv[1:] if a != "--sheets"]
+    sheets_only(args[0] if args else os.path.join(HERE, "art"))
 elif __name__ == "__main__":
     cutout.generate(CONFIG, sys.argv[1] if len(sys.argv) > 1 else os.path.join(HERE, "art"))
