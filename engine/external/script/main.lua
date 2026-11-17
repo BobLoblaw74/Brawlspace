@@ -1140,7 +1140,11 @@ function main.f_commandLine()
 		loadStart(params)
 	end
 	while loading() do
-		--do nothing
+		-- Brawlspace: yield a frame while loading (as start.lua does). A bare
+		-- busy-wait never returns control to the browser, freezing the wasm
+		-- build; only quick-match command-line launches use this path.
+		clearColor(0, 0, 0)
+		refresh()
 	end
 	local winner = game()
 	if flags['-log'] ~= nil then

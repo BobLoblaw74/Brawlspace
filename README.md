@@ -105,6 +105,7 @@ To upgrade the animation, drop a hand-drawn PNG into `tools/fighters/tinker/art/
 | `stage0-720` (Training Room HD) | Stock |
 | `sluttywood` (SluttyWood) | One illustration: a single layer with a pulsing neon glow |
 | `bananaisland` (Banana Island) | One illustration: 3 parallax layers plus 5 moving elements. Juanana's home stage |
+| `nasajpl` (NASA JPL) | One illustration: 3 parallax layers; the satellite dishes slowly pan. Tinker's home stage |
 
 Generated stages come from one generic tool, `tools/stages/stagegen.py`.
 Each stage has a folder, `tools/stages/<id>/`, holding a `source` image and a short `make_stage.py` config.
@@ -126,6 +127,36 @@ To make a new stage:
 
 To make it a fighter's home stage, put it second on that fighter's `[Characters]` line.
 In Arcade, each match is played on the opponent's home stage.
+
+## Developer mode (local only)
+
+To start a match directly with any fighters and stage, skipping the title screen and menus:
+
+```sh
+node tools/dev/devmatch.mjs --p1 tinker --p2 juanana --stage nasajpl
+node tools/dev/devmatch.mjs --list                                  # available fighters and stages
+node tools/dev/devmatch.mjs --p1 pooja --p2 hotnight --stage sluttywood --p1ai 6 --headless
+```
+
+The first form opens the match in your browser: you play P1 against a CPU P2.
+
+| Option | What it does |
+|---|---|
+| `--p1ai N` | Make P1 a CPU too, at level 1–8 |
+| `--human2` | Make P2 a second human player |
+| `--power` | Full, auto-refilling power bars, for testing supers |
+| `--rounds N` | Number of rounds to play |
+| `--time N` | Round time in seconds |
+| `--pal1 N`, `--pal2 N` | Palette (color) numbers |
+
+**Headless mode** (`--headless`) runs the match in a background browser instead.
+It saves screenshots to `web/test/boot/shots/` and prints the engine's warnings, so you can test without a window.
+
+If anything under `content/` has changed since the last build, the tool repackages `web/content.zip` first.
+
+**Why players can't reach it:** the tool lives in `tools/`, and only `web/` is published.
+It runs its own local server, which changes one line of `main.js` in memory to pass the engine its quick-match arguments.
+The deployed site's code never contains any of this.
 
 ## Title logo
 
