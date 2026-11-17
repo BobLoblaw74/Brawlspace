@@ -103,7 +103,7 @@ To upgrade the animation, drop a hand-drawn PNG into `tools/fighters/tinker/art/
 | Stage | Source |
 |---|---|
 | `stage0-720` (Training Room HD) | Stock |
-| `sluttywood` (SluttyWood) | One illustration: a single layer with a pulsing neon glow |
+| `sluttywood` (SluttyWood) | One illustration: a single layer with a pulsing neon glow. HotNight's home stage |
 | `bananaisland` (Banana Island) | One illustration: 3 parallax layers plus 5 moving elements. Juanana's home stage |
 | `nasajpl` (NASA JPL) | One illustration: 3 parallax layers; the satellite dishes slowly pan. Tinker's home stage |
 | `indiodates` (Indio Dates Paradise) | One illustration: back wall, then floor and fixtures (which move with the fighters), then foreground trash cans; the hanging signs sway. Pooja's home stage |
