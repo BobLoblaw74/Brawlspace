@@ -8,6 +8,11 @@ hang over her legs, so the legs are traced exactly (leg_shapes). Effects:
   6000  plastic water bottle, tumbling end over end (8 frames)
   6001  water splash (4 frames)
   6002  sparkle of water droplets for Hydrate (4 frames)
+Hand-drawn sheets (green screen, cut out by tools/fighters/greensheet.py):
+  7200  jab_kick.jpg, 6 poses: 0-2 jab (action 200), 3-5 heavy kick (action 240)
+
+  python3 -I tools/fighters/hotnight/make_frames.py --sheets [<art_dir>]
+re-cuts only the sheets into an existing art/ (keeps everything else).
 """
 import math
 import os
@@ -19,6 +24,7 @@ from PIL import Image, ImageDraw, ImageFilter
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.dirname(HERE))
 import cutout  # noqa: E402
+import greensheet  # noqa: E402
 
 INK = (30, 40, 60, 255)
 
@@ -92,7 +98,59 @@ def sparkle(k, size=160):
     return im
 
 
+# Hand-drawn sheets: <file>: (sprite group, poses anchored by the head). Poses face right,
+# standing on the sheet's floor. Most keep the back foot planted; a pose standing on one
+# leg (a kick) keeps the head in place instead, so it steps in rather than lurching back.
+SHEETS = {"jab_kick.jpg": (7200, (3, 4))}
+SHEET_SCALE = 421 / 482  # sheet stance is 482 px tall; the game idle is 421
+BACK_FOOT_TO_AXIS = 153  # stance, sheet px: back boot's left edge -> midpoint of the feet
+HEAD_TO_AXIS = 5         # stance, sheet px: head centre -> midpoint of the feet
+
+
+def back_boot_left(fig):
+    """Left edge of the leftmost boot on the floor (the planted back foot)."""
+    a = fig.getchannel("A").load()
+    w, h = fig.size
+    return next(x for x in range(w) if any(a[x, y] > 128 for y in range(h - 30, h)))
+
+
+def head_centre(fig, rows=60):
+    """Mean x of the opaque pixels in the top rows (the head)."""
+    a = fig.getchannel("A").load()
+    xs = [x for y in range(rows) for x in range(fig.width) if a[x, y] > 128]
+    return sum(xs) / len(xs)
+
+
+def sheet_frames(name, out_dir, axes):
+    """The axis sits a fixed distance in front of the planted back foot, or from the head."""
+    group, by_head = SHEETS[name]
+    for k, (fig, _) in enumerate(greensheet.figures(os.path.join(HERE, name))):
+        if k in by_head:
+            ax = (head_centre(fig) + HEAD_TO_AXIS) * SHEET_SCALE
+        else:
+            ax = (back_boot_left(fig) + BACK_FOOT_TO_AXIS) * SHEET_SCALE
+        ay = fig.height * SHEET_SCALE
+        fig = fig.resize((round(fig.width * SHEET_SCALE), round(fig.height * SHEET_SCALE)), Image.LANCZOS)
+        cutout.save_png(fig, os.path.join(out_dir, "%d_%d.png" % (group, k)))
+        axes.append("%d_%d %d %d" % (group, k, round(ax), round(ay)))
+
+
+def sheets_only(out_dir):
+    """Re-cut the sheets into an existing art dir, replacing their axis.txt lines."""
+    axes = []
+    for name in SHEETS:
+        sheet_frames(name, out_dir, axes)
+    groups = tuple("%d_" % g for g, _ in SHEETS.values())
+    path = os.path.join(out_dir, "axis.txt")
+    with open(path) as f:
+        kept = [l for l in f.read().splitlines() if not l.startswith(groups)]
+    with open(path, "w") as f:
+        f.write("\n".join(kept + axes) + "\n")
+
+
 def effects(out_dir, axes):
+    for name in SHEETS:
+        sheet_frames(name, out_dir, axes)
     for k in range(8):
         bottle(k).save(os.path.join(out_dir, "6000_%d.png" % k), optimize=True)
         axes.append("6000_%d 65 65" % k)
@@ -132,5 +190,8 @@ CONFIG = {
     "effects": effects,
 }
 
-if __name__ == "__main__":
+if __name__ == "__main__" and "--sheets" in sys.argv:
+    args = [a for a in sys.argv[1:] if a != "--sheets"]
+    sheets_only(args[0] if args else os.path.join(HERE, "art"))
+elif __name__ == "__main__":
     cutout.generate(CONFIG, sys.argv[1] if len(sys.argv) > 1 else os.path.join(HERE, "art"))
