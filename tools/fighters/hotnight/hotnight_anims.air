@@ -144,3 +144,384 @@ Clsn2: 2
  Clsn2[0] = -40,0,76,-320
  Clsn2[1] =   0,-376,48,-320
 7200,5, 0,0, 6
+
+;---------------------------------------------------------------------------
+; Hand-drawn sheet guard_hit.jpg -> sprites 7300,0-4: stand guard, crouch guard,
+; hit high, hit low, launched. These are KFM's guard and hit actions with the
+; same elements, timings and hurtboxes (the common states time off them); only
+; the sprites change. The air guard (122/132/142/152) keeps KFM's art.
+;---------------------------------------------------------------------------
+[Begin Action 120]
+Clsn2Default: 4
+ Clsn2[0] =  56,0,-52,-172
+ Clsn2[1] = -44,-172,48,-344
+ Clsn2[2] =  -4,-344,-44,-376
+ Clsn2[3] = -80,-312,52,-232
+7300,0,0,0, 1
+
+
+[Begin Action 121]
+Clsn2: 2
+ Clsn2[0] = -68,0,64,-224
+ Clsn2[1] =   12,-224,-36,-256
+7300,1,0,0, 1
+
+
+[Begin Action 130]
+Clsn2Default: 4
+ Clsn2[0] =  56,0,-52,-172
+ Clsn2[1] = -44,-172,48,-344
+ Clsn2[2] =  -4,-344,-44,-376
+ Clsn2[3] = -80,-312,52,-232
+7300,0,0,0, -1
+
+
+[Begin Action 131]
+Clsn2: 2
+ Clsn2[0] = -68,0,64,-224
+ Clsn2[1] =   12,-224,-36,-256
+7300,1,0,0, -1
+
+
+[Begin Action 140]
+Clsn2Default: 4
+ Clsn2[0] =  56,0,-52,-172
+ Clsn2[1] = -44,-172,48,-344
+ Clsn2[2] =  -4,-344,-44,-376
+ Clsn2[3] = -80,-312,52,-232
+7300,0,0,0, 5
+
+
+[Begin Action 141]
+Clsn2: 2
+ Clsn2[0] = -68,0,64,-224
+ Clsn2[1] =   12,-224,-36,-256
+7300,1,0,0, 1
+
+
+[Begin Action 150]
+Clsn2Default: 4
+ Clsn2[0] =  56,0,-52,-172
+ Clsn2[1] = -44,-172,48,-344
+ Clsn2[2] =  -4,-344,-44,-376
+ Clsn2[3] = -80,-312,52,-232
+7300,0,0,0, 4
+7300,0,0,0, 8
+7300,0,0,0, 4
+7300,0,0,0, -1
+
+
+[Begin Action 151]
+Clsn2: 2
+ Clsn2[0] = -68,0,64,-224
+ Clsn2[1] =   12,-224,-36,-256
+7300,1,0,0, -1
+
+
+[Begin Action 5000]
+Clsn2: 2
+ Clsn2[0] = -72,-316,64,0
+ Clsn2[1] = -68,-376,-16,-316
+7300,2,0,0, 4
+Clsn2: 2
+ Clsn2[0] = -72,-316,64,0
+ Clsn2[1] = -48,-308,-100,-376
+7300,2,0,0, 4
+
+
+[Begin Action 5001]
+Clsn2: 2
+ Clsn2[0] = -72,-316,64,0
+ Clsn2[1] = -48,-308,-100,-376
+7300,2,0,0, 5
+Clsn2: 2
+ Clsn2[0] = -72,-316,64,0
+ Clsn2[1] = -128,-356,-60,-240
+7300,2,0,0, 5
+
+
+[Begin Action 5002]
+Clsn2: 2
+ Clsn2[0] = -72,-316,64,0
+ Clsn2[1] = -128,-356,-60,-240
+7300,2,0,0, 5
+Clsn2: 2
+ Clsn2[0] = -72,-316,64,0
+ Clsn2[1] = -56,-220,-148,-348
+7300,2,0,0, 5
+
+
+[Begin Action 5005]
+Clsn2: 2
+ Clsn2[0] = -72,-316,64,0
+ Clsn2[1] = -128,-356,-60,-240
+7300,2,0,0, 3
+Clsn2: 2
+ Clsn2[0] = -72,-316,64,0
+ Clsn2[1] = -48,-308,-100,-376
+7300,2,0,0, 3
+Clsn2: 2
+ Clsn2[0] = -72,-316,64,0
+ Clsn2[1] = -68,-376,-16,-316
+7300,2,0,0, -1
+
+
+[Begin Action 5006]
+Clsn2: 2
+ Clsn2[0] = -72,-316,64,0
+ Clsn2[1] = -56,-220,-148,-348
+7300,2,0,0, 3
+Clsn2: 2
+ Clsn2[0] = -72,-316,64,0
+ Clsn2[1] = -128,-356,-60,-240
+7300,2,0,0, 4
+Clsn2: 2
+ Clsn2[0] = -72,-316,64,0
+ Clsn2[1] = -48,-308,-100,-376
+7300,2,0,0, 4
+Clsn2: 2
+ Clsn2[0] = -72,-316,64,0
+ Clsn2[1] = -68,-376,-16,-316
+7300,2,0,0, -1
+
+
+[Begin Action 5007]
+Clsn2: 2
+ Clsn2[0] = -72,-316,64,0
+ Clsn2[1] = -56,-220,-148,-348
+7300,2,0,0, 5
+Clsn2: 2
+ Clsn2[0] = -72,-316,64,0
+ Clsn2[1] = -128,-356,-60,-240
+7300,2,0,0, 4
+Clsn2: 2
+ Clsn2[0] = -72,-316,64,0
+ Clsn2[1] = -48,-308,-100,-376
+7300,2,0,0, 4
+Clsn2: 2
+ Clsn2[0] = -72,-316,64,0
+ Clsn2[1] = -68,-376,-16,-316
+7300,2,0,0, -1
+
+
+[Begin Action 5010]
+Clsn2: 2
+ Clsn2[0] =  64,0,-96,-304
+ Clsn2[1] = -48,-288,4,-352
+7300,3,0,0, 5
+Clsn2: 2
+ Clsn2[0] = -108,-304,64,0
+ Clsn2[1] = -48,-264,4,-324
+7300,3,0,0, 5
+
+
+[Begin Action 5011]
+Clsn2: 2
+ Clsn2[0] = -108,-304,64,0
+ Clsn2[1] = -48,-264,4,-324
+7300,3,0,0, 5
+Clsn2: 1
+ Clsn2[0] = -108,-304,64,0
+7300,3,0,0, 5
+Clsn2: 1
+ Clsn2[0] = -108,-304,64,0
+7300,3,0,0, 5
+
+
+[Begin Action 5012]
+Clsn2Default: 1
+ Clsn2[0] = -108,-304,64,0
+7300,3,0,0, 1
+7300,3,0,0, 5
+7300,3,0,0, 5
+7300,3,0,0, 5
+
+
+[Begin Action 5015]
+Clsn2: 2
+ Clsn2[0] = -108,-304,64,0
+ Clsn2[1] = -48,-264,4,-324
+7300,3,0,0, 1
+Clsn2: 2
+ Clsn2[0] =  64,0,-96,-304
+ Clsn2[1] = -48,-288,4,-352
+7300,3,0,0, -1
+
+
+[Begin Action 5016]
+Clsn2: 1
+ Clsn2[0] = -108,-304,64,0
+7300,3,0,0, 1
+Clsn2: 2
+ Clsn2[0] = -108,-304,64,0
+ Clsn2[1] = -48,-264,4,-324
+7300,3,0,0, 4
+Clsn2: 2
+ Clsn2[0] =  64,0,-96,-304
+ Clsn2[1] = -48,-288,4,-352
+7300,3,0,0, -1
+
+
+[Begin Action 5017]
+Clsn2: 1
+ Clsn2[0] = -108,-304,64,0
+7300,3,0,0, 1
+Clsn2: 2
+ Clsn2[0] = -108,-304,64,0
+ Clsn2[1] = -48,-264,4,-324
+7300,3,0,0, -1
+
+
+[Begin Action 5030]
+Clsn2: 2
+ Clsn2[0] = -84,-352,20,-244
+ Clsn2[1] =  -32,-264,64,-152
+7300,4,0,0, 5
+
+
+[Begin Action 5035]
+Clsn2: 2
+ Clsn2[0] = -84,-352,20,-244
+ Clsn2[1] =  -32,-264,64,-152
+7300,4,0,0, 4
+Clsn2: 2
+ Clsn2[0] =  76,-156,-20,-264
+ Clsn2[1] =   8,-228,-104,-332
+7300,4,0,0, 7
+
+
+[Begin Action 5050]
+Clsn2Default: 2
+ Clsn2[0] =  96,-176,-8,-304
+ Clsn2[1] =  -8,-176,-132,-268
+7300,4,0,0, 5
+7300,4,0,0, 5
+
+
+
+;---------------------------------------------------------------------------
+; Hand-drawn sheet jump.jpg -> sprites 7400,0-4: crouch, rise, apex, fall, land.
+; These replace KFM's actions 40/41/42/43/47. Airborne poses are anchored at their
+; lowest point (physics sets the height). A neutral jump is ~38 ticks
+; (jump.neu y -33.6, yaccel 1.76), apex at ~19.
+;---------------------------------------------------------------------------
+
+; Jump start (state 40 takes off when this ends: keep KFM's 3 ticks)
+[Begin Action 40]
+Clsn2Default: 2
+ Clsn2[0] = -60,0,70,-300
+ Clsn2[1] = -10,-381,50,-300
+7400,0, 0,0, 3
+
+; Neutral jump: rise, apex, fall (holds until landing)
+[Begin Action 41]
+Clsn2: 2
+ Clsn2[0] = -70,-20,60,-370
+ Clsn2[1] = -20,-455,40,-370
+7400,1, 0,0, 12
+Clsn2: 2
+ Clsn2[0] = -70,0,70,-330
+ Clsn2[1] = -20,-414,40,-330
+7400,2, 0,0, 10
+Loopstart
+Clsn2: 2
+ Clsn2[0] = -70,0,60,-380
+ Clsn2[1] = -20,-468,40,-380
+7400,3, 0,0, 60
+
+; Forward and back jumps use the same drawing
+[Begin Action 42]
+Clsn2: 2
+ Clsn2[0] = -70,-20,60,-370
+ Clsn2[1] = -20,-455,40,-370
+7400,1, 0,0, 12
+Clsn2: 2
+ Clsn2[0] = -70,0,70,-330
+ Clsn2[1] = -20,-414,40,-330
+7400,2, 0,0, 10
+Loopstart
+Clsn2: 2
+ Clsn2[0] = -70,0,60,-380
+ Clsn2[1] = -20,-468,40,-380
+7400,3, 0,0, 60
+
+[Begin Action 43]
+Clsn2: 2
+ Clsn2[0] = -70,-20,60,-370
+ Clsn2[1] = -20,-455,40,-370
+7400,1, 0,0, 12
+Clsn2: 2
+ Clsn2[0] = -70,0,70,-330
+ Clsn2[1] = -20,-414,40,-330
+7400,2, 0,0, 10
+Loopstart
+Clsn2: 2
+ Clsn2[0] = -70,0,60,-380
+ Clsn2[1] = -20,-468,40,-380
+7400,3, 0,0, 60
+
+; Landing (state 52 returns to the stance when this ends: KFM's 3 ticks)
+[Begin Action 47]
+Clsn2Default: 2
+ Clsn2[0] = -60,0,70,-290
+ Clsn2[1] = -10,-371,50,-290
+7400,4, 0,0, 3
+
+;---------------------------------------------------------------------------
+; Hand-drawn sheet walk.jpg -> sprites 7500,0-5. 0-2 walk forward; 3-5 were drawn
+; facing left and are mirrored, then played in reverse to walk back. Each cycle
+; ping-pongs its three poses so it never pops back to the first. These replace
+; KFM's actions 20 and 21 (same hurtboxes).
+;---------------------------------------------------------------------------
+[Begin Action 20]
+Clsn2Default: 2
+ Clsn2[0] = -56,0,64,-324
+ Clsn2[1] =   24,-324,-28,-384
+7500,0, 0,0, 7
+7500,1, 0,0, 7
+7500,2, 0,0, 7
+7500,1, 0,0, 7
+
+[Begin Action 21]
+Clsn2Default: 2
+ Clsn2[0] = -56,0,64,-324
+ Clsn2[1] =   24,-324,-28,-384
+7500,5, 0,0, 7
+7500,4, 0,0, 7
+7500,3, 0,0, 7
+7500,4, 0,0, 7
+
+;---------------------------------------------------------------------------
+; Hand-drawn sheet idle_crouch.jpg -> sprites 7600,0-5: four idle breathing poses,
+; half-crouch, crouching. These replace KFM's actions 0, 10, 11 and 12 (same
+; hurtboxes; 10 and 12 keep KFM's 4 ticks, since states 10/12 end with them).
+;---------------------------------------------------------------------------
+[Begin Action 0]
+Clsn2Default: 2
+ Clsn2[0] = -52,0,64,-316
+ Clsn2[1] =   20,-316,-28,-372
+7600,0, 0,0, 10
+7600,1, 0,0, 8
+7600,2, 0,0, 12
+7600,3, 0,0, 8
+
+; Stand to crouch
+[Begin Action 10]
+Clsn2: 2
+ Clsn2[0] = -48,0,68,-260
+ Clsn2[1] =  -28,-324,24,-260
+7600,4, 0,0, 4
+
+; Crouching
+[Begin Action 11]
+Clsn2: 2
+ Clsn2[0] =  76,0,-60,-192
+ Clsn2[1] =  -24,-248,24,-192
+7600,5, 0,0, 1
+
+; Crouch to stand
+[Begin Action 12]
+Clsn2: 2
+ Clsn2[0] = -48,0,68,-260
+ Clsn2[1] =  -28,-324,24,-260
+7600,4, 0,0, 4

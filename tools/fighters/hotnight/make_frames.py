@@ -10,6 +10,12 @@ hang over her legs, so the legs are traced exactly (leg_shapes). Effects:
   6002  sparkle of water droplets for Hydrate (4 frames)
 Hand-drawn sheets (green screen, cut out by tools/fighters/greensheet.py):
   7200  jab_kick.jpg, 6 poses: 0-2 jab (action 200), 3-5 heavy kick (action 240)
+  7300  guard_hit.jpg, 5 poses: stand guard, crouch guard, hit high, hit low, launched
+  7400  jump.jpg, 5 poses: crouch, rise, apex, fall, land (actions 40-47)
+  7500  walk.jpg, 6 poses: 0-2 walk cycle, 3-5 the same drawn facing left (mirrored;
+        actions 20 and 21)
+  7600  idle_crouch.jpg, 6 poses: 0-3 idle breathing (action 0), 4 half-crouch
+        (actions 10 and 12), 5 crouching (action 11)
 
   python3 -I tools/fighters/hotnight/make_frames.py --sheets [<art_dir>]
 re-cuts only the sheets into an existing art/ (keeps everything else).
@@ -98,20 +104,33 @@ def sparkle(k, size=160):
     return im
 
 
-# Hand-drawn sheets: <file>: (sprite group, poses anchored by the head). Poses face right,
-# standing on the sheet's floor. Most keep the back foot planted; a pose standing on one
-# leg (a kick) keeps the head in place instead, so it steps in rather than lurching back.
-SHEETS = {"jab_kick.jpg": (7200, (3, 4))}
-SHEET_SCALE = 421 / 482  # sheet stance is 482 px tall; the game idle is 421
-BACK_FOOT_TO_AXIS = 153  # stance, sheet px: back boot's left edge -> midpoint of the feet
-HEAD_TO_AXIS = 5         # stance, sheet px: head centre -> midpoint of the feet
+# Hand-drawn sheets: <file>: (sprite group, {pose: anchor}, drawing size, mirrored poses).
+# Poses face right (mirrored poses are drawn facing left and get flipped), standing on
+# the sheet's floor. Drawing size is relative to jab_kick.jpg (estimated from figure
+# areas and head widths). Anchors:
+#   "foot" (default)  back foot planted: the axis is a fixed distance in front of it
+#   "head"            head kept in place: a one-legged pose (a kick) steps in, not back
+#   "air"             airborne: centred, anchored at its lowest point
+#   "air_head"        airborne: head kept in place, anchored at its lowest point
+SHEETS = {
+    "jab_kick.jpg": (7200, {3: "head", 4: "head"}, 1.0, ()),
+    "guard_hit.jpg": (7300, {4: "air"}, 1.0, ()),
+    "jump.jpg": (7400, {1: "air_head", 2: "air_head", 3: "air_head"}, 0.78, ()),
+    # a walk alternates feet, so it glides on the head rather than a planted foot
+    "walk.jpg": (7500, {k: "head" for k in range(6)}, 1.0, (3, 4, 5)),
+    "idle_crouch.jpg": (7600, {}, 1.0, ()),
+}
+# Measured on jab_kick.jpg's stance (size 1.0), in its pixels:
+SHEET_SCALE = 421 / 482  # stance is 482 px tall; the game idle is 421
+BACK_FOOT_TO_AXIS = 153  # back boot's left edge -> midpoint of the feet
+HEAD_TO_AXIS = 5         # head centre -> midpoint of the feet
 
 
-def back_boot_left(fig):
+def back_boot_left(fig, rows=30):
     """Left edge of the leftmost boot on the floor (the planted back foot)."""
     a = fig.getchannel("A").load()
     w, h = fig.size
-    return next(x for x in range(w) if any(a[x, y] > 128 for y in range(h - 30, h)))
+    return next(x for x in range(w) if any(a[x, y] > 128 for y in range(h - rows, h)))
 
 
 def head_centre(fig, rows=60):
@@ -122,15 +141,20 @@ def head_centre(fig, rows=60):
 
 
 def sheet_frames(name, out_dir, axes):
-    """The axis sits a fixed distance in front of the planted back foot, or from the head."""
-    group, by_head = SHEETS[name]
+    group, anchors, size, mirrored = SHEETS[name]
+    scale = SHEET_SCALE / size
     for k, (fig, _) in enumerate(greensheet.figures(os.path.join(HERE, name))):
-        if k in by_head:
-            ax = (head_centre(fig) + HEAD_TO_AXIS) * SHEET_SCALE
+        if k in mirrored:
+            fig = fig.transpose(Image.FLIP_LEFT_RIGHT)
+        anchor = anchors.get(k, "foot")
+        if anchor in ("head", "air_head"):
+            ax = (head_centre(fig, round(60 * size)) + HEAD_TO_AXIS * size) * scale
+        elif anchor == "air":
+            ax = fig.width / 2 * scale
         else:
-            ax = (back_boot_left(fig) + BACK_FOOT_TO_AXIS) * SHEET_SCALE
-        ay = fig.height * SHEET_SCALE
-        fig = fig.resize((round(fig.width * SHEET_SCALE), round(fig.height * SHEET_SCALE)), Image.LANCZOS)
+            ax = (back_boot_left(fig, round(30 * size)) + BACK_FOOT_TO_AXIS * size) * scale
+        ay = fig.height * scale
+        fig = fig.resize((round(fig.width * scale), round(fig.height * scale)), Image.LANCZOS)
         cutout.save_png(fig, os.path.join(out_dir, "%d_%d.png" % (group, k)))
         axes.append("%d_%d %d %d" % (group, k, round(ax), round(ay)))
 
@@ -140,7 +164,7 @@ def sheets_only(out_dir):
     axes = []
     for name in SHEETS:
         sheet_frames(name, out_dir, axes)
-    groups = tuple("%d_" % g for g, _ in SHEETS.values())
+    groups = tuple("%d_" % s[0] for s in SHEETS.values())
     path = os.path.join(out_dir, "axis.txt")
     with open(path) as f:
         kept = [l for l in f.read().splitlines() if not l.startswith(groups)]
