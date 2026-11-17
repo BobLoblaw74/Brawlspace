@@ -368,10 +368,10 @@ Welcome to BRAWLSPACE!
 [Select Info]
 fadein.time = 10
 fadeout.time = 10
-rows = 10
+rows = 5
 columns = 8
 wrapping = 0                       ;1 to let cursor wrap around
-pos = 525,195                      ;Position to draw to
+pos = 525,305                      ;Position to draw to
 showemptyboxes = 1                 ;1 to show empty boxes
 moveoveremptyboxes = 1             ;1 to allow cursor to move over empty boxes
 cell.size = 24,24                  ;x,y size of each cell (in pixels)
