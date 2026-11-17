@@ -103,13 +103,29 @@ To upgrade the animation, drop a hand-drawn PNG into `tools/fighters/tinker/art/
 | Stage | Source |
 |---|---|
 | `stage0-720` (Training Room HD) | Stock |
-| `sluttywood` (SluttyWood) | Generated from one illustration by `tools/stages/sluttywood/make_stage.py` |
+| `sluttywood` (SluttyWood) | One illustration: a single layer with a pulsing neon glow |
+| `bananaisland` (Banana Island) | One illustration: 3 parallax layers plus 5 moving elements. Juanana's home stage |
 
-For SluttyWood, the script scales `source.jpg` to fill a 720p screen and sets the ground line on the street.
-It also adds a softly pulsing glow layer built from the neon signs and string lights, plus the stage-select thumbnail (sprite 9000,1).
+Generated stages come from one generic tool, `tools/stages/stagegen.py`.
+Each stage has a folder, `tools/stages/<id>/`, holding a `source` image and a short `make_stage.py` config.
 
-Stages listed under `[ExtraStages]` in `content/data/select.def` can be picked in modes with stage select (VS, Quick Match, Training).
-Arcade uses each fighter's home stage: the second item on that fighter's `[Characters]` line.
+| Config key | What it does |
+|---|---|
+| `layers` | Back-to-front depth layers. Each has a `delta` (scroll speed: far layers move less) and the polygons it owns. Per region, `"behind": "fill"` blends the hidden area in from its surroundings (good for sky or water); `"keep"` leaves the original pixels (good for foliage and detailed objects). |
+| `elements` | Small moving pieces cut out of a layer: `"sway"` rotates them about a pivot, `"bob"` floats them up and down. |
+| `glow` | A pulsing additive glow over bright neon colors. |
+
+The tool also writes the stage-select thumbnail and the `.def` (camera bounds, ground line, shadow color).
+
+To make a new stage:
+
+1. Copy `tools/stages/bananaisland/` and replace `source.png`.
+2. Trace the layer and element polygons over the image in source pixels.
+3. Run `python3 -I tools/stages/<id>/make_stage.py`.
+4. List the stage under `[ExtraStages]` in `content/data/select.def`.
+
+To make it a fighter's home stage, put it second on that fighter's `[Characters]` line.
+In Arcade, each match is played on the opponent's home stage.
 
 ## Title logo
 
