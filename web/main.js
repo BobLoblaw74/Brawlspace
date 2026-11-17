@@ -62,9 +62,8 @@ window.__ikemenBootLog = [];
 				// Boot-critical prefixes, prefetched in parallel so boot is
 				// not a waterfall of tiny Range requests: data/ and font/
 				// (motif, lifebar, fonts), external/ (the engine runs
-				// external/script/*.lua at startup), video/ (logo.def plays
-				// video/ik_logo.webm as the boot storyboard, see
-				// content/data/ikemen1/system.def). chars/, stages/ and
+				// external/script/*.lua at startup), video/ (storyboard
+				// videos, if any are added). chars/, stages/ and
 				// sound/ (the 5.7 MB soundfont) stay lazy.
 				setStatus("Downloading core data…");
 				await prefetchLazy("/ikemen", ["data/", "font/", "external/", "video/"], (done, total) => {

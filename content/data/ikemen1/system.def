@@ -38,7 +38,7 @@ localcoord = 1280,720       ;Local coordinate space width and height (new in MUG
 [Files]
 spr = system.sff            ;Filename of sprite data
 snd = system.snd            ;Filename of sound data
-logo.storyboard = logo.def  ;Browser port: re-enabled — video playback works on js/wasm (plays video/ik_logo.webm via a hidden <video> element)
+logo.storyboard =           ;Brawlspace: no intro video - boots straight to the title screen
 ;intro.storyboard =         ;Intro storyboard definition (optional)
 select = select.def         ;Character and stage selection list
 fight = fight.def           ;Fight definition filename
