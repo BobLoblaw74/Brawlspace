@@ -17,6 +17,7 @@ CONFIG = {
     "scale": 1.9,           # 1024x434 -> 1946x825
     "ground_y": 345,        # middle of the dirt clearing
     "shadow_color": (40, 20, 10),
+    "music": "sound/monsoon_edge.ogg",  # "Monsoon Edge"
     "layers": [
         # far: sky, bridge, skyline, river, distant shore (the whole image)
         {"name": "Far", "delta": 0.55},

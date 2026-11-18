@@ -21,6 +21,7 @@ CONFIG = {
     "scale": 1.9,           # 1024x434 -> 1946x825
     "ground_y": 370,        # front of the shop floor (lower would leave a gap under the image)
     "shadow_color": (60, 20, 40),
+    "music": "sound/sugar_spike_standoff.ogg",  # "Sugar Spike Standoff"
     "layers": [
         # far: back wall, window, jar shelves, the date-shake poster, ceiling
         {"name": "Wall", "delta": 0.92},

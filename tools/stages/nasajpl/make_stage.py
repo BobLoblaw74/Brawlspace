@@ -17,6 +17,7 @@ CONFIG = {
     "scale": 1.9,           # 1024x434 -> 1946x825
     "ground_y": 360,        # middle of the plaza
     "shadow_color": (20, 20, 50),
+    "music": "sound/locked_behind_the_glass.ogg",  # "Locked Behind The Glass"
     "layers": [
         # far: sunset sky and the San Gabriel mountains (the whole image)
         {"name": "Far", "delta": 0.5},

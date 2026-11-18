@@ -20,6 +20,7 @@ CONFIG = {
     "scale": 1.9,           # 1024x434 -> 1946x825
     "ground_y": 375,        # asphalt just above the near rainbow crosswalk
     "shadow_color": (30, 0, 40),
+    "music": "sound/stiletto_command.ogg",  # "Stiletto Command"
     "layers": [{"name": "Street", "delta": 1.0}],
     # glow only below the skyline (the sunset sky is bright too) and above the crosswalks
     "glow": {"layer": 0, "min_y": 135, "max_y": 325, "boost": 1.7, "pulse": (110, 160, 190, 160)},

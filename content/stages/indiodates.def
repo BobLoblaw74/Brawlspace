@@ -57,7 +57,7 @@ fade.range = 0,0
 intensity = 0
 
 [Music]
-bgmusic =
+bgmusic = sound/sugar_spike_standoff.ogg
 bgmvolume = 100
 
 [BGdef]

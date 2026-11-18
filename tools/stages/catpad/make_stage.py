@@ -26,6 +26,7 @@ CONFIG = {
     "scale": 1.9,           # 1024x434 -> 1946x825
     "ground_y": 365,        # on the rug
     "shadow_color": (60, 30, 10),
+    "music": "sound/velvet_prowl.ogg",  # "Velvet Prowl"
     "layers": [
         # room: walls, fireplace, wallpaper, and the windows with the yard beyond.
         # (The yard stays on this layer: a separate yard layer exposed blurred

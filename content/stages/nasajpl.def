@@ -57,7 +57,7 @@ fade.range = 0,0
 intensity = 0
 
 [Music]
-bgmusic =
+bgmusic = sound/locked_behind_the_glass.ogg
 bgmvolume = 100
 
 [BGdef]

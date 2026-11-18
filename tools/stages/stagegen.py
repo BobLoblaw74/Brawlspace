@@ -33,6 +33,9 @@ CONFIG keys
                       limits it to those source-pixel regions, e.g. to skip a
                       bright prop that shouldn't pulse)
   shadow_color      (r, g, b) tint of the fighters' shadows
+  music             optional background music, a path the engine resolves from the
+                    content root, e.g. "sound/song.ogg" (OGG recommended; the file
+                    lives in content/sound/); music_volume sets bgmvolume (default 100)
   feather           mask edge softness in source px (default 2)
 
 How depth works: each layer is cut out with its polygons. Wherever a nearer
@@ -223,7 +226,8 @@ def build(cfg):
     bx = BW // 2 - 640 - 10
     bh = max(0, -top - 10)
     sc = cfg.get("shadow_color", (0, 0, 0))
-    out = [DEF_HEAD.format(name=cfg["name"], bx=bx, bh=bh, z=z, sid=sid, sc="%d,%d,%d" % tuple(sc))]
+    out = [DEF_HEAD.format(name=cfg["name"], bx=bx, bh=bh, z=z, sid=sid, sc="%d,%d,%d" % tuple(sc),
+                           music=(" " + cfg["music"]) if cfg.get("music") else "", music_volume=cfg.get("music_volume", 100))]
     out.append("[Begin Action 9000]\n9000,1, 0,0, -1\n")
     for num, lines in actions:
         out.append("[Begin Action %d]\n%s\n" % (num, "\n".join(lines)))
@@ -296,8 +300,8 @@ fade.range = 0,0
 intensity = 0
 
 [Music]
-bgmusic =
-bgmvolume = 100
+bgmusic ={music}
+bgmvolume = {music_volume}
 
 [BGdef]
 spr = {sid}.sff
