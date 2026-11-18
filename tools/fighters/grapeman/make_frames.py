@@ -9,6 +9,8 @@ The source faces left, so it is mirrored. Effects: a spinning grape projectile
 Hand-drawn sheets (green screen, cut out by tools/fighters/greensheet.py):
   7600  idle_crouch.jpg, 6 poses: 0-3 idle (action 0), 4 half-crouch (actions 10
         and 12), 5 crouching (action 11)
+  7500  walk.jpg, 6 poses: 0-2 walk cycle, 3-5 the same drawn facing left (mirrored;
+        actions 20 and 21)
 
   python3 -I tools/fighters/grapeman/make_frames.py --sheets [<art_dir>]
 re-cuts only the sheets into an existing art/ (keeps everything else).
@@ -28,6 +30,8 @@ import greensheet  # noqa: E402
 SHEETS = {
     # the idle stance widens and narrows: keep his body centred between his feet
     "idle_crouch.jpg": (7600, {k: "feet" for k in range(6)}, 1.0, ()),
+    # a stride: centred between the feet (his "head" anchor would measure the vine crown)
+    "walk.jpg": (7500, {k: "feet" for k in range(6)}, 1.0, (3, 4, 5)),
 }
 # Measured on idle_crouch.jpg's first pose (529 px tall; the game idle is 421), in its pixels.
 CAL = {"scale": 421 / 529, "back_foot_to_axis": 158, "head_to_axis": 0}
