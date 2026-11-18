@@ -151,6 +151,7 @@ def figures(path, min_area=2000, threshold=128, attach=40):
 #     "air_head"        airborne: head kept in place, anchored at its lowest point
 #     "air_body"        airborne: body kept in place (centre of mass below the top 30%,
 #                       which skips headgear like a vine crown), anchored at its lowest point
+#     "body"            the same on the ground: "head" for a fighter whose top is headgear
 # cal: measured on one stance pose (drawing size 1.0), in its sheet pixels:
 #   {"scale": game px per sheet px (game idle height / sheet stance height),
 #    "back_foot_to_axis": back boot's left edge -> midpoint of the feet,
@@ -201,7 +202,7 @@ def cut_sheet(path, group, anchors, size, mirrored, cal, out_dir, axes):
         anchor = anchors.get(k, "foot")
         if anchor in ("head", "air_head"):
             ax = (head_centre(fig, round(60 * size)) + cal["head_to_axis"] * size) * scale
-        elif anchor == "air_body":
+        elif anchor in ("air_body", "body"):
             ax = (body_centre(fig) - cal.get("body_to_axis", 0) * size) * scale
         elif anchor == "feet":
             ax = feet_centre(fig, round(30 * size)) * scale

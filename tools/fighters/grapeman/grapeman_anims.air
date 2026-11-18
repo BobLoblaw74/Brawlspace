@@ -163,3 +163,58 @@ Clsn2Default: 2
  Clsn2[0] = -60,0,70,-300
  Clsn2[1] = -20,-350,40,-300
 7400,4, 0,0, 3
+
+;---------------------------------------------------------------------------
+; Hand-drawn sheet punch_kick.jpg -> sprites 7200,0-5 (0-2 light punch, 3-5 heavy
+; kick). These replace KFM's actions 200 and 240; hitboxes follow the drawn fist
+; and boot.
+;---------------------------------------------------------------------------
+
+; Stand light punch. KFM's state 200 turns its HitDef on at AnimElem = 3 (the
+; punch); total length stays KFM's 12 ticks.
+[Begin Action 200]
+Clsn2Default: 2
+ Clsn2[0] = -40,0,76,-320
+ Clsn2[1] =   0,-376,48,-320
+7200,0, 0,0, 2
+7200,0, 0,0, 1
+Clsn1: 1
+ Clsn1[0] =  90,-305,158,-252
+Clsn2: 3
+ Clsn2[0] = -40,0,76,-320
+ Clsn2[1] =   0,-376,48,-320
+ Clsn2[2] =  60,-305,158,-252
+7200,1, 0,0, 4
+7200,2, 0,0, 3
+7200,2, 0,0, 2
+
+; Stand heavy kick: chamber the knee, kick, back to the stance. KFM's state 240
+; hits whenever a frame has a Clsn1 and nudges him forward at AnimElem = 7, so
+; this stays under 7 elements. 25 ticks, kick out on ticks 7-14 like KFM's.
+[Begin Action 240]
+Clsn2Default: 2
+ Clsn2[0] = -40,0,76,-320
+ Clsn2[1] =   0,-376,48,-320
+7200,0, 0,0, 2
+Clsn2: 3
+ Clsn2[0] = -60,0,60,-320
+ Clsn2[1] = -20,-376,40,-320
+ Clsn2[2] =  40,-260,105,-60
+7200,3, 0,0, 5
+Clsn1: 1
+ Clsn1[0] = 100,-340,188,-254
+Clsn2: 4
+ Clsn2[0] = -60,0,40,-320
+ Clsn2[1] = -20,-376,40,-320
+ Clsn2[2] =  20,-340,188,-250
+ Clsn2[3] = -30,-120,20,0
+7200,4, 0,0, 8
+Clsn2: 3
+ Clsn2[0] = -60,0,60,-320
+ Clsn2[1] = -20,-376,40,-320
+ Clsn2[2] =  40,-260,105,-60
+7200,3, 0,0, 4
+Clsn2: 2
+ Clsn2[0] = -40,0,76,-320
+ Clsn2[1] =   0,-376,48,-320
+7200,5, 0,0, 6

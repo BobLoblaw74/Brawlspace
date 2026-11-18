@@ -12,6 +12,7 @@ Hand-drawn sheets (green screen, cut out by tools/fighters/greensheet.py):
   7500  walk.jpg, 6 poses: 0-2 walk cycle, 3-5 the same drawn facing left (mirrored;
         actions 20 and 21)
   7400  jump.jpg, 5 poses: crouch, rise, apex, fall, land (actions 40-47)
+  7200  punch_kick.jpg, 6 poses: 0-2 light punch (action 200), 3-5 heavy kick (action 240)
 
   python3 -I tools/fighters/grapeman/make_frames.py --sheets [<art_dir>]
 re-cuts only the sheets into an existing art/ (keeps everything else).
@@ -34,6 +35,9 @@ SHEETS = {
     # a stride: centred between the feet (his "head" anchor would measure the vine crown)
     "walk.jpg": (7500, {k: "feet" for k in range(6)}, 1.0, (3, 4, 5)),
     # drawn ~0.89x (landing crouch vs the idle's half-crouch, by area and height)
+    # punches keep the back foot planted; the one-legged kick poses keep the body in
+    # place, so he steps into the kick rather than lurching back onto his standing leg
+    "punch_kick.jpg": (7200, {3: "body", 4: "body"}, 1.0, ()),
     "jump.jpg": (7400, {0: "feet", 1: "air_body", 2: "air_body", 3: "air_body", 4: "feet"}, 0.89, ()),
 }
 # Measured on idle_crouch.jpg's first pose (529 px tall; the game idle is 421), in its pixels.
