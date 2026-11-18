@@ -25,6 +25,39 @@ window.__ikemenBootLog = [];
 
 	function fmtMB(n) { return (n / (1024 * 1024)).toFixed(1) + " MB"; }
 
+	// Brawlspace: browsers keep a page's audio muted until the player clicks or
+	// presses a key on it, so without this the title music only started on the
+	// first key press. Before the engine starts, create the AudioContext; if the
+	// browser won't let it run yet, ask for a click or key and resume it inside
+	// that gesture. The engine (audio_js.go) then adopts this unlocked context,
+	// so the title music starts as soon as the title screen appears. Skipped
+	// when audio may already play (the player has interacted with the page, or
+	// the browser allows autoplay, as the headless test browsers do).
+	async function unlockAudio() {
+		const AC = window.AudioContext || window.webkitAudioContext;
+		if (!AC) return;
+		let ctx;
+		try { ctx = new AC(); } catch (e) { return; }
+		window.__ikemenAudioCtx = ctx;
+		if (ctx.state === "running") return;
+		try { await Promise.race([ctx.resume(), new Promise((r) => setTimeout(r, 150))]); } catch (e) { /* needs a gesture */ }
+		if (ctx.state === "running") return;
+		setProgress(1);
+		setStatus("Click or press any key to start");
+		status.classList.add("prompt");
+		await new Promise((resolve) => {
+			const start = (e) => {
+				if (e.type === "keydown" && (e.repeat || ["Shift", "Control", "Alt", "Meta"].includes(e.key))) return;
+				ctx.resume().catch(() => {});
+				for (const t of ["pointerdown", "keydown", "touchstart"]) window.removeEventListener(t, start, true);
+				if (e.type === "keydown") e.preventDefault(); // this key only starts the game
+				resolve();
+			};
+			for (const t of ["pointerdown", "keydown", "touchstart"]) window.addEventListener(t, start, true);
+		});
+		status.classList.remove("prompt");
+	}
+
 	async function boot() {
 		const dlProgress = (loaded, total) => {
 			if (total > 0) {
@@ -115,6 +148,7 @@ window.__ikemenBootLog = [];
 			result = await WebAssembly.instantiate(await resp.arrayBuffer(), go.importObject);
 		}
 
+		await unlockAudio();
 		overlay.classList.add("hidden");
 		showControlsHint();
 		let exitCode = 0;

@@ -74,6 +74,8 @@
 		transition: width 0.1s linear;
 	}
 	#status { color: #999; }
+	#status.prompt { color: #fff; font-size: 1.25em; animation: prompt-pulse 1.4s ease-in-out infinite; }
+	@keyframes prompt-pulse { 50% { opacity: .45; } }
 	#credit {
 		position: fixed;
 		left: 0;

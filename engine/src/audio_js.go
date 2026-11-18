@@ -104,10 +104,15 @@ func (s *JSSpeaker) Init(sampleRate beep.SampleRate, bufferSize int) error {
 		return errors.New("WebAudio not available; audio disabled")
 	}
 
-	// Ask the context for the engine's configured rate so no resample is
-	// needed (supported by all current browsers); fall back to the device
-	// default if the browser rejects the option.
-	if !jsTry(func() { s.ctx = ctor.New(map[string]interface{}{"sampleRate": int(sampleRate)}) }) {
+	// Brawlspace: web/main.js creates the AudioContext before the engine starts
+	// and unlocks it with the player's first click or key, so music can start
+	// with the first screen. Adopt it when present (its rate is adopted below).
+	if pre := js.Global().Get("__ikemenAudioCtx"); pre.Truthy() && pre.Get("state").String() != "closed" {
+		s.ctx = pre
+	} else if !jsTry(func() { s.ctx = ctor.New(map[string]interface{}{"sampleRate": int(sampleRate)}) }) {
+		// Ask the context for the engine's configured rate so no resample is
+		// needed (supported by all current browsers); fall back to the device
+		// default if the browser rejects the option.
 		if !jsTry(func() { s.ctx = ctor.New() }) {
 			s.ctx = js.Undefined()
 			return errors.New("could not create AudioContext; audio disabled")
