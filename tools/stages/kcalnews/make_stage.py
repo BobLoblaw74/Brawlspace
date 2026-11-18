@@ -32,6 +32,7 @@ CONFIG = {
     "scale": 1.9,           # 1024x434 -> 1946x825
     "ground_y": 372,        # studio floor, in front of the desk riser
     "shadow_color": (20, 25, 50),
+    "music": "sound/prime_time_takedown.ogg",  # "Prime Time Takedown"
     "layers": [
         # studio: lighting rig, video wall, control-room windows, green screen, server rack
         {"name": "Studio", "delta": 0.95},

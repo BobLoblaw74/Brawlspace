@@ -57,7 +57,7 @@ fade.range = 0,0
 intensity = 0
 
 [Music]
-bgmusic =
+bgmusic = sound/prime_time_takedown.ogg
 bgmvolume = 100
 
 [BGdef]
