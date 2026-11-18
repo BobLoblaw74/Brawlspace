@@ -4,7 +4,8 @@
     cut_sheets(here, sheets, cal, out_dir, axes)   sprites + axes for a fighter's sheets
     recut(here, sheets, cal, out_dir)              same, into an existing art/ + axis.txt
 
-Keys out the green with a soft edge, removes green spill from that edge, then splits the sheet into
+Keys out the green with a soft edge, removes green spill from that edge, erases a drawn
+floor line (rows opaque across most of the sheet), then splits the sheet into
 connected figures, so poses whose bounding boxes overlap (a kick reaching over the
 next pose) still come apart. Pieces smaller than min_area pixels (a leaf tip or vine end
 that doesn't touch the body) join the nearest figure within `attach` pixels; anything
@@ -41,6 +42,34 @@ def key(im):
     return out
 
 
+def erase_floor_line(rgba, span=0.5, max_rows=8):
+    """Clear rows that are opaque across more than `span` of the width (a floor line drawn
+    under the poses), except where a figure covers them: a pixel stays when the pixels
+    just above and below the band are both opaque (a boot standing on the line)."""
+    w, h = rgba.size
+    a = rgba.getchannel("A").load()
+    rows = [y for y in range(h) if sum(1 for x in range(w) if a[x, y] > 128) > span * w]
+    bands = []
+    for y in rows:
+        if bands and y == bands[-1][1] + 1:
+            bands[-1][1] = y
+        else:
+            bands.append([y, y])
+    px = rgba.load()
+    for y0, y1 in bands:
+        y0, y1 = max(0, y0 - 1), min(h - 1, y1 + 1)  # its anti-aliased edges too
+        if y1 - y0 + 1 > max_rows:
+            continue  # too thick to be a line
+        for x in range(w):
+            above = y0 > 0 and a[x, y0 - 1] > 128
+            below = y1 < h - 1 and a[x, y1 + 1] > 128
+            if not (above and below):
+                for y in range(y0, y1 + 1):
+                    r, g, b, _ = px[x, y]
+                    px[x, y] = (r, g, b, 0)
+    return rgba
+
+
 def box_gap(a, b):
     """Pixel gap between two (x0, y0, x1, y1) boxes; 0 if they overlap."""
     dx = max(a[0] - b[2], b[0] - a[2], 0)
@@ -49,7 +78,7 @@ def box_gap(a, b):
 
 
 def figures(path, min_area=2000, threshold=128, attach=40):
-    rgba = key(Image.open(path))
+    rgba = erase_floor_line(key(Image.open(path)))
     w, h = rgba.size
     alpha = rgba.getchannel("A").load()
     label = [[0] * w for _ in range(h)]
@@ -120,10 +149,13 @@ def figures(path, min_area=2000, threshold=128, attach=40):
 #     "head"            head kept in place: a one-legged pose (a kick) steps in, not back
 #     "air"             airborne: centred, anchored at its lowest point
 #     "air_head"        airborne: head kept in place, anchored at its lowest point
+#     "air_body"        airborne: body kept in place (centre of mass below the top 30%,
+#                       which skips headgear like a vine crown), anchored at its lowest point
 # cal: measured on one stance pose (drawing size 1.0), in its sheet pixels:
 #   {"scale": game px per sheet px (game idle height / sheet stance height),
 #    "back_foot_to_axis": back boot's left edge -> midpoint of the feet,
-#    "head_to_axis": head centre -> midpoint of the feet}
+#    "head_to_axis": head centre -> midpoint of the feet,
+#    "body_to_axis": body centre (see "air_body") -> midpoint of the feet; optional}
 # ---------------------------------------------------------------------------
 
 
@@ -140,6 +172,13 @@ def feet_centre(fig, rows=30):
     w, h = fig.size
     xs = [x for x in range(w) if any(a[x, y] > 128 for y in range(h - rows, h))]
     return (xs[0] + xs[-1]) / 2
+
+
+def body_centre(fig, skip=0.3):
+    """Mean x of the opaque pixels below the top `skip` of the figure."""
+    a = fig.getchannel("A").load()
+    xs = [x for y in range(int(fig.height * skip), fig.height) for x in range(fig.width) if a[x, y] > 128]
+    return sum(xs) / len(xs)
 
 
 def head_centre(fig, rows=60):
@@ -162,6 +201,8 @@ def cut_sheet(path, group, anchors, size, mirrored, cal, out_dir, axes):
         anchor = anchors.get(k, "foot")
         if anchor in ("head", "air_head"):
             ax = (head_centre(fig, round(60 * size)) + cal["head_to_axis"] * size) * scale
+        elif anchor == "air_body":
+            ax = (body_centre(fig) - cal.get("body_to_axis", 0) * size) * scale
         elif anchor == "feet":
             ax = feet_centre(fig, round(30 * size)) * scale
         elif anchor == "air":
