@@ -185,3 +185,28 @@ Clsn2Default: 2
  Clsn2[0] = -60,0,70,-270
  Clsn2[1] = -10,-332,50,-270
 7400,4, 0,0, 3
+
+;---------------------------------------------------------------------------
+; Hand-drawn sheet walk.jpg -> sprites 7500,0-5. Walk forward cycles poses 0-2;
+; walk back plays the right-facing poses in reverse, with pose 5 (a stride like
+; pose 0) in place of 0. Poses 3-4 face left and stay unused: mirroring them would
+; print "DATES" backwards on her apron. Each cycle ping-pongs so it never pops.
+; These replace KFM's actions 20 and 21 (same hurtboxes).
+;---------------------------------------------------------------------------
+[Begin Action 20]
+Clsn2Default: 2
+ Clsn2[0] = -56,0,64,-324
+ Clsn2[1] =   24,-324,-28,-384
+7500,0, 0,0, 7
+7500,1, 0,0, 7
+7500,2, 0,0, 7
+7500,1, 0,0, 7
+
+[Begin Action 21]
+Clsn2Default: 2
+ Clsn2[0] = -56,0,64,-324
+ Clsn2[1] =   24,-324,-28,-384
+7500,2, 0,0, 7
+7500,1, 0,0, 7
+7500,5, 0,0, 7
+7500,1, 0,0, 7
