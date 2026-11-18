@@ -11,6 +11,7 @@ hips, so the legs are traced exactly (leg_shapes). Effects:
 Hand-drawn sheets (green screen, cut out by tools/fighters/greensheet.py):
   7600  idle_crouch.jpg, 6 poses: 0-3 idle (action 0), 4 half-crouch (actions 10
         and 12), 5 crouching (action 11)
+  7400  jump.jpg, 5 poses: crouch, rise, apex, fall, land (actions 40-47)
 
   python3 -I tools/fighters/pooja/make_frames.py --sheets [<art_dir>]
 re-cuts only the sheets into an existing art/ (keeps everything else).
@@ -31,6 +32,9 @@ import greensheet  # noqa: E402
 SHEETS = {
     # the idle stance widens and narrows: keep her body centred between her feet
     "idle_crouch.jpg": (7600, {k: "feet" for k in range(6)}, 1.0, ()),
+    # drawn ~0.66x (crouches vs the idle sheet's, by area and height); in the air her
+    # head leans forward by varying amounts, so the body is what stays put
+    "jump.jpg": (7400, {0: "feet", 1: "air_body", 2: "air_body", 3: "air_body", 4: "feet"}, 0.66, ()),
 }
 # Measured on idle_crouch.jpg's first pose (497 px tall; the game idle is 419), in its pixels.
 CAL = {"scale": 419 / 497, "back_foot_to_axis": 168, "head_to_axis": -18, "body_to_axis": 6}

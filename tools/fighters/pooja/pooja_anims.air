@@ -117,3 +117,71 @@ Clsn2: 2
  Clsn2[0] = -48,0,68,-260
  Clsn2[1] =  -28,-324,24,-260
 7600,4, 0,0, 4
+
+;---------------------------------------------------------------------------
+; Hand-drawn sheet jump.jpg -> sprites 7400,0-4: crouch, rise, apex, fall, land.
+; These replace KFM's actions 40/41/42/43/47. Airborne poses are anchored at their
+; lowest point (physics sets the height). A neutral jump is ~38 ticks
+; (jump.neu y -33.6, yaccel 1.76), apex at ~19.
+;---------------------------------------------------------------------------
+
+; Jump start (state 40 takes off when this ends: keep KFM's 3 ticks)
+[Begin Action 40]
+Clsn2Default: 2
+ Clsn2[0] = -60,0,70,-280
+ Clsn2[1] = -20,-350,40,-280
+7400,0, 0,0, 3
+
+; Neutral jump: rise, apex, fall (holds until landing)
+[Begin Action 41]
+Clsn2: 2
+ Clsn2[0] = -60,-20,60,-320
+ Clsn2[1] = -10,-392,50,-320
+7400,1, 0,0, 12
+Clsn2: 2
+ Clsn2[0] = -60,0,60,-300
+ Clsn2[1] = -10,-374,50,-300
+7400,2, 0,0, 10
+Loopstart
+Clsn2: 2
+ Clsn2[0] = -60,0,60,-360
+ Clsn2[1] = -10,-441,50,-360
+7400,3, 0,0, 60
+
+; Forward and back jumps use the same drawing
+[Begin Action 42]
+Clsn2: 2
+ Clsn2[0] = -60,-20,60,-320
+ Clsn2[1] = -10,-392,50,-320
+7400,1, 0,0, 12
+Clsn2: 2
+ Clsn2[0] = -60,0,60,-300
+ Clsn2[1] = -10,-374,50,-300
+7400,2, 0,0, 10
+Loopstart
+Clsn2: 2
+ Clsn2[0] = -60,0,60,-360
+ Clsn2[1] = -10,-441,50,-360
+7400,3, 0,0, 60
+
+[Begin Action 43]
+Clsn2: 2
+ Clsn2[0] = -60,-20,60,-320
+ Clsn2[1] = -10,-392,50,-320
+7400,1, 0,0, 12
+Clsn2: 2
+ Clsn2[0] = -60,0,60,-300
+ Clsn2[1] = -10,-374,50,-300
+7400,2, 0,0, 10
+Loopstart
+Clsn2: 2
+ Clsn2[0] = -60,0,60,-360
+ Clsn2[1] = -10,-441,50,-360
+7400,3, 0,0, 60
+
+; Landing (state 52 returns to the stance when this ends: KFM's 3 ticks)
+[Begin Action 47]
+Clsn2Default: 2
+ Clsn2[0] = -60,0,70,-270
+ Clsn2[1] = -10,-332,50,-270
+7400,4, 0,0, 3

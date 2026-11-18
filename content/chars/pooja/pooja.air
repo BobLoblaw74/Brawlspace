@@ -64,145 +64,6 @@ Clsn2Default: 2
 21,12,0,0, 3
 
 ; Jump start frame
-[Begin Action 40]
-Clsn2: 2
- Clsn2[0] = -60,0,64,-268
- Clsn2[1] =  -24,-332,24,-268
-11,0,0,0, 3
-
-; Starting Jumping up
-[Begin Action 41]
-Clsn2: 2
- Clsn2[0] =  48,-44,-44,-376
- Clsn2[1] =  -24,-436,24,-376
-41,0,0,0, 7
-Clsn2: 2
- Clsn2[0] = -44,-344,48,-112
- Clsn2[1] =  -24,-404,32,-344
-41,1,0,0, 4
-Clsn2: 2
- Clsn2[0] = -44,-308,56,-132
- Clsn2[1] =   0,-364,44,-308
-41,2,0,0, 4
-Clsn2: 2
- Clsn2[0] = -44,-292,56,-140
- Clsn2[1] =   12,-344,60,-276
-41,3,0,0, 4
-Clsn2: 2
- Clsn2[0] = -44,-292,56,-140
- Clsn2[1] =   12,-344,60,-276
-41,4,0,0, 4
-Clsn2: 2
- Clsn2[0] = -44,-132,56,-308
- Clsn2[1] =  -8,-372,44,-304
-41,5,0,0, 4
-Clsn2: 2
- Clsn2[0] = -44,-336,56,-108
- Clsn2[1] =  -12,-396,36,-336
-41,6,0,0, 4
-Loopstart
-Clsn2Default: 2
- Clsn2[0] =  56,-92,-44,-360
- Clsn2[1] =  -16,-420,36,-356
-41,7,0,0, 4
-41,8,0,0, 4
-
-; Starting Jumping forwards
-[Begin Action 42]
-Clsn2: 2
- Clsn2[0] =  48,-44,-44,-376
- Clsn2[1] =  -24,-436,24,-376
-42,0,0,0, 5
-Clsn2: 2
- Clsn2[0] = -44,-344,56,-112
- Clsn2[1] =   20,-384,68,-340
-42,1,0,0, 5
-Clsn2: 2
- Clsn2[0] = -44,-308,56,-132
- Clsn2[1] =   0,-364,44,-308
-41,2,0,0, 3
-Clsn2: 2
- Clsn2[0] = -44,-292,56,-140
- Clsn2[1] =   12,-344,60,-276
-41,3,0,0, 4
-Clsn2: 1
- Clsn2[0] = -72,-300,72,-176
-42,3,0,0, 3
-Clsn2: 1
- Clsn2[0] = -72,-300,72,-176
-42,4,0,0, 3
-Clsn2: 1
- Clsn2[0] = -72,-300,72,-176
-42,5,0,0, 3
-Clsn2: 2
- Clsn2[0] = -44,-132,56,-308
- Clsn2[1] =  -8,-372,44,-304
-41,5,0,0, 3
-Clsn2: 2
- Clsn2[0] = -44,-336,56,-108
- Clsn2[1] =  -12,-396,36,-336
-41,6,0,0, 5
-Loopstart
-Clsn2Default: 2
- Clsn2[0] =  56,-92,-44,-360
- Clsn2[1] =  -16,-420,36,-356
-41,7,0,0, 4
-41,8,0,0, 4
-
-; Starting Jumping backwards
-[Begin Action 43]
-Clsn2: 2
- Clsn2[0] =  48,-44,-44,-376
- Clsn2[1] =  -24,-436,24,-376
-43,0,0,0, 6
-Clsn2: 2
- Clsn2[0] = -44,-344,48,-112
- Clsn2[1] =  -24,-404,32,-344
-43,1,0,0, 5
-Clsn2: 2
- Clsn2[0] = -44,-308,56,-132
- Clsn2[1] =   0,-364,44,-308
-41,2,0,0, 4
-Clsn2: 2
- Clsn2[0] = -44,-292,56,-140
- Clsn2[1] =   12,-344,60,-276
-41,3,0,0, 4
-Clsn2: 2
- Clsn2[0] = -44,-292,56,-140
- Clsn2[1] =   12,-344,60,-276
-41,4,0,0, 4
-Clsn2: 2
- Clsn2[0] = -44,-132,56,-308
- Clsn2[1] =  -8,-372,44,-304
-41,5,0,0, 4
-Clsn2: 2
- Clsn2[0] = -44,-336,56,-108
- Clsn2[1] =  -12,-396,36,-336
-41,6,0,0, 5
-Loopstart
-Clsn2Default: 2
- Clsn2[0] =  56,-92,-44,-360
- Clsn2[1] =  -16,-420,36,-356
-41,7,0,0, 4
-41,8,0,0, 4
-
-; Peak and coming down from Jumping up
-;[Begin Action 44]
-
-; Peak and coming down from Jumping forwards
-;[Begin Action 45]
-
-; Peak and coming down from Jumping backwards
-;[Begin Action 46]
-
-; Jump land animation
-[Begin Action 47]
-Clsn2: 2
- Clsn2[0] =  60,0,-64,-272
- Clsn2[1] =  -20,-316,24,-272
-11,0,0,0, 3
-
-; Run forwards
 [Begin Action 100]
 Clsn2Default: 2
  Clsn2[0] =  56,0,-60,-316
@@ -2579,3 +2440,71 @@ Clsn2: 2
  Clsn2[0] = -48,0,68,-260
  Clsn2[1] =  -28,-324,24,-260
 7600,4, 0,0, 4
+
+;---------------------------------------------------------------------------
+; Hand-drawn sheet jump.jpg -> sprites 7400,0-4: crouch, rise, apex, fall, land.
+; These replace KFM's actions 40/41/42/43/47. Airborne poses are anchored at their
+; lowest point (physics sets the height). A neutral jump is ~38 ticks
+; (jump.neu y -33.6, yaccel 1.76), apex at ~19.
+;---------------------------------------------------------------------------
+
+; Jump start (state 40 takes off when this ends: keep KFM's 3 ticks)
+[Begin Action 40]
+Clsn2Default: 2
+ Clsn2[0] = -60,0,70,-280
+ Clsn2[1] = -20,-350,40,-280
+7400,0, 0,0, 3
+
+; Neutral jump: rise, apex, fall (holds until landing)
+[Begin Action 41]
+Clsn2: 2
+ Clsn2[0] = -60,-20,60,-320
+ Clsn2[1] = -10,-392,50,-320
+7400,1, 0,0, 12
+Clsn2: 2
+ Clsn2[0] = -60,0,60,-300
+ Clsn2[1] = -10,-374,50,-300
+7400,2, 0,0, 10
+Loopstart
+Clsn2: 2
+ Clsn2[0] = -60,0,60,-360
+ Clsn2[1] = -10,-441,50,-360
+7400,3, 0,0, 60
+
+; Forward and back jumps use the same drawing
+[Begin Action 42]
+Clsn2: 2
+ Clsn2[0] = -60,-20,60,-320
+ Clsn2[1] = -10,-392,50,-320
+7400,1, 0,0, 12
+Clsn2: 2
+ Clsn2[0] = -60,0,60,-300
+ Clsn2[1] = -10,-374,50,-300
+7400,2, 0,0, 10
+Loopstart
+Clsn2: 2
+ Clsn2[0] = -60,0,60,-360
+ Clsn2[1] = -10,-441,50,-360
+7400,3, 0,0, 60
+
+[Begin Action 43]
+Clsn2: 2
+ Clsn2[0] = -60,-20,60,-320
+ Clsn2[1] = -10,-392,50,-320
+7400,1, 0,0, 12
+Clsn2: 2
+ Clsn2[0] = -60,0,60,-300
+ Clsn2[1] = -10,-374,50,-300
+7400,2, 0,0, 10
+Loopstart
+Clsn2: 2
+ Clsn2[0] = -60,0,60,-360
+ Clsn2[1] = -10,-441,50,-360
+7400,3, 0,0, 60
+
+; Landing (state 52 returns to the stance when this ends: KFM's 3 ticks)
+[Begin Action 47]
+Clsn2Default: 2
+ Clsn2[0] = -60,0,70,-270
+ Clsn2[1] = -10,-332,50,-270
+7400,4, 0,0, 3
