@@ -28,8 +28,10 @@ CONFIG keys
                              "bob" moves up/down by +/-amp source px (with a
                              slight tilt); period in game ticks (60 = 1 s)
   glow              optional pulsing neon glow: {"layer", "min_y", "max_y",
-                      "boost", "pulse"} (bright saturated pixels between
-                      min_y and max_y, added on top of that layer)
+                      "boost", "pulse", "polys"} (bright saturated pixels between
+                      min_y and max_y, added on top of that layer; "polys"
+                      limits it to those source-pixel regions, e.g. to skip a
+                      bright prop that shouldn't pulse)
   shadow_color      (r, g, b) tint of the fighters' shadows
   feather           mask edge softness in source px (default 2)
 
@@ -83,13 +85,16 @@ def inpaint(img, unknown):
 
 
 # ---------------------------------------------------------------- pieces
-def glow_layer(img, min_y, max_y, boost):
+def glow_layer(img, min_y, max_y, boost, polys=None):
     w, h = img.size
     px = img.load()
     out = Image.new("RGB", (w, h))
     opx = out.load()
+    inside = poly_mask(img.size, polys).load() if polys else None
     for y in range(max(0, min_y), min(h, max_y)):
         for x in range(w):
+            if inside and not inside[x, y]:
+                continue
             r, g, b = px[x, y]
             _, s, v = colorsys.rgb_to_hsv(r / 255.0, g / 255.0, b / 255.0)
             if v > 0.82 and s > 0.45:
@@ -196,7 +201,7 @@ def build(cfg):
 
         g = cfg.get("glow")
         if g and g.get("layer", 0) == i:
-            glow = glow_layer(src, g["min_y"], g.get("max_y", int(H * 0.75)), g.get("boost", 1.7))
+            glow = glow_layer(src, g["min_y"], g.get("max_y", int(H * 0.75)), g.get("boost", 1.7), g.get("polys"))
             glow.resize((BW, BH), Image.LANCZOS).save(os.path.join(art, "50_0.png"), optimize=True)
             axes.append("50_0 %d 0" % (BW // 2))
             pulse = g.get("pulse", (110, 160, 190, 160))

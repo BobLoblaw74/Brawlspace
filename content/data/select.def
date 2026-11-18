@@ -291,6 +291,7 @@ stages/bananaisland.def
 stages/nasajpl.def
 stages/indiodates.def
 stages/catpad.def
+stages/kcalnews.def
 ;-------------------------------------------------------------------------------
 [Options]
  ;Here you set the maximum number of matches to fight before the game ends in
