@@ -14,7 +14,7 @@ further away is dropped as noise.
 import os
 from collections import deque
 
-from PIL import Image
+from PIL import Image, ImageChops, ImageFilter
 
 KEY_SOLID = 40   # greenness (g - max(r, b)) at or below this: fully opaque
 KEY_CLEAR = 110  # at or above this: fully transparent
@@ -70,6 +70,24 @@ def erase_floor_line(rgba, span=0.5, max_rows=8):
     return rgba
 
 
+def despill_edge(rgba, width):
+    """Remove green from opaque pixels within `width` px of the cut edge: outlines the
+    artist anti-aliased into the green screen. Only for figures with no green of their
+    own near an edge (it would grey thin green props like leaves)."""
+    mask = rgba.getchannel("A").point(lambda v: 255 if v >= 128 else 0)
+    inner = mask.filter(ImageFilter.MinFilter(2 * width + 1))
+    edge = ImageChops.subtract(mask, inner).load()
+    px = rgba.load()
+    w, h = rgba.size
+    for y in range(h):
+        for x in range(w):
+            if edge[x, y]:
+                r, g, b, a = px[x, y]
+                if g > max(r, b):
+                    px[x, y] = (r, max(r, b), b, a)
+    return rgba
+
+
 def box_gap(a, b):
     """Pixel gap between two (x0, y0, x1, y1) boxes; 0 if they overlap."""
     dx = max(a[0] - b[2], b[0] - a[2], 0)
@@ -77,8 +95,10 @@ def box_gap(a, b):
     return max(dx, dy)
 
 
-def figures(path, min_area=2000, threshold=128, attach=40):
+def figures(path, min_area=2000, threshold=128, attach=40, despill=0):
     rgba = erase_floor_line(key(Image.open(path)))
+    if despill:
+        rgba = despill_edge(rgba, despill)
     w, h = rgba.size
     alpha = rgba.getchannel("A").load()
     label = [[0] * w for _ in range(h)]
@@ -139,7 +159,9 @@ def figures(path, min_area=2000, threshold=128, attach=40):
 # ---------------------------------------------------------------------------
 # Fighter sheets.
 #
-# sheets: {<file>: (sprite group, {pose: anchor}, drawing size, mirrored poses)}
+# sheets: {<file>: (sprite group, {pose: anchor}, drawing size, mirrored poses[, options])}
+#   options: {"despill": n} also removes green from opaque pixels within n px of the cut
+#   edge (fringe from outlines anti-aliased into the screen); not for green props
 #   Poses face right (mirrored poses are drawn facing left and get flipped), standing on
 #   the sheet's floor. Drawing size is relative to the sheet the calibration was
 #   measured on (estimate it from figure areas and head widths). Anchors:
@@ -194,9 +216,9 @@ def save_png(im, path):
     im.convert("RGBA").quantize(256, method=2).save(path, optimize=True)
 
 
-def cut_sheet(path, group, anchors, size, mirrored, cal, out_dir, axes):
+def cut_sheet(path, group, anchors, size, mirrored, cal, out_dir, axes, options=None):
     scale = cal["scale"] / size
-    for k, (fig, _) in enumerate(figures(path)):
+    for k, (fig, _) in enumerate(figures(path, despill=(options or {}).get("despill", 0))):
         if k in mirrored:
             fig = fig.transpose(Image.FLIP_LEFT_RIGHT)
         anchor = anchors.get(k, "foot")
@@ -217,8 +239,8 @@ def cut_sheet(path, group, anchors, size, mirrored, cal, out_dir, axes):
 
 
 def cut_sheets(here, sheets, cal, out_dir, axes):
-    for name, (group, anchors, size, mirrored) in sheets.items():
-        cut_sheet(os.path.join(here, name), group, anchors, size, mirrored, cal, out_dir, axes)
+    for name, (group, anchors, size, mirrored, *options) in sheets.items():
+        cut_sheet(os.path.join(here, name), group, anchors, size, mirrored, cal, out_dir, axes, *options)
 
 
 def recut(here, sheets, cal, out_dir):
