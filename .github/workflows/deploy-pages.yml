@@ -34,9 +34,17 @@ jobs:
         run: bash build/wasm.sh
 
       # Test harnesses (screenshots, test wasm binaries) don't belong on the
-      # deployed site.
-      - name: Prune test harnesses from site
-        run: rm -rf web/test
+      # deployed site, nor does the single content.zip: GitHub rejects files
+      # over 100 MiB, so the site ships its parts (content-N.zip, listed in
+      # content.json) instead.
+      - name: Prune test harnesses and the unsplit bundle from site
+        run: |
+          rm -rf web/test web/content.zip
+          for f in web/*; do
+            if [ -f "$f" ] && [ "$(stat -c %s "$f")" -gt 104857600 ]; then
+              echo "::error::$f is over GitHub's 100 MiB file limit"; exit 1
+            fi
+          done
 
       - name: Push site to gh-pages
         run: |

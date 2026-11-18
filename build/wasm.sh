@@ -3,6 +3,7 @@
 #   1. compile the engine to web/ikemen.wasm (GOOS=js GOARCH=wasm)
 #   2. copy wasm_exec.js from GOROOT
 #   3. package web/content.zip from the engine content dirs (data/ external/ font/)
+#      and split it into web/content-N.zip + web/content.json for publishing
 #
 # Pass --shell-only to skip the engine compile and only refresh steps 2-3
 # (useful after content-only changes).
@@ -69,6 +70,10 @@ if [[ -d "$ROOT/content" ]]; then
 	fi
 fi
 echo "==> done: $(du -h "$ROOT/web/content.zip" | cut -f1) content.zip"
+# GitHub rejects files over 100 MiB, so the site ships content.zip as parts
+# (content-1.zip, ...) listed in content.json; web/main.js mounts them all.
+echo "==> splitting content.zip into parts"
+python3 -I "$ROOT/build/split_zip.py" "$ROOT/web/content.zip"
 
 # 4. build stamp: lets the running page tell which deploy it is and offer
 #    "check for updates" (web/loader.js compares this against a fresh fetch)

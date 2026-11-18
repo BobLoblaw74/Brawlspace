@@ -1,4 +1,4 @@
-// main.js -- boot sequence: mount content.zip into the in-memory fs (lazily
+// main.js -- boot sequence: mount the content zip(s) into the in-memory fs (lazily
 // via its central directory when the host supports Range requests, else in
 // full), prefetch the boot-critical prefixes, chdir, then instantiate and
 // run ikemen.wasm.
@@ -43,22 +43,36 @@ window.__ikemenBootLog = [];
 		// cached per URL, so after a redeploy a browser could otherwise read
 		// the index of one build and file bytes of another ("bad local header
 		// ... (changed archive?)"). A fresh URL per build can never mix.
-		let contentUrl = "content.zip";
+		let stampQuery = "";
 		try {
 			const vr = await fetch("version.txt", { cache: "no-store" });
 			const stamp = vr.ok ? (await vr.text()).trim() : "";
-			if (stamp) contentUrl = "content.zip?v=" + encodeURIComponent(stamp);
-		} catch (e) { /* no stamp (bare static host): plain URL */ }
+			if (stamp) stampQuery = "?v=" + encodeURIComponent(stamp);
+		} catch (e) { /* no stamp (bare static host): plain URLs */ }
+		// Brawlspace: the content ships as parts (content-1.zip, ...) listed in
+		// content.json, since GitHub Pages rejects files over 100 MiB. The parts
+		// never share a path, so each mounts over /ikemen in turn. Without a
+		// content.json (an older or hand-made build), fall back to content.zip.
+		let contentUrls = ["content.zip" + stampQuery];
+		try {
+			const pr = await fetch("content.json" + stampQuery, { cache: "no-store" });
+			const parts = pr.ok ? (await pr.json()).parts : null;
+			if (Array.isArray(parts) && parts.length) contentUrls = parts.map((p) => p + stampQuery);
+		} catch (e) { /* no part list: single content.zip */ }
 		if (new URLSearchParams(location.search).get("eager") === "1") {
 			setStatus("Downloading content…");
-			await mountZip(contentUrl, "/ikemen", dlProgress);
+			for (const url of contentUrls) await mountZip(url, "/ikemen", dlProgress);
 			console.log("fs: eager mode forced (?eager=1)");
 		} else {
 			setStatus("Fetching content index…");
-			const res = await mountZipIndex(contentUrl, "/ikemen", { onProgress: dlProgress });
+			let res = null;
+			for (const url of contentUrls) {
+				const r = await mountZipIndex(url, "/ikemen", { onProgress: dlProgress });
+				res = res ? { lazy: res.lazy && r.lazy, files: res.files + r.files } : r;
+			}
 			if (res.lazy) {
 				mode = "lazy";
-				console.log("fs: lazy index mounted, " + res.files + " files");
+				console.log("fs: lazy index mounted, " + res.files + " files from " + contentUrls.length + " part(s)");
 				// Boot-critical prefixes, prefetched in parallel so boot is
 				// not a waterfall of tiny Range requests: data/ and font/
 				// (motif, lifebar, fonts), external/ (the engine runs

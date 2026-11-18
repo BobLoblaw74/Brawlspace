@@ -1,5 +1,7 @@
 web/ikemen.wasm
 web/content.zip
+web/content-*.zip
+web/content.json
 web/version.txt
 web/test/fstest.wasm
 web/test/content.zip

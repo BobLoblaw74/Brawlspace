@@ -442,7 +442,7 @@
 			? "Update found (" + local + " → " + remote + ") — re-downloading…"
 			: "Re-downloading game files…", true);
 		const assets = ["index.html", "main.js", "loader.js", "fs-shim.js", "touch.js",
-			"wasm_exec.js", "ikemen.wasm", "content.zip"];
+			"wasm_exec.js", "ikemen.wasm", "content.json"]; // content parts are fetched by versioned URL
 		await Promise.allSettled(assets.map((a) => fetch(a, { cache: "reload" })));
 		showStatus("Restarting with the latest build…", true);
 		setTimeout(() => location.reload(), 300);
