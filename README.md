@@ -102,7 +102,7 @@ To upgrade the animation, drop a hand-drawn PNG into `tools/fighters/tinker/art/
 
 | Stage | Source |
 |---|---|
-| `stage0-720` (Training Room HD) | Stock |
+| `stage0-720` (Training Room HD) | Stock. Not in the stage-select list; the default stage for developer mode and home stage for KFM and GrapeMan |
 | `sluttywood` (SluttyWood) | One illustration: a single layer with a pulsing neon glow. HotNight's home stage |
 | `bananaisland` (Banana Island) | One illustration: 3 parallax layers plus 5 moving elements. Juanana's home stage |
 | `nasajpl` (NASA JPL) | One illustration: 3 parallax layers; the satellite dishes slowly pan. Tinker's home stage |

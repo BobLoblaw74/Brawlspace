@@ -205,10 +205,10 @@
  ;
  ;Insert your characters below.
 
-kfm720, stages/stage0-720.def
-Training, stages/stage0-720.def, order=0, ordersurvival=0, exclude=1
+kfm720, stages/stage0-720.def, includestage=0
+Training, stages/stage0-720.def, order=0, ordersurvival=0, exclude=1, includestage=0
 tinker, stages/nasajpl.def
-grapeman, stages/stage0-720.def
+grapeman, stages/stage0-720.def, includestage=0
 juanana, stages/bananaisland.def
 cuddlepuss, stages/catpad.def
 hotnight, stages/sluttywood.def
@@ -283,8 +283,6 @@ randomselect
  ; stages/mybg.def, order=3
  ;
  ;Insert your stages below.
-
-stages/stage0-720.def
 
 stages/sluttywood.def
 stages/bananaisland.def
