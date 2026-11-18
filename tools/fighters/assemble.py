@@ -8,6 +8,8 @@ Used by each fighter's build.py. Steps:
   5. <id>.air: KFM animations + the fighter's <id>_anims.air (an action the fighter
      defines replaces KFM's: the engine keeps the first of two duplicates)
   6. .def (single palette), movelist.dat, and <id>.sff packed from art/
+  7. <id>.snd: KFM's sounds plus the fighter's sounds/<group>_<index>.wav, if it has any
+     (see tools/snd.py; a WAV replaces a KFM sound with the same group,index)
 """
 import os
 import re
@@ -95,4 +97,10 @@ def assemble(fid, name, here, projectile, stats, quotes, movelist, argv, cmd_hoo
     wr(os.path.join(out, "movelist.dat"), movelist)
     subprocess.run([PY, "-I", os.path.join(ROOT, "tools", "png_to_sff.py"), art, os.path.join(out, fid + ".sff")],
                    check=True)
+
+    sounds = os.path.join(here, "sounds")
+    if os.path.isdir(sounds):
+        wavs = sorted(os.path.join(sounds, f) for f in os.listdir(sounds) if f.lower().endswith(".wav"))
+        subprocess.run([PY, "-I", os.path.join(ROOT, "tools", "snd.py"), "build",
+                        os.path.join(KFM, "kfm.snd"), os.path.join(out, fid + ".snd")] + wavs, check=True)
     print("%s built in %s" % (name, out))

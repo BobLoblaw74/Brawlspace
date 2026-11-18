@@ -22,10 +22,10 @@ anim = 1000
 ctrl = 0
 sprpriority = 2
 
-[State 1500, Voice]
+[State 1500, Must Eat]
 type = PlaySnd
-trigger1 = Time = 6
-value = 0, 3
+trigger1 = Time = 1
+value = 1500, 0
 
 [State 1500, Date 1]
 type = Projectile
@@ -132,10 +132,10 @@ anim = 1000
 ctrl = 0
 sprpriority = 2
 
-[State 1510, Voice]
+[State 1510, Must Eat]
 type = PlaySnd
-trigger1 = Time = 6
-value = 0, 3
+trigger1 = Time = 1
+value = 1500, 0
 
 [State 1510, Date 1]
 type = Projectile
@@ -309,10 +309,10 @@ darken = 0
 anim = -1
 sound = -1
 
-[State 1520, Voice]
+[State 1520, Must Eat]
 type = PlaySnd
-trigger1 = Time = 6
-value = 0, 3
+trigger1 = Time = 1
+value = 1500, 0
 
 [State 1520, Date 1]
 type = Projectile
@@ -539,10 +539,10 @@ anim = 1100
 ctrl = 0
 sprpriority = 2
 
-[State 1600, Voice]
+[State 1600, Must Eat]
 type = PlaySnd
-trigger1 = Time = 6
-value = 0, 3
+trigger1 = Time = 1
+value = 1500, 0
 
 [State 1600, Rain 1]
 type = Projectile
@@ -798,12 +798,10 @@ trigger1 = Time < 12
 value = SCA
 time = 1
 
-[State 3100, Voice]
+[State 3100, Must Eat]
 type = PlaySnd
 trigger1 = AnimElem = 2
-trigger2 = AnimElem = 5
-trigger3 = AnimElem = 8
-value = 0, 3
+value = 1500, 0
 
 [State 3100, Wave 1 Date 1]
 type = Projectile

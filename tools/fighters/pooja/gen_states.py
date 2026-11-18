@@ -32,10 +32,16 @@ def proj(state, tag, trigger, pid, anim, off, vel, accel, damage, **over):
     return "[State %d, %s]\ntype = Projectile\n%s\n%s\n\n" % (state, tag, trigger, body)
 
 
+# Sound 1500,0 (sounds/1500_0.wav): Pooja's "Must eat!", for every move that throws dates.
+MUST_EAT = "1500, 0"
+
+
 def head(n, anim, poweradd, extra=""):
+    """Start of a date-throwing state: says "Must eat!" as the throw begins."""
     return ("[Statedef %d]\ntype    = S\nmovetype= A\nphysics = S\njuggle  = 6\npoweradd= %d\n"
             "velset = 0,0\nanim = %d\nctrl = 0\nsprpriority = 2\n%s\n"
-            "[State %d, Voice]\ntype = PlaySnd\ntrigger1 = Time = 6\nvalue = 0, 3\n\n" % (n, poweradd, anim, extra, n))
+            "[State %d, Must Eat]\ntype = PlaySnd\ntrigger1 = Time = 1\nvalue = %s\n\n"
+            % (n, poweradd, anim, extra, n, MUST_EAT))
 
 
 def end(n):
@@ -117,12 +123,10 @@ trigger1 = Time < 12
 value = SCA
 time = 1
 
-[State 3100, Voice]
+[State 3100, Must Eat]
 type = PlaySnd
 trigger1 = AnimElem = 2
-trigger2 = AnimElem = 5
-trigger3 = AnimElem = 8
-value = 0, 3
+value = """ + MUST_EAT + """
 
 """
     fan = [("17, -18", "0, 0.9"), ("20, -9", "0, 0.5"), ("23, -2", "0, 0.12"), ("20, 5", "0, 0"), ("17, 11", "0, 0")]

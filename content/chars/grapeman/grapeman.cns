@@ -3444,6 +3444,7 @@ value = 40, 0
 ;---------------------------------------------------------------------------
 ; Grape Shot (QCF+P) - fires a grape from his hand; it bursts into juice on contact
 ; 1500 = light (slow), 1510 = strong (fast), 1520 = EX Jumbo Grape (2 hits, 1/3 bar)
+; Sound 1500,0 (sounds/1500_0.wav) is his voice line, said as the throw starts.
 ;---------------------------------------------------------------------------
 [Statedef 1500]
 type    = S
@@ -3456,10 +3457,10 @@ anim = 1000
 ctrl = 0
 sprpriority = 2
 
-[State 1500, Voice]
+[State 1500, Babe Grape]
 type = PlaySnd
-trigger1 = Time = 6
-value = 0, 3
+trigger1 = Time = 1
+value = 1500, 0
 
 [State 1500, Grape]
 type = Projectile
@@ -3507,10 +3508,10 @@ anim = 1000
 ctrl = 0
 sprpriority = 2
 
-[State 1510, Voice]
+[State 1510, Babe Grape]
 type = PlaySnd
-trigger1 = Time = 6
-value = 0, 3
+trigger1 = Time = 1
+value = 1500, 0
 
 [State 1510, Grape]
 type = Projectile
@@ -3567,10 +3568,10 @@ darken = 0
 anim = -1
 sound = -1
 
-[State 1520, Voice]
+[State 1520, Babe Grape]
 type = PlaySnd
-trigger1 = Time = 6
-value = 0, 3
+trigger1 = Time = 1
+value = 1500, 0
 
 [State 1520, Grape]
 type = Projectile
