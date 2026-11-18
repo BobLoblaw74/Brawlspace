@@ -13,6 +13,7 @@ Hand-drawn sheets (green screen, cut out by tools/fighters/greensheet.py):
         actions 20 and 21)
   7400  jump.jpg, 5 poses: crouch, rise, apex, fall, land (actions 40-47)
   7200  punch_kick.jpg, 6 poses: 0-2 light punch (action 200), 3-5 heavy kick (action 240)
+  7300  guard_hit.jpg, 5 poses: stand guard, crouch guard, hit high, hit low, launched
 
   python3 -I tools/fighters/grapeman/make_frames.py --sheets [<art_dir>]
 re-cuts only the sheets into an existing art/ (keeps everything else).
@@ -38,6 +39,8 @@ SHEETS = {
     # punches keep the back foot planted; the one-legged kick poses keep the body in
     # place, so he steps into the kick rather than lurching back onto his standing leg
     "punch_kick.jpg": (7200, {3: "body", 4: "body"}, 1.0, ()),
+    # drawn ~1.08x (stand guard vs idle, crouch guard vs crouch, by height and area)
+    "guard_hit.jpg": (7300, {4: "air_body"}, 1.08, ()),
     "jump.jpg": (7400, {0: "feet", 1: "air_body", 2: "air_body", 3: "air_body", 4: "feet"}, 0.89, ()),
 }
 # Measured on idle_crouch.jpg's first pose (529 px tall; the game idle is 421), in its pixels.
