@@ -1,11 +1,16 @@
 """Cut figures out of a green-screen sprite sheet (e.g. an AI-generated row of poses).
 
     figures(path) -> [(rgba_image, (x0, y0, x1, y1)), ...]   left to right
+    cut_sheets(here, sheets, cal, out_dir, axes)   sprites + axes for a fighter's sheets
+    recut(here, sheets, cal, out_dir)              same, into an existing art/ + axis.txt
 
 Keys out the green with a soft edge, removes green spill from that edge, then splits the sheet into
 connected figures, so poses whose bounding boxes overlap (a kick reaching over the
-next pose) still come apart. Specks smaller than min_area pixels are dropped.
+next pose) still come apart. Pieces smaller than min_area pixels (a leaf tip or vine end
+that doesn't touch the body) join the nearest figure within `attach` pixels; anything
+further away is dropped as noise.
 """
+import os
 from collections import deque
 
 from PIL import Image
@@ -36,7 +41,14 @@ def key(im):
     return out
 
 
-def figures(path, min_area=2000, threshold=128):
+def box_gap(a, b):
+    """Pixel gap between two (x0, y0, x1, y1) boxes; 0 if they overlap."""
+    dx = max(a[0] - b[2], b[0] - a[2], 0)
+    dy = max(a[1] - b[3], b[1] - a[3], 0)
+    return max(dx, dy)
+
+
+def figures(path, min_area=2000, threshold=128, attach=40):
     rgba = key(Image.open(path))
     w, h = rgba.size
     alpha = rgba.getchannel("A").load()
@@ -58,13 +70,24 @@ def figures(path, min_area=2000, threshold=128):
                         label[ny][nx] = n
                         q.append((nx, ny))
             comps.append(px)
-    out = []
-    for n, px in enumerate(comps, 1):
-        if len(px) < min_area:
-            continue
+    def bbox(px):
         xs = [p[0] for p in px]
         ys = [p[1] for p in px]
-        box = (min(xs), min(ys), max(xs) + 1, max(ys) + 1)
+        return (min(xs), min(ys), max(xs) + 1, max(ys) + 1)
+
+    big = {n: bbox(px) for n, px in enumerate(comps, 1) if len(px) >= min_area}
+    for n, px in enumerate(comps, 1):
+        if n in big or not big:
+            continue
+        b = bbox(px)
+        owner = min(big, key=lambda m: box_gap(b, big[m]))
+        if box_gap(b, big[owner]) <= attach:
+            for x, y in px:
+                label[y][x] = owner
+            o = big[owner]
+            big[owner] = (min(o[0], b[0]), min(o[1], b[1]), max(o[2], b[2]), max(o[3], b[3]))
+    out = []
+    for n, box in big.items():
         # keep this figure's pixels plus the soft (sub-threshold) edge touching them
         fig = Image.new("RGBA", (box[2] - box[0], box[3] - box[1]))
         crop = rgba.crop(box)
@@ -82,3 +105,87 @@ def figures(path, min_area=2000, threshold=128):
         out.append((fig, box))
     out.sort(key=lambda f: f[1][0])
     return out
+
+
+# ---------------------------------------------------------------------------
+# Fighter sheets.
+#
+# sheets: {<file>: (sprite group, {pose: anchor}, drawing size, mirrored poses)}
+#   Poses face right (mirrored poses are drawn facing left and get flipped), standing on
+#   the sheet's floor. Drawing size is relative to the sheet the calibration was
+#   measured on (estimate it from figure areas and head widths). Anchors:
+#     "foot" (default)  back foot planted: the axis is a fixed distance in front of it
+#     "feet"            centred between the feet: a stance that widens and narrows
+#                       (an idle shuffle) breathes around a steady body
+#     "head"            head kept in place: a one-legged pose (a kick) steps in, not back
+#     "air"             airborne: centred, anchored at its lowest point
+#     "air_head"        airborne: head kept in place, anchored at its lowest point
+# cal: measured on one stance pose (drawing size 1.0), in its sheet pixels:
+#   {"scale": game px per sheet px (game idle height / sheet stance height),
+#    "back_foot_to_axis": back boot's left edge -> midpoint of the feet,
+#    "head_to_axis": head centre -> midpoint of the feet}
+# ---------------------------------------------------------------------------
+
+
+def back_boot_left(fig, rows=30):
+    """Left edge of the leftmost boot on the floor (the planted back foot)."""
+    a = fig.getchannel("A").load()
+    w, h = fig.size
+    return next(x for x in range(w) if any(a[x, y] > 128 for y in range(h - rows, h)))
+
+
+def feet_centre(fig, rows=30):
+    """Midpoint between the outer edges of the boots on the floor."""
+    a = fig.getchannel("A").load()
+    w, h = fig.size
+    xs = [x for x in range(w) if any(a[x, y] > 128 for y in range(h - rows, h))]
+    return (xs[0] + xs[-1]) / 2
+
+
+def head_centre(fig, rows=60):
+    """Mean x of the opaque pixels in the top rows (the head)."""
+    a = fig.getchannel("A").load()
+    xs = [x for y in range(rows) for x in range(fig.width) if a[x, y] > 128]
+    return sum(xs) / len(xs)
+
+
+def save_png(im, path):
+    """256-colour PNG with alpha, as tools/fighters/cutout.py writes."""
+    im.convert("RGBA").quantize(256, method=2).save(path, optimize=True)
+
+
+def cut_sheet(path, group, anchors, size, mirrored, cal, out_dir, axes):
+    scale = cal["scale"] / size
+    for k, (fig, _) in enumerate(figures(path)):
+        if k in mirrored:
+            fig = fig.transpose(Image.FLIP_LEFT_RIGHT)
+        anchor = anchors.get(k, "foot")
+        if anchor in ("head", "air_head"):
+            ax = (head_centre(fig, round(60 * size)) + cal["head_to_axis"] * size) * scale
+        elif anchor == "feet":
+            ax = feet_centre(fig, round(30 * size)) * scale
+        elif anchor == "air":
+            ax = fig.width / 2 * scale
+        else:
+            ax = (back_boot_left(fig, round(30 * size)) + cal["back_foot_to_axis"] * size) * scale
+        ay = fig.height * scale
+        fig = fig.resize((round(fig.width * scale), round(fig.height * scale)), Image.LANCZOS)
+        save_png(fig, os.path.join(out_dir, "%d_%d.png" % (group, k)))
+        axes.append("%d_%d %d %d" % (group, k, round(ax), round(ay)))
+
+
+def cut_sheets(here, sheets, cal, out_dir, axes):
+    for name, (group, anchors, size, mirrored) in sheets.items():
+        cut_sheet(os.path.join(here, name), group, anchors, size, mirrored, cal, out_dir, axes)
+
+
+def recut(here, sheets, cal, out_dir):
+    """Re-cut the sheets into an existing art dir, replacing their axis.txt lines."""
+    axes = []
+    cut_sheets(here, sheets, cal, out_dir, axes)
+    groups = tuple("%d_" % s[0] for s in sheets.values())
+    path = os.path.join(out_dir, "axis.txt")
+    with open(path) as f:
+        kept = [l for l in f.read().splitlines() if not l.startswith(groups)]
+    with open(path, "w") as f:
+        f.write("\n".join(kept + axes) + "\n")

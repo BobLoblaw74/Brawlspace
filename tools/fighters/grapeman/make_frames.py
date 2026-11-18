@@ -5,6 +5,13 @@ Usage (repo root):
 
 The source faces left, so it is mirrored. Effects: a spinning grape projectile
 (group 6000) and a juice splat for when it lands (group 6001).
+
+Hand-drawn sheets (green screen, cut out by tools/fighters/greensheet.py):
+  7600  idle_crouch.jpg, 6 poses: 0-3 idle (action 0), 4 half-crouch (actions 10
+        and 12), 5 crouching (action 11)
+
+  python3 -I tools/fighters/grapeman/make_frames.py --sheets [<art_dir>]
+re-cuts only the sheets into an existing art/ (keeps everything else).
 """
 import math
 import os
@@ -15,6 +22,15 @@ from PIL import Image, ImageDraw, ImageFilter
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.dirname(HERE))
 import cutout  # noqa: E402
+import greensheet  # noqa: E402
+
+# Hand-drawn sheets (format and anchors: tools/fighters/greensheet.py).
+SHEETS = {
+    # the idle stance widens and narrows: keep his body centred between his feet
+    "idle_crouch.jpg": (7600, {k: "feet" for k in range(6)}, 1.0, ()),
+}
+# Measured on idle_crouch.jpg's first pose (529 px tall; the game idle is 421), in its pixels.
+CAL = {"scale": 421 / 529, "back_foot_to_axis": 158, "head_to_axis": 0}
 
 INK = (38, 12, 52, 255)
 
@@ -60,6 +76,7 @@ def splat(k, size=180):
 
 
 def effects(out_dir, axes):
+    greensheet.cut_sheets(HERE, SHEETS, CAL, out_dir, axes)
     for k in range(6):  # 6000: grape spinning (60 degrees per frame)
         grape(-k * 60).save(os.path.join(out_dir, "6000_%d.png" % k), optimize=True)
         axes.append("6000_%d 55 55" % k)
@@ -97,5 +114,8 @@ CONFIG = {
     "lunge": 0.4,                 # legs join under the bunch: slide less, lean more
 }
 
-if __name__ == "__main__":
+if __name__ == "__main__" and "--sheets" in sys.argv:
+    args = [a for a in sys.argv[1:] if a != "--sheets"]
+    greensheet.recut(HERE, SHEETS, CAL, args[0] if args else os.path.join(HERE, "art"))
+elif __name__ == "__main__":
     cutout.generate(CONFIG, sys.argv[1] if len(sys.argv) > 1 else os.path.join(HERE, "art"))

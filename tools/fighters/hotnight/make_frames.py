@@ -104,14 +104,7 @@ def sparkle(k, size=160):
     return im
 
 
-# Hand-drawn sheets: <file>: (sprite group, {pose: anchor}, drawing size, mirrored poses).
-# Poses face right (mirrored poses are drawn facing left and get flipped), standing on
-# the sheet's floor. Drawing size is relative to jab_kick.jpg (estimated from figure
-# areas and head widths). Anchors:
-#   "foot" (default)  back foot planted: the axis is a fixed distance in front of it
-#   "head"            head kept in place: a one-legged pose (a kick) steps in, not back
-#   "air"             airborne: centred, anchored at its lowest point
-#   "air_head"        airborne: head kept in place, anchored at its lowest point
+# Hand-drawn sheets (format and anchors: tools/fighters/greensheet.py).
 SHEETS = {
     "jab_kick.jpg": (7200, {3: "head", 4: "head"}, 1.0, ()),
     "guard_hit.jpg": (7300, {4: "air"}, 1.0, ()),
@@ -120,61 +113,12 @@ SHEETS = {
     "walk.jpg": (7500, {k: "head" for k in range(6)}, 1.0, (3, 4, 5)),
     "idle_crouch.jpg": (7600, {}, 1.0, ()),
 }
-# Measured on jab_kick.jpg's stance (size 1.0), in its pixels:
-SHEET_SCALE = 421 / 482  # stance is 482 px tall; the game idle is 421
-BACK_FOOT_TO_AXIS = 153  # back boot's left edge -> midpoint of the feet
-HEAD_TO_AXIS = 5         # head centre -> midpoint of the feet
-
-
-def back_boot_left(fig, rows=30):
-    """Left edge of the leftmost boot on the floor (the planted back foot)."""
-    a = fig.getchannel("A").load()
-    w, h = fig.size
-    return next(x for x in range(w) if any(a[x, y] > 128 for y in range(h - rows, h)))
-
-
-def head_centre(fig, rows=60):
-    """Mean x of the opaque pixels in the top rows (the head)."""
-    a = fig.getchannel("A").load()
-    xs = [x for y in range(rows) for x in range(fig.width) if a[x, y] > 128]
-    return sum(xs) / len(xs)
-
-
-def sheet_frames(name, out_dir, axes):
-    group, anchors, size, mirrored = SHEETS[name]
-    scale = SHEET_SCALE / size
-    for k, (fig, _) in enumerate(greensheet.figures(os.path.join(HERE, name))):
-        if k in mirrored:
-            fig = fig.transpose(Image.FLIP_LEFT_RIGHT)
-        anchor = anchors.get(k, "foot")
-        if anchor in ("head", "air_head"):
-            ax = (head_centre(fig, round(60 * size)) + HEAD_TO_AXIS * size) * scale
-        elif anchor == "air":
-            ax = fig.width / 2 * scale
-        else:
-            ax = (back_boot_left(fig, round(30 * size)) + BACK_FOOT_TO_AXIS * size) * scale
-        ay = fig.height * scale
-        fig = fig.resize((round(fig.width * scale), round(fig.height * scale)), Image.LANCZOS)
-        cutout.save_png(fig, os.path.join(out_dir, "%d_%d.png" % (group, k)))
-        axes.append("%d_%d %d %d" % (group, k, round(ax), round(ay)))
-
-
-def sheets_only(out_dir):
-    """Re-cut the sheets into an existing art dir, replacing their axis.txt lines."""
-    axes = []
-    for name in SHEETS:
-        sheet_frames(name, out_dir, axes)
-    groups = tuple("%d_" % s[0] for s in SHEETS.values())
-    path = os.path.join(out_dir, "axis.txt")
-    with open(path) as f:
-        kept = [l for l in f.read().splitlines() if not l.startswith(groups)]
-    with open(path, "w") as f:
-        f.write("\n".join(kept + axes) + "\n")
+# Measured on jab_kick.jpg's stance (482 px tall; the game idle is 421), in its pixels.
+CAL = {"scale": 421 / 482, "back_foot_to_axis": 153, "head_to_axis": 5}
 
 
 def effects(out_dir, axes):
-    for name in SHEETS:
-        sheet_frames(name, out_dir, axes)
+    greensheet.cut_sheets(HERE, SHEETS, CAL, out_dir, axes)
     for k in range(8):
         bottle(k).save(os.path.join(out_dir, "6000_%d.png" % k), optimize=True)
         axes.append("6000_%d 65 65" % k)
@@ -216,6 +160,6 @@ CONFIG = {
 
 if __name__ == "__main__" and "--sheets" in sys.argv:
     args = [a for a in sys.argv[1:] if a != "--sheets"]
-    sheets_only(args[0] if args else os.path.join(HERE, "art"))
+    greensheet.recut(HERE, SHEETS, CAL, args[0] if args else os.path.join(HERE, "art"))
 elif __name__ == "__main__":
     cutout.generate(CONFIG, sys.argv[1] if len(sys.argv) > 1 else os.path.join(HERE, "art"))
