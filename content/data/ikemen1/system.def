@@ -608,6 +608,10 @@ p2.name.layerno = 2
 
 ;Stage select
 stage.pos = 640,707
+stage.text = %s                    ;Stage name only (engine default: "Stage %i: %s")
+stage.active.text = %s
+stage.active2.text = %s
+stage.done.text = %s
 stage.font = 3,0,0
 stage.active.font = 3,0,0
 stage.active2.font = 3,0,0, 200,256,200  ;Second font color for blinking
