@@ -116,6 +116,7 @@ To upgrade the animation, drop a hand-drawn PNG into `tools/fighters/tinker/art/
 | `indiodates` (Indio Dates Paradise) | One illustration: back wall, then floor and fixtures (which move with the fighters), then foreground trash cans; the hanging signs sway. Pooja's home stage |
 | `catpad` (Cat Pad) | One illustration: the room with its windows, then the floor with the cat tree and furniture, then foreground plants; the pendant lamps swing and the palm outside sways. CuddlePuss's home stage |
 | `kcalnews` (KCAL News) | One illustration: a TV news studio. The studio with its video wall, control-room windows and green screen, then the floor with the anchor desk (moves with the fighters), then the studio cameras and tripod monitors; the video wall pulses |
+| `kitchenstadium` (Kitchen Stadium) | One illustration: a TV cooking-show set. The studio with the Red Team and Blue Team kitchens on their platform, then the concrete floor with the studio cameras (moves with the fighters); the neon sign, team signs and scoreboard pulse. Worst Cook's home stage |
 
 Generated stages come from one generic tool, `tools/stages/stagegen.py`.
 Each stage has a folder, `tools/stages/<id>/`, holding a `source` image and a short `make_stage.py` config.

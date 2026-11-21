@@ -213,7 +213,7 @@ juanana, stages/bananaisland.def
 cuddlepuss, stages/catpad.def
 hotnight, stages/sluttywood.def
 pooja, stages/indiodates.def
-worstcook, stages/stage0-720.def, includestage=0
+worstcook, stages/kitchenstadium.def
 sylvia, stages/stage0-720.def, includestage=0
 bibblebabble, stages/stage0-720.def, includestage=0
 randomselect
@@ -293,6 +293,7 @@ stages/nasajpl.def
 stages/indiodates.def
 stages/catpad.def
 stages/kcalnews.def
+stages/kitchenstadium.def
 ;-------------------------------------------------------------------------------
 [Options]
  ;Here you set the maximum number of matches to fight before the game ends in
