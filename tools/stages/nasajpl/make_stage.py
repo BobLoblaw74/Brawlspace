@@ -1,4 +1,4 @@
-"""Build the NASA JPL stage (see tools/stages/stagegen.py).
+"""Build the Space Center stage (see tools/stages/stagegen.py).
 
 Usage (repo root):
     python3 -I tools/stages/nasajpl/make_stage.py
@@ -12,7 +12,7 @@ from stagegen import build  # noqa: E402
 
 CONFIG = {
     "id": "nasajpl",
-    "name": "NASA JPL",
+    "name": "Space Center",
     "source": os.path.join(HERE, "source.png"),
     "scale": 1.9,           # 1024x434 -> 1946x825
     "ground_y": 360,        # middle of the plaza

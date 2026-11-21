@@ -112,7 +112,7 @@ To upgrade the animation, drop a hand-drawn PNG into `tools/fighters/tinker/art/
 | `stage0-720` (Training Room HD) | Stock. Not in the stage-select list; the default stage for developer mode and home stage for KFM and GrapeMan |
 | `sluttywood` (SluttyWood) | One illustration: a single layer with a pulsing neon glow. HotNight's home stage |
 | `bananaisland` (Banana Island) | One illustration: 3 parallax layers plus 5 moving elements. Juanana's home stage |
-| `nasajpl` (NASA JPL) | One illustration: 3 parallax layers; the satellite dishes slowly pan. Tinker's home stage |
+| `nasajpl` (Space Center) | One illustration: 3 parallax layers; the satellite dishes slowly pan. Tinker's home stage |
 | `indiodates` (Indio Dates Paradise) | One illustration: back wall, then floor and fixtures (which move with the fighters), then foreground trash cans; the hanging signs sway. Pooja's home stage |
 | `catpad` (Cat Pad) | One illustration: the room with its windows, then the floor with the cat tree and furniture, then foreground plants; the pendant lamps swing and the palm outside sways. CuddlePuss's home stage |
 | `kcalnews` (KCAL News) | One illustration: a TV news studio. The studio with its video wall, control-room windows and green screen, then the floor with the anchor desk (moves with the fighters), then the studio cameras and tripod monitors; the video wall pulses |
