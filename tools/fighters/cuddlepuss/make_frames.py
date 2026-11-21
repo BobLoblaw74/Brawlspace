@@ -140,7 +140,7 @@ CONFIG = {
     "glow_color": (255, 205, 230),
     "scale": 0.78,
     "head_box": (475, 35, 625, 185),
-    "bust_box": (300, 10, 780, 570),
+    "bust_box": (445, 28, 655, 273),
     "icon_bg": (30, 30, 38),
     "effects": effects,
 }

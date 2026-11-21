@@ -122,7 +122,7 @@ CONFIG = {
     "glow_color": (190, 90, 255),
     "scale": 0.76,
     "head_box": (410, 85, 560, 235),
-    "bust_box": (215, 0, 695, 560),
+    "bust_box": (380, 78, 590, 323),
     "icon_bg": (40, 20, 52),
     "effects": effects,
     "lunge": 0.4,                 # legs join under the bunch: slide less, lean more

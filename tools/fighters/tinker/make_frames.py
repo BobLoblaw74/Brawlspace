@@ -46,7 +46,7 @@ CONFIG = {
     "glow_color": (90, 255, 140),
     "scale": 0.82,
     "head_box": (470, 40, 610, 180),
-    "bust_box": (330, 40, 770, 553),
+    "bust_box": (442, 33, 638, 262),
     "icon_bg": (28, 40, 34),
     "effects": radar_pulse,
 }
