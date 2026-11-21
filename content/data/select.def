@@ -211,7 +211,7 @@ tinker, stages/nasajpl.def
 grapeman, stages/stage0-720.def, includestage=0
 juanana, stages/bananaisland.def
 cuddlepuss, stages/catpad.def
-hotnight, stages/sluttywood.def
+hotnight, stages/muggyholloway.def
 pooja, stages/indiodates.def
 worstcook, stages/kitchenstadium.def
 sylvia, stages/stage0-720.def, includestage=0
@@ -295,6 +295,7 @@ stages/catpad.def
 stages/kcalnews.def
 stages/kitchenstadium.def
 stages/drugstoremaze.def
+stages/muggyholloway.def
 ;-------------------------------------------------------------------------------
 [Options]
  ;Here you set the maximum number of matches to fight before the game ends in

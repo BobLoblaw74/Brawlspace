@@ -110,7 +110,7 @@ To upgrade the animation, drop a hand-drawn PNG into `tools/fighters/tinker/art/
 | Stage | Source |
 |---|---|
 | `stage0-720` (Training Room HD) | Stock. Not in the stage-select list; the default stage for developer mode and home stage for KFM and GrapeMan |
-| `sluttywood` (SluttyWood) | One illustration: a single layer with a pulsing neon glow. HotNight's home stage |
+| `sluttywood` (SluttyWood) | One illustration: a single layer with a pulsing neon glow |
 | `bananaisland` (Banana Island) | One illustration: 3 parallax layers plus 5 moving elements. Juanana's home stage |
 | `nasajpl` (Space Center) | One illustration: 3 parallax layers; the satellite dishes slowly pan. Tinker's home stage |
 | `indiodates` (Indio Dates Paradise) | One illustration: back wall, then floor and fixtures (which move with the fighters), then foreground trash cans; the hanging signs sway. Pooja's home stage |
@@ -118,6 +118,7 @@ To upgrade the animation, drop a hand-drawn PNG into `tools/fighters/tinker/art/
 | `kcalnews` (KCAL News) | One illustration: a TV news studio. The studio with its video wall, control-room windows and green screen, then the floor with the anchor desk (moves with the fighters), then the studio cameras and tripod monitors; the video wall pulses |
 | `kitchenstadium` (Kitchen Stadium) | One illustration: a TV cooking-show set. The studio with the Red Team and Blue Team kitchens on their platform, then the concrete floor with the studio cameras (moves with the fighters); the neon sign, team signs and scoreboard pulse. Worst Cook's home stage |
 | `drugstoremaze` (Drugstore Maze) | One illustration: a neighborhood drugstore. The store with its aisles and pharmacy counter, then the tiled floor with the two checkouts in front (moves with the fighters). Bibble Babble's home stage |
+| `muggyholloway` (Muggy Holloway) | One illustration: an apartment-complex walkway at night. The building and the courtyard beyond, then the walkway with the plants, the open stairwell and the boxes (moves with the fighters); the ground line is set low so fighters stand in front of the stairwell. HotNight's home stage |
 
 Generated stages come from one generic tool, `tools/stages/stagegen.py`.
 Each stage has a folder, `tools/stages/<id>/`, holding a `source` image and a short `make_stage.py` config.
