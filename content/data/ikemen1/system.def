@@ -368,14 +368,14 @@ Welcome to BRAWLSPACE!
 [Select Info]
 fadein.time = 10
 fadeout.time = 10
-rows = 5
-columns = 8
+rows = 3
+columns = 6
 wrapping = 0                       ;1 to let cursor wrap around
-pos = 464,312                      ;Position to draw to
+pos = 479,357                      ;Position to draw to
 showemptyboxes = 1                 ;1 to show empty boxes
 moveoveremptyboxes = 1             ;1 to allow cursor to move over empty boxes
-cell.size = 36, 36                  ;x,y size of each cell (in pixels)
-cell.spacing = 6                   ;Space between each cell
+cell.size = 48, 48                  ;x,y size of each cell (in pixels)
+cell.spacing = 8                   ;Space between each cell
 cell.bg.spr = 150,0                ;Note: Don't use animation for cells
 cell.bg.scale = .25,.25
 cell.random.spr = 151,0            ;Icon for random select (don't use animation)
@@ -453,23 +453,23 @@ title.replay.text = REPLAY
 cell.*-0.xangle = 10
 cell.*-0.projection = perspective
 cell.*-0.focallength = 50
-cell.*-0.spacing = 11.25, 0
-cell.*-0.scale = 0.45, 0.45
-cell.*-0.offset = -16.5, -69
+cell.*-0.spacing = 15, 0
+cell.*-0.scale = 0.6, 0.6
+cell.*-0.offset = -22, -92
 
 cell.*-1.xangle = 10
 cell.*-1.projection = perspective
 cell.*-1.focallength = 50
-cell.*-1.spacing = 13.125, -69
-cell.*-1.scale = 0.4725, 0.4725
-cell.*-1.offset = -24, 0
+cell.*-1.spacing = 17.5, -92
+cell.*-1.scale = 0.63, 0.63
+cell.*-1.offset = -32, 0
 
 cell.*-2.xangle = 10
 cell.*-2.projection = perspective
 cell.*-2.focallength = 50
-cell.*-2.spacing = 15, -33
-cell.*-2.scale = 0.4875, 0.4875
-cell.*-2.offset = -31.5, 0
+cell.*-2.spacing = 20, -44
+cell.*-2.scale = 0.65, 0.65
+cell.*-2.offset = -42, 0
 
 cell.*-3.xangle = 10
 cell.*-3.projection = perspective
