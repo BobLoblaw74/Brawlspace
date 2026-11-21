@@ -117,6 +117,7 @@ To upgrade the animation, drop a hand-drawn PNG into `tools/fighters/tinker/art/
 | `catpad` (Cat Pad) | One illustration: the room with its windows, then the floor with the cat tree and furniture, then foreground plants; the pendant lamps swing and the palm outside sways. CuddlePuss's home stage |
 | `kcalnews` (KCAL News) | One illustration: a TV news studio. The studio with its video wall, control-room windows and green screen, then the floor with the anchor desk (moves with the fighters), then the studio cameras and tripod monitors; the video wall pulses |
 | `kitchenstadium` (Kitchen Stadium) | One illustration: a TV cooking-show set. The studio with the Red Team and Blue Team kitchens on their platform, then the concrete floor with the studio cameras (moves with the fighters); the neon sign, team signs and scoreboard pulse. Worst Cook's home stage |
+| `drugstoremaze` (Drugstore Maze) | One illustration: a neighborhood drugstore. The store with its aisles and pharmacy counter, then the tiled floor with the two checkouts in front (moves with the fighters). Bibble Babble's home stage |
 
 Generated stages come from one generic tool, `tools/stages/stagegen.py`.
 Each stage has a folder, `tools/stages/<id>/`, holding a `source` image and a short `make_stage.py` config.
