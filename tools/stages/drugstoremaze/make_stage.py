@@ -28,6 +28,7 @@ CONFIG = {
     "scale": 1.9,           # 1024x434 -> 1946x825
     "ground_y": 380,        # the tiles in front of the aisles
     "shadow_color": (40, 40, 50),
+    "music": "sound/drugstore.ogg",
     "layers": [
         {"name": "Store", "delta": 0.95},
         {"name": "Floor", "delta": 1.0, "polys": [
