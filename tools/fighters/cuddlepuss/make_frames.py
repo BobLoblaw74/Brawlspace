@@ -9,6 +9,14 @@ The source faces left on white, so it is mirrored. Effects:
 Hand-drawn sheets (see SHEETS; animated in cuddlepuss_anims.air):
   7040  jump, from jump.png (8 frames; actions 40/41/42/43/47)
   7200  standing light punch, from punch.png (8 frames; action 200)
+Green-screen sheets (GREEN_SHEETS, cut by tools/fighters/greensheet.py):
+  7600  idle_crouch.jpg, 6 poses: 0-3 idle (action 0), 4 half-crouch (10, 12), 5 crouching (11)
+  7500  walk.jpg, 6 poses, all facing right (actions 20 and 21)
+  7250  punch_kick.jpg, 6 poses: 3-5 heavy kick (action 240); 0-2 are cut but unused
+        (punch.png already drives the light punch)
+  7300  guard_hit.jpg, 5 poses: stand guard, low guard, hit high, hit low, launched
+  prep_sheets() resizes them to the working size first (the big ones are ~1050 px per
+  pose, the punch/kick sheet ~170): <name>.png next to each .jpg.
 
   python3 -I tools/fighters/cuddlepuss/make_frames.py --sheets [<art_dir>]
 re-slices only the sheets into an existing art/ (keeps everything else).
@@ -23,6 +31,7 @@ from PIL import Image, ImageDraw, ImageFilter
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.dirname(HERE))
 import cutout  # noqa: E402
+import greensheet  # noqa: E402
 
 INK = (20, 20, 22, 255)
 
@@ -114,9 +123,30 @@ def sheet_frames(name, out_dir, axes):
         axes.append("%d_%d %d %d" % (group, k, ax, ay))
 
 
+# Green-screen sheets: resized from the .jpg to these working sizes (poses ~500 px tall).
+PREP = {"idle_crouch": 0.47, "walk": 0.47, "guard_hit": 0.47, "punch_kick": 3.0}
+CLEAN = {"despill": 2}
+GREEN_SHEETS = {
+    "idle_crouch.png": (7600, {k: "feet" for k in range(6)}, 1.0, (), CLEAN),
+    "walk.png": (7500, {k: "feet" for k in range(6)}, 1.03, (), CLEAN),
+    "punch_kick.png": (7250, {3: "body", 4: "body"}, 1.04, (), CLEAN),
+    "guard_hit.png": (7300, {4: "air_body"}, 1.0, (), CLEAN),
+}
+# Measured on idle_crouch.png's first pose (494 px tall; the game idle is ~420), in its pixels.
+CAL = {"scale": 420 / 494, "back_foot_to_axis": 114, "head_to_axis": -15, "body_to_axis": -25}
+
+
+def prep_sheets():
+    for name, f in PREP.items():
+        im = Image.open(os.path.join(HERE, name + ".jpg")).convert("RGB")
+        im.resize((round(im.width * f), round(im.height * f)), Image.LANCZOS).save(os.path.join(HERE, name + ".png"))
+
+
 def effects(out_dir, axes):
     for name in SHEETS:
         sheet_frames(name, out_dir, axes)
+    prep_sheets()
+    greensheet.cut_sheets(HERE, GREEN_SHEETS, CAL, out_dir, axes)
     for k in range(6):
         hairball(k).save(os.path.join(out_dir, "6000_%d.png" % k), optimize=True)
         axes.append("6000_%d 55 55" % k)
@@ -160,6 +190,9 @@ def sheets_only(out_dir):
 
 if __name__ == "__main__" and "--sheets" in sys.argv:
     args = [a for a in sys.argv[1:] if a != "--sheets"]
-    sheets_only(args[0] if args else os.path.join(HERE, "art"))
+    out = args[0] if args else os.path.join(HERE, "art")
+    sheets_only(out)
+    prep_sheets()
+    greensheet.recut(HERE, GREEN_SHEETS, CAL, out)
 elif __name__ == "__main__":
     cutout.generate(CONFIG, sys.argv[1] if len(sys.argv) > 1 else os.path.join(HERE, "art"))
