@@ -164,6 +164,8 @@ def figures(path, min_area=2000, threshold=128, attach=40, despill=0, keying=(KE
 #   edge (fringe from outlines anti-aliased into the screen); not for green props
 #            {"key": (solid, clear)} greenness thresholds (default KEY_SOLID, KEY_CLEAR);
 #   raise them for a fighter who wears green, so only the saturated screen keys out
+#            {"min_area": n, "attach": px} figures() settings: raise min_area so props
+#   flying off a pose (a dropped bag) join it instead of becoming poses of their own
 #   Poses face right (mirrored poses are drawn facing left and get flipped), standing on
 #   the sheet's floor. Drawing size is relative to the sheet the calibration was
 #   measured on (estimate it from figure areas and head widths). Anchors:
@@ -222,7 +224,8 @@ def cut_sheet(path, group, anchors, size, mirrored, cal, out_dir, axes, options=
     scale = cal["scale"] / size
     options = options or {}
     keying = options.get("key", (KEY_SOLID, KEY_CLEAR))
-    for k, (fig, _) in enumerate(figures(path, despill=options.get("despill", 0), keying=keying)):
+    extra = {k: options[k] for k in ("min_area", "attach") if k in options}
+    for k, (fig, _) in enumerate(figures(path, despill=options.get("despill", 0), keying=keying, **extra)):
         if k in mirrored:
             fig = fig.transpose(Image.FLIP_LEFT_RIGHT)
         anchor = anchors.get(k, "foot")

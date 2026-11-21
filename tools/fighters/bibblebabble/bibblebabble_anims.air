@@ -1,0 +1,543 @@
+;===========================================================================
+; BIBBLE BABBLE - ORIGINAL ANIMATIONS
+;===========================================================================
+
+; Rubber chicken - tumbling
+[Begin Action 1590]
+Clsn2Default: 1
+ Clsn2[0] = -40,-40, 40, 40
+Clsn1Default: 1
+ Clsn1[0] = -40,-40, 40, 40
+6000,0, 0,0, 3
+6000,1, 0,0, 3
+6000,2, 0,0, 3
+6000,3, 0,0, 3
+6000,4, 0,0, 3
+6000,5, 0,0, 3
+
+; Feather puff (hit / blocked / cancelled)
+[Begin Action 1591]
+6001,0, 0,0, 3
+6001,1, 0,0, 3
+6001,2, 0,0, 4
+6001,3, 0,0, 4
+
+; Big chicken (EX / super)
+[Begin Action 1592]
+Clsn2Default: 1
+ Clsn2[0] = -58,-58, 58, 58
+Clsn1Default: 1
+ Clsn1[0] = -58,-58, 58, 58
+6000,0, 0,0, 2, , , 1.45, 1.45
+6000,1, 0,0, 2, , , 1.45, 1.45
+6000,2, 0,0, 2, , , 1.45, 1.45
+6000,3, 0,0, 2, , , 1.45, 1.45
+6000,4, 0,0, 2, , , 1.45, 1.45
+6000,5, 0,0, 2, , , 1.45, 1.45
+
+; Shopping bag - skidding along the floor
+[Begin Action 1595]
+Clsn2Default: 1
+ Clsn2[0] = -36,-80, 36, 0
+Clsn1Default: 1
+ Clsn1[0] = -36,-80, 36, 0
+6002,0, 0,0, 3
+6002,1, 0,0, 3
+6002,2, 0,0, 3
+6002,3, 0,0, 3
+
+; Chicken throw (his drawn punch: the chicken is gone from his hand): leaves on element 5
+[Begin Action 1550]
+Clsn2Default: 2
+ Clsn2[0] = -50,0,61,-301
+ Clsn2[1] =  19,-301,-27,-354
+7600,0, 0,0, 3
+7200,0, 0,0, 3
+7200,2, 0,0, 3
+7200,2, 0,0, 2
+7200,1, 0,0, 10
+7200,2, 0,0, 6
+7600,0, 0,0, 4
+
+; Squawk - he hugs the chicken and squeezes: the shockwave hits on element 3
+[Begin Action 1650]
+Clsn2Default: 2
+ Clsn2[0] = -50,0,61,-301
+ Clsn2[1] =  19,-301,-27,-354
+7600,0, 0,0, 3
+7300,0, 0,0, 4
+Clsn1: 1
+ Clsn1[0] = -40,-400, 260,-40
+7300,0, 0,0, 12
+7300,0, 0,0, 8
+7600,0, 0,0, 4
+
+; Squawk - the shockwave ring
+[Begin Action 1660]
+6003,0, 0,0, 3
+6003,1, 0,0, 3
+6003,2, 0,0, 4
+6003,3, 0,0, 4
+
+; Grocery Skid - swings the bag back, flings it low: leaves on element 2
+[Begin Action 1680]
+Clsn2Default: 2
+ Clsn2[0] = -50,0,61,-301
+ Clsn2[1] =  19,-301,-27,-354
+7200,5, 0,0, 8
+7200,1, 0,0, 4
+7200,1, 0,0, 8
+7600,0, 0,0, 4
+
+; Chicken Stampede - three throws (chickens leave on elements 2, 4 and 6)
+[Begin Action 3100]
+Clsn2Default: 2
+ Clsn2[0] = -50,0,61,-301
+ Clsn2[1] =  19,-301,-27,-354
+7200,2, 0,0, 8
+7200,1, 0,0, 6
+7200,2, 0,0, 3
+7200,1, 0,0, 6
+7200,2, 0,0, 3
+7200,1, 0,0, 10
+7200,2, 0,0, 6
+7600,0, 0,0, 4
+
+;---------------------------------------------------------------------------
+; Hand-drawn sheet idle_crouch.jpg -> sprites 7600,0-4: four idle poses and one crouch,
+; used for stand-to-crouch, crouching and crouch-to-stand (actions 10, 11, 12). These
+; replace KFM's actions 0, 10, 11 and 12 (same hurtboxes).
+;---------------------------------------------------------------------------
+[Begin Action 0]
+Clsn2Default: 2
+ Clsn2[0] = -50,0,61,-301
+ Clsn2[1] = 19,-301,-27,-354
+7600,0, 0,0, 10
+7600,1, 0,0, 8
+7600,2, 0,0, 12
+7600,3, 0,0, 8
+
+; Stand to crouch
+[Begin Action 10]
+Clsn2: 2
+ Clsn2[0] = -46,0,65,-248
+ Clsn2[1] = -27,-309,23,-248
+7600,4, 0,0, 4
+
+; Crouching
+[Begin Action 11]
+Clsn2: 2
+ Clsn2[0] = 72,0,-57,-183
+ Clsn2[1] = -23,-236,23,-183
+7600,4, 0,0, 1
+
+; Crouch to stand
+[Begin Action 12]
+Clsn2: 2
+ Clsn2[0] = -46,0,65,-248
+ Clsn2[1] = -27,-309,23,-248
+7600,4, 0,0, 4
+
+;---------------------------------------------------------------------------
+; Hand-drawn sheet jump.jpg -> sprites 7400,0-4: crouch, rise, apex, fall, land.
+; These replace KFM's actions 40/41/42/43/47. Airborne poses are anchored at their
+; lowest point (physics sets the height). A neutral jump is ~38 ticks
+; (jump.neu y -33.6, yaccel 1.76), apex at ~19.
+;---------------------------------------------------------------------------
+
+; Jump start (state 40 takes off when this ends: keep KFM's 3 ticks)
+[Begin Action 40]
+Clsn2Default: 2
+ Clsn2[0] = -57,0,67,-267
+ Clsn2[1] = -19,-333,38,-267
+7400,0, 0,0, 3
+
+; Neutral jump: rise, apex, fall (holds until landing)
+[Begin Action 41]
+Clsn2: 2
+ Clsn2[0] = -57,-19,57,-305
+ Clsn2[1] = -10,-373,48,-305
+7400,1, 0,0, 12
+Clsn2: 2
+ Clsn2[0] = -57,0,57,-286
+ Clsn2[1] = -10,-356,48,-286
+7400,2, 0,0, 10
+Loopstart
+Clsn2: 2
+ Clsn2[0] = -57,0,57,-343
+ Clsn2[1] = -10,-420,48,-343
+7400,3, 0,0, 60
+
+; Forward and back jumps use the same drawing
+[Begin Action 42]
+Clsn2: 2
+ Clsn2[0] = -57,-19,57,-305
+ Clsn2[1] = -10,-373,48,-305
+7400,1, 0,0, 12
+Clsn2: 2
+ Clsn2[0] = -57,0,57,-286
+ Clsn2[1] = -10,-356,48,-286
+7400,2, 0,0, 10
+Loopstart
+Clsn2: 2
+ Clsn2[0] = -57,0,57,-343
+ Clsn2[1] = -10,-420,48,-343
+7400,3, 0,0, 60
+
+[Begin Action 43]
+Clsn2: 2
+ Clsn2[0] = -57,-19,57,-305
+ Clsn2[1] = -10,-373,48,-305
+7400,1, 0,0, 12
+Clsn2: 2
+ Clsn2[0] = -57,0,57,-286
+ Clsn2[1] = -10,-356,48,-286
+7400,2, 0,0, 10
+Loopstart
+Clsn2: 2
+ Clsn2[0] = -57,0,57,-343
+ Clsn2[1] = -10,-420,48,-343
+7400,3, 0,0, 60
+
+; Landing (state 52 returns to the stance when this ends: KFM's 3 ticks)
+[Begin Action 47]
+Clsn2Default: 2
+ Clsn2[0] = -57,0,67,-257
+ Clsn2[1] = -10,-316,48,-257
+7400,4, 0,0, 3
+
+;---------------------------------------------------------------------------
+; Hand-drawn sheet walk.jpg -> sprites 7500,0-5: one stride cycle, all facing right.
+; Walk forward plays 0-5; walk back plays them in reverse. These replace KFM's
+; actions 20 and 21 (same hurtboxes).
+;---------------------------------------------------------------------------
+[Begin Action 20]
+Clsn2Default: 2
+ Clsn2[0] = -53,0,61,-309
+ Clsn2[1] = 23,-309,-27,-366
+7500,0, 0,0, 6
+7500,1, 0,0, 6
+7500,2, 0,0, 6
+7500,3, 0,0, 6
+7500,4, 0,0, 6
+7500,5, 0,0, 6
+
+[Begin Action 21]
+Clsn2Default: 2
+ Clsn2[0] = -53,0,61,-309
+ Clsn2[1] = 23,-309,-27,-366
+7500,5, 0,0, 6
+7500,4, 0,0, 6
+7500,3, 0,0, 6
+7500,2, 0,0, 6
+7500,1, 0,0, 6
+7500,0, 0,0, 6
+
+;---------------------------------------------------------------------------
+; Hand-drawn sheet punch_kick.jpg -> sprites 7200,0-5 (0-2 light punch, 3-5 heavy
+; kick). These replace KFM's actions 200 and 240; hitboxes follow the drawn fist
+; and foot.
+;---------------------------------------------------------------------------
+
+; Stand light punch. KFM's state 200 turns its HitDef on at AnimElem = 3 (the
+; punch); total length stays KFM's 12 ticks.
+[Begin Action 200]
+Clsn2Default: 2
+ Clsn2[0] = -38,0,72,-305
+ Clsn2[1] = 0,-358,46,-305
+7200,0, 0,0, 2
+7200,0, 0,0, 1
+Clsn1: 1
+ Clsn1[0] = 175,-295,240,-245
+Clsn2: 3
+ Clsn2[0] = -38,0,72,-305
+ Clsn2[1] = 0,-358,46,-305
+ Clsn2[2] = 72,-352,231,-297
+7200,1, 0,0, 4
+7200,2, 0,0, 3
+7200,2, 0,0, 2
+
+; Stand heavy kick: chamber the knee, kick, back to the stance. KFM's state 240
+; hits whenever a frame has a Clsn1 and nudges him forward at AnimElem = 7, so
+; this stays under 7 elements. 25 ticks, kick out on ticks 7-14 like KFM's.
+[Begin Action 240]
+Clsn2Default: 2
+ Clsn2[0] = -38,0,72,-305
+ Clsn2[1] = 0,-358,46,-305
+7200,0, 0,0, 2
+Clsn2: 3
+ Clsn2[0] = -57,0,57,-305
+ Clsn2[1] = -19,-358,38,-305
+ Clsn2[2] = 38,-286,124,-86
+7200,3, 0,0, 5
+Clsn1: 1
+ Clsn1[0] = 120,-375,186,-280
+Clsn2: 4
+ Clsn2[0] = -67,0,38,-305
+ Clsn2[1] = -38,-358,19,-305
+ Clsn2[2] = 19,-414,240,-286
+ Clsn2[3] = -29,-114,19,0
+7200,4, 0,0, 8
+Clsn2: 3
+ Clsn2[0] = -57,0,57,-305
+ Clsn2[1] = -19,-358,38,-305
+ Clsn2[2] = 38,-286,124,-86
+7200,3, 0,0, 4
+Clsn2: 2
+ Clsn2[0] = -38,0,72,-305
+ Clsn2[1] = 0,-358,46,-305
+7200,5, 0,0, 6
+
+;---------------------------------------------------------------------------
+; Hand-drawn sheet guard_hit.jpg -> sprites 7300,0-4: stand guard, low guard
+; (crouch), hit high, hit low, launched. These are KFM's guard and hit actions with
+; the same elements, timings and hurtboxes (the common states time off them); only
+; the sprites change. The air guard (122/132/142/152) keeps KFM's art.
+;---------------------------------------------------------------------------
+[Begin Action 120]
+Clsn2Default: 4
+ Clsn2[0] = 53,0,-50,-164
+ Clsn2[1] = -42,-164,46,-328
+ Clsn2[2] = -4,-328,-42,-358
+ Clsn2[3] = -76,-297,50,-221
+7300,0,0,0, 1
+
+
+[Begin Action 121]
+Clsn2: 2
+ Clsn2[0] = -65,0,61,-213
+ Clsn2[1] = 11,-213,-34,-244
+7300,1,0,0, 1
+
+
+[Begin Action 130]
+Clsn2Default: 4
+ Clsn2[0] = 53,0,-50,-164
+ Clsn2[1] = -42,-164,46,-328
+ Clsn2[2] = -4,-328,-42,-358
+ Clsn2[3] = -76,-297,50,-221
+7300,0,0,0, -1
+
+
+[Begin Action 131]
+Clsn2: 2
+ Clsn2[0] = -65,0,61,-213
+ Clsn2[1] = 11,-213,-34,-244
+7300,1,0,0, -1
+
+
+[Begin Action 140]
+Clsn2Default: 4
+ Clsn2[0] = 53,0,-50,-164
+ Clsn2[1] = -42,-164,46,-328
+ Clsn2[2] = -4,-328,-42,-358
+ Clsn2[3] = -76,-297,50,-221
+7300,0,0,0, 5
+
+
+[Begin Action 141]
+Clsn2: 2
+ Clsn2[0] = -65,0,61,-213
+ Clsn2[1] = 11,-213,-34,-244
+7300,1,0,0, 1
+
+
+[Begin Action 150]
+Clsn2Default: 4
+ Clsn2[0] = 53,0,-50,-164
+ Clsn2[1] = -42,-164,46,-328
+ Clsn2[2] = -4,-328,-42,-358
+ Clsn2[3] = -76,-297,50,-221
+7300,0,0,0, 4
+7300,0,0,0, 8
+7300,0,0,0, 4
+7300,0,0,0, -1
+
+
+[Begin Action 151]
+Clsn2: 2
+ Clsn2[0] = -65,0,61,-213
+ Clsn2[1] = 11,-213,-34,-244
+7300,1,0,0, -1
+
+
+[Begin Action 5000]
+Clsn2: 2
+ Clsn2[0] = -69,-301,61,0
+ Clsn2[1] = -65,-358,-15,-301
+7300,2,0,0, 4
+Clsn2: 2
+ Clsn2[0] = -69,-301,61,0
+ Clsn2[1] = -46,-293,-95,-358
+7300,2,0,0, 4
+
+
+[Begin Action 5001]
+Clsn2: 2
+ Clsn2[0] = -69,-301,61,0
+ Clsn2[1] = -46,-293,-95,-358
+7300,2,0,0, 5
+Clsn2: 2
+ Clsn2[0] = -69,-301,61,0
+ Clsn2[1] = -122,-339,-57,-229
+7300,2,0,0, 5
+
+
+[Begin Action 5002]
+Clsn2: 2
+ Clsn2[0] = -69,-301,61,0
+ Clsn2[1] = -122,-339,-57,-229
+7300,2,0,0, 5
+Clsn2: 2
+ Clsn2[0] = -69,-301,61,0
+ Clsn2[1] = -53,-210,-141,-331
+7300,2,0,0, 5
+
+
+[Begin Action 5005]
+Clsn2: 2
+ Clsn2[0] = -69,-301,61,0
+ Clsn2[1] = -122,-339,-57,-229
+7300,2,0,0, 3
+Clsn2: 2
+ Clsn2[0] = -69,-301,61,0
+ Clsn2[1] = -46,-293,-95,-358
+7300,2,0,0, 3
+Clsn2: 2
+ Clsn2[0] = -69,-301,61,0
+ Clsn2[1] = -65,-358,-15,-301
+7300,2,0,0, -1
+
+
+[Begin Action 5006]
+Clsn2: 2
+ Clsn2[0] = -69,-301,61,0
+ Clsn2[1] = -53,-210,-141,-331
+7300,2,0,0, 3
+Clsn2: 2
+ Clsn2[0] = -69,-301,61,0
+ Clsn2[1] = -122,-339,-57,-229
+7300,2,0,0, 4
+Clsn2: 2
+ Clsn2[0] = -69,-301,61,0
+ Clsn2[1] = -46,-293,-95,-358
+7300,2,0,0, 4
+Clsn2: 2
+ Clsn2[0] = -69,-301,61,0
+ Clsn2[1] = -65,-358,-15,-301
+7300,2,0,0, -1
+
+
+[Begin Action 5007]
+Clsn2: 2
+ Clsn2[0] = -69,-301,61,0
+ Clsn2[1] = -53,-210,-141,-331
+7300,2,0,0, 5
+Clsn2: 2
+ Clsn2[0] = -69,-301,61,0
+ Clsn2[1] = -122,-339,-57,-229
+7300,2,0,0, 4
+Clsn2: 2
+ Clsn2[0] = -69,-301,61,0
+ Clsn2[1] = -46,-293,-95,-358
+7300,2,0,0, 4
+Clsn2: 2
+ Clsn2[0] = -69,-301,61,0
+ Clsn2[1] = -65,-358,-15,-301
+7300,2,0,0, -1
+
+
+[Begin Action 5010]
+Clsn2: 2
+ Clsn2[0] = 61,0,-91,-290
+ Clsn2[1] = -46,-274,4,-335
+7300,3,0,0, 5
+Clsn2: 2
+ Clsn2[0] = -103,-290,61,0
+ Clsn2[1] = -46,-251,4,-309
+7300,3,0,0, 5
+
+
+[Begin Action 5011]
+Clsn2: 2
+ Clsn2[0] = -103,-290,61,0
+ Clsn2[1] = -46,-251,4,-309
+7300,3,0,0, 5
+Clsn2: 1
+ Clsn2[0] = -103,-290,61,0
+7300,3,0,0, 5
+Clsn2: 1
+ Clsn2[0] = -103,-290,61,0
+7300,3,0,0, 5
+
+
+[Begin Action 5012]
+Clsn2Default: 1
+ Clsn2[0] = -103,-290,61,0
+7300,3,0,0, 1
+7300,3,0,0, 5
+7300,3,0,0, 5
+7300,3,0,0, 5
+
+
+[Begin Action 5015]
+Clsn2: 2
+ Clsn2[0] = -103,-290,61,0
+ Clsn2[1] = -46,-251,4,-309
+7300,3,0,0, 1
+Clsn2: 2
+ Clsn2[0] = 61,0,-91,-290
+ Clsn2[1] = -46,-274,4,-335
+7300,3,0,0, -1
+
+
+[Begin Action 5016]
+Clsn2: 1
+ Clsn2[0] = -103,-290,61,0
+7300,3,0,0, 1
+Clsn2: 2
+ Clsn2[0] = -103,-290,61,0
+ Clsn2[1] = -46,-251,4,-309
+7300,3,0,0, 4
+Clsn2: 2
+ Clsn2[0] = 61,0,-91,-290
+ Clsn2[1] = -46,-274,4,-335
+7300,3,0,0, -1
+
+
+[Begin Action 5017]
+Clsn2: 1
+ Clsn2[0] = -103,-290,61,0
+7300,3,0,0, 1
+Clsn2: 2
+ Clsn2[0] = -103,-290,61,0
+ Clsn2[1] = -46,-251,4,-309
+7300,3,0,0, -1
+
+
+[Begin Action 5030]
+Clsn2: 2
+ Clsn2[0] = -80,-335,19,-232
+ Clsn2[1] = -30,-251,61,-145
+7300,4,0,0, 5
+
+
+[Begin Action 5035]
+Clsn2: 2
+ Clsn2[0] = -80,-335,19,-232
+ Clsn2[1] = -30,-251,61,-145
+7300,4,0,0, 4
+Clsn2: 2
+ Clsn2[0] = 72,-149,-19,-251
+ Clsn2[1] = 8,-217,-99,-316
+7300,4,0,0, 7
+
+
+[Begin Action 5050]
+Clsn2Default: 2
+ Clsn2[0] = 91,-168,-8,-290
+ Clsn2[1] = -8,-168,-126,-255
+7300,4,0,0, 5
+7300,4,0,0, 5
+
+
