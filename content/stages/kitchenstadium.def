@@ -57,7 +57,7 @@ fade.range = 0,0
 intensity = 0
 
 [Music]
-bgmusic =
+bgmusic = sound/kitchen_timer.ogg
 bgmvolume = 100
 
 [BGdef]

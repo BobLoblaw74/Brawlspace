@@ -28,6 +28,7 @@ CONFIG = {
     "scale": 1.9,           # 1024x434 -> 1946x825
     "ground_y": 365,        # concrete floor in front of the platform
     "shadow_color": (25, 22, 40),
+    "music": "sound/kitchen_timer.ogg",  # "Kitchen Timer"
     "layers": [
         {"name": "Studio", "delta": 0.95},
         {"name": "Floor", "delta": 1.0, "polys": [
