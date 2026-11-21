@@ -20,7 +20,7 @@ KEY_SOLID = 40   # greenness (g - max(r, b)) at or below this: fully opaque
 KEY_CLEAR = 110  # at or above this: fully transparent
 
 
-def key(im):
+def key(im, solid=KEY_SOLID, clear=KEY_CLEAR):
     im = im.convert("RGB")
     w, h = im.size
     src = im.load()
@@ -30,12 +30,12 @@ def key(im):
         for x in range(w):
             r, g, b = src[x, y]
             d = g - max(r, b)
-            if d <= KEY_SOLID:
+            if d <= solid:
                 a = 255
-            elif d >= KEY_CLEAR:
+            elif d >= clear:
                 a = 0
             else:
-                a = round(255 * (KEY_CLEAR - d) / (KEY_CLEAR - KEY_SOLID))
+                a = round(255 * (clear - d) / (clear - solid))
             if 0 < a < 255 and d > 0:
                 g = max(r, b)  # despill the soft edge only: green props (the bag) stay green
             dst[x, y] = (r, g, b, a)
@@ -95,8 +95,8 @@ def box_gap(a, b):
     return max(dx, dy)
 
 
-def figures(path, min_area=2000, threshold=128, attach=40, despill=0):
-    rgba = erase_floor_line(key(Image.open(path)))
+def figures(path, min_area=2000, threshold=128, attach=40, despill=0, keying=(KEY_SOLID, KEY_CLEAR)):
+    rgba = erase_floor_line(key(Image.open(path), *keying))
     if despill:
         rgba = despill_edge(rgba, despill)
     w, h = rgba.size
@@ -162,6 +162,8 @@ def figures(path, min_area=2000, threshold=128, attach=40, despill=0):
 # sheets: {<file>: (sprite group, {pose: anchor}, drawing size, mirrored poses[, options])}
 #   options: {"despill": n} also removes green from opaque pixels within n px of the cut
 #   edge (fringe from outlines anti-aliased into the screen); not for green props
+#            {"key": (solid, clear)} greenness thresholds (default KEY_SOLID, KEY_CLEAR);
+#   raise them for a fighter who wears green, so only the saturated screen keys out
 #   Poses face right (mirrored poses are drawn facing left and get flipped), standing on
 #   the sheet's floor. Drawing size is relative to the sheet the calibration was
 #   measured on (estimate it from figure areas and head widths). Anchors:
@@ -218,7 +220,9 @@ def save_png(im, path):
 
 def cut_sheet(path, group, anchors, size, mirrored, cal, out_dir, axes, options=None):
     scale = cal["scale"] / size
-    for k, (fig, _) in enumerate(figures(path, despill=(options or {}).get("despill", 0))):
+    options = options or {}
+    keying = options.get("key", (KEY_SOLID, KEY_CLEAR))
+    for k, (fig, _) in enumerate(figures(path, despill=options.get("despill", 0), keying=keying)):
         if k in mirrored:
             fig = fig.transpose(Image.FLIP_LEFT_RIGHT)
         anchor = anchors.get(k, "foot")
