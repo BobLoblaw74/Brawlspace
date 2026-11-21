@@ -213,6 +213,7 @@ juanana, stages/bananaisland.def
 cuddlepuss, stages/catpad.def
 hotnight, stages/sluttywood.def
 pooja, stages/indiodates.def
+worstcook, stages/stage0-720.def, includestage=0
 randomselect
 
 ;-------------------------------------------------------------------------------

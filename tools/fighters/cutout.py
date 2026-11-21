@@ -9,7 +9,8 @@ animations, timings and hitboxes drive the new art.
 
 Config keys (all coordinates are pixels in the source image, after mirroring):
   source        path to the PNG (figure on a white background)
-  background    "white" (default) or "checker" for a painted grey/white checkerboard
+  background    "white" (default), "checker" for a painted grey/white checkerboard, or
+                "alpha" for a PNG that is already cut out (e.g. a pose from a green sheet)
   holes         optional points inside small enclosed background gaps (e.g. between an
                 arm and the body) that the automatic cut-out kept; they are cleared
   mirror        True if the figure faces left in the source (fighters face right)
@@ -393,10 +394,16 @@ def portraits(cfg, src, out_dir, axes):
 
 def generate(cfg, out_dir):
     os.makedirs(out_dir, exist_ok=True)
-    img = Image.open(cfg["source"]).convert("RGB")
+    img = Image.open(cfg["source"])
+    if cfg.get("background") == "alpha":
+        img = img.convert("RGBA")
+    else:
+        img = img.convert("RGB")
     if cfg.get("mirror"):
         img = ImageOps.mirror(img)
-    if cfg.get("background") == "checker":
+    if cfg.get("background") == "alpha":
+        src = img
+    elif cfg.get("background") == "checker":
         src = cut_out_checker(img)
     else:
         src = cut_out(img)
