@@ -455,7 +455,7 @@ cell.*-0.projection = perspective
 cell.*-0.focallength = 50
 cell.*-0.spacing = 15, 0
 cell.*-0.scale = 0.6, 0.6
-cell.*-0.offset = -22, -92
+cell.*-0.offset = -22, -104
 
 cell.*-1.xangle = 10
 cell.*-1.projection = perspective
@@ -467,7 +467,7 @@ cell.*-1.offset = -32, 0
 cell.*-2.xangle = 10
 cell.*-2.projection = perspective
 cell.*-2.focallength = 50
-cell.*-2.spacing = 20, -44
+cell.*-2.spacing = 20, -38
 cell.*-2.scale = 0.65, 0.65
 cell.*-2.offset = -42, 0
 
