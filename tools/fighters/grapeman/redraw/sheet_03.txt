@@ -1,0 +1,12 @@
+Image 1 is the character GrapeMan. Draw a sprite sheet of him for a 2D fighting game: 8 separate full-body figures in 2 row(s) of up to 4, numbered left to right, top to bottom, with these poses:
+
+1. victory: both fists raised high overhead
+2. victory: both arms thrust straight up overhead, head thrown back laughing
+3. intro: standing, plucking a single grape from his chest with one hand, eyeing it
+4. intro: standing, popping the grape into his mouth, grinning
+5. intro: flexing both arms, the vines on his forearms pulled tight
+6. starting a jab: leaning forward, back fist moving forward
+7. light jab: back fist fully extended straight forward at head height
+8. winding up a heavy punch: shoulders twisted back, vine-wrapped fist pulled back
+
+Every figure: the same face and glasses, purple grape-bunch costume, leafy vine crown, vine-wrapped forearms, boots, colours and inked comic style as image 1; the same scale throughout (a standing figure fills most of the row height); facing right like image 1; whole body visible, nothing cropped; a clear gap between figures, no overlap. Only draw what each pose asks for (no opponent, no effects, no motion lines). Background: flat solid pure green #00FF00 everywhere, no shadows, no floor, no text, no numbers, no borders.
