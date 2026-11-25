@@ -20,7 +20,8 @@ KEY_SOLID = 40   # greenness (g - max(r, b)) at or below this: fully opaque
 KEY_CLEAR = 110  # at or above this: fully transparent
 
 
-def key(im, solid=KEY_SOLID, clear=KEY_CLEAR):
+def key(im, solid=KEY_SOLID, clear=KEY_CLEAR, screen="green"):
+    """screen="magenta" keys a #FF00FF screen instead (for fighters with green on them)."""
     im = im.convert("RGB")
     w, h = im.size
     src = im.load()
@@ -29,15 +30,18 @@ def key(im, solid=KEY_SOLID, clear=KEY_CLEAR):
     for y in range(h):
         for x in range(w):
             r, g, b = src[x, y]
-            d = g - max(r, b)
+            d = g - max(r, b) if screen == "green" else min(r, b) - g
             if d <= solid:
                 a = 255
             elif d >= clear:
                 a = 0
             else:
                 a = round(255 * (clear - d) / (clear - solid))
-            if 0 < a < 255 and d > 0:
-                g = max(r, b)  # despill the soft edge only: green props (the bag) stay green
+            if 0 < a < 255 and d > 0:  # despill the soft edge only: green props (the bag) stay green
+                if screen == "green":
+                    g = max(r, b)
+                else:
+                    r, b = r - d, b - d
             dst[x, y] = (r, g, b, a)
     return out
 
@@ -95,7 +99,7 @@ def box_gap(a, b):
     return max(dx, dy)
 
 
-def figures(path, min_area=2000, threshold=128, attach=40, despill=0, keying=(KEY_SOLID, KEY_CLEAR)):
+def figures(path, min_area=2000, threshold=128, attach=40, despill=0, keying=(KEY_SOLID, KEY_CLEAR), rows=False):
     rgba = erase_floor_line(key(Image.open(path), *keying))
     if despill:
         rgba = despill_edge(rgba, despill)
@@ -153,7 +157,17 @@ def figures(path, min_area=2000, threshold=128, attach=40, despill=0, keying=(KE
                     fp[x - box[0], y - box[1]] = cp[x - box[0], y - box[1]]
         out.append((fig, box))
     out.sort(key=lambda f: f[1][0])
-    return out
+    if not rows:
+        return out
+    # rows=True, a multi-row sheet: a figure starts a new row when its vertical centre is
+    # below every figure in the current row; then left to right within each row
+    lines = []
+    for f in sorted(out, key=lambda f: f[1][1] + f[1][3]):
+        if lines and (f[1][1] + f[1][3]) / 2 < max(g[1][3] for g in lines[-1]):
+            lines[-1].append(f)
+        else:
+            lines.append([f])
+    return [f for line in lines for f in sorted(line, key=lambda f: f[1][0])]
 
 
 # ---------------------------------------------------------------------------
