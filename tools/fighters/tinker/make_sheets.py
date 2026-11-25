@@ -18,6 +18,11 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(HERE, "redraw")
 PER_SHEET, PER_ROW = 8, 4
 SKIP = {6000, 9000}  # radar pulse effect and portraits: not body frames
+# after review: {sheet: {figure: figure whose drawing its frames use instead}} (1-based);
+# the drawn figure stays on the sheet with no frames, so the sheet layout is unchanged.
+# sheet_00's four breathing figures came back as different-looking drawings: the idle
+# holds figure 2 instead of flickering.
+USE_FIGURE = {"sheet_00": {1: 2, 3: 2, 4: 2}}
 
 STANCE = "his fighting stance exactly as in image 1"
 CROUCH = "crouching low, knees deeply bent, back fist up by his chin, gauntlet arm forward"
@@ -229,7 +234,7 @@ def main():
         figures.setdefault(pose_of(g, i, items), []).append("%d_%d" % (g, i))
     figs = list(figures.items())
     os.makedirs(OUT, exist_ok=True)
-    for old in glob.glob(os.path.join(OUT, "sheet_*")):
+    for old in glob.glob(os.path.join(OUT, "sheet_*.txt")):  # never the returned .png sheets
         os.remove(old)
     manifest = {}
     for k in range(0, len(figs), PER_SHEET):
@@ -239,7 +244,10 @@ def main():
                              list="\n".join("%d. %s" % (j + 1, p) for j, (p, _) in enumerate(chunk)))
         with open(os.path.join(OUT, name + ".txt"), "w") as f:
             f.write(text)
-        manifest[name] = [{"pose": p, "frames": f} for p, f in chunk]
+        manifest[name] = [{"pose": p, "frames": list(f)} for p, f in chunk]
+        for src, dst in USE_FIGURE.get(name, {}).items():
+            manifest[name][dst - 1]["frames"] += manifest[name][src - 1]["frames"]
+            manifest[name][src - 1]["frames"] = []
     with open(os.path.join(OUT, "sheets.json"), "w") as f:
         json.dump(manifest, f, indent=1)
     for old in ("PROMPT.txt",):
