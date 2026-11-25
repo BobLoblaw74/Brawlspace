@@ -20,9 +20,7 @@ PER_SHEET, PER_ROW = 8, 4
 SKIP = {6000, 9000}  # radar pulse effect and portraits: not body frames
 # after review: {sheet: {figure: figure whose drawing its frames use instead}} (1-based);
 # the drawn figure stays on the sheet with no frames, so the sheet layout is unchanged.
-# sheet_00's four breathing figures came back as different-looking drawings: the idle
-# holds figure 2 instead of flickering.
-USE_FIGURE = {"sheet_00": {1: 2, 3: 2, 4: 2}}
+USE_FIGURE = {}
 
 STANCE = "his fighting stance exactly as in image 1"
 CROUCH = "crouching low, knees deeply bent, back fist up by his chin, gauntlet arm forward"

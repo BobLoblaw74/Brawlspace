@@ -2,7 +2,9 @@
  "sheet_00": [
   {
    "pose": "his fighting stance exactly as in image 1, chest slightly raised (breathing in)",
-   "frames": []
+   "frames": [
+    "0_0"
+   ]
   },
   {
    "pose": "his fighting stance exactly as in image 1",
@@ -12,20 +14,21 @@
     "1052_0",
     "1052_3",
     "1400_0",
-    "1400_7",
-    "0_0",
-    "0_3",
-    "0_4",
-    "0_5"
+    "1400_7"
    ]
   },
   {
    "pose": "his fighting stance exactly as in image 1, shoulders slightly lowered (breathing out)",
-   "frames": []
+   "frames": [
+    "0_3"
+   ]
   },
   {
    "pose": "his fighting stance exactly as in image 1, shoulders lowered further (breathing out)",
-   "frames": []
+   "frames": [
+    "0_4",
+    "0_5"
+   ]
   },
   {
    "pose": "turning around: body seen from the front, mid-turn, fists up",
