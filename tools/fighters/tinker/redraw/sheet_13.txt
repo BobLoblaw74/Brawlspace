@@ -1,0 +1,12 @@
+Image 1 is the character Tinker. Draw a sprite sheet of him for a 2D fighting game: 8 separate full-body figures in 2 row(s) of up to 4, numbered left to right, top to bottom, with these poses:
+
+1. antenna uppercut: in the air, whole body stretched straight up, gauntlet fist high overhead
+2. wrench swing: drawing a big wrench from his toolbelt, raised behind his head
+3. wrench swing: swinging the big wrench forward and down
+4. wrench swing: big wrench straight out in front at full reach
+5. wrench swing: follow-through, big wrench swung low past his front knee
+6. high parry: gauntlet forearm raised at head height, deflecting
+7. low parry: crouching, gauntlet forearm lowered to deflect at shin height
+8. air parry: in mid-air, knees tucked, gauntlet forearm raised to deflect
+
+Every figure: the same face, outfit, radar-dish gauntlet, tool belt, colours and inked comic style as image 1; the same scale throughout (a standing figure fills most of the row height); facing right like image 1; whole body visible, nothing cropped; a clear gap between figures, no overlap. Only draw what each pose asks for (no opponent, no effects, no motion lines). Background: flat solid magenta #FF00FF everywhere, no shadows, no floor, no text, no numbers, no borders.

@@ -1,0 +1,12 @@
+Image 1 is the character Tinker. Draw a sprite sheet of him for a 2D fighting game: 8 separate full-body figures in 2 row(s) of up to 4, numbered left to right, top to bottom, with these poses:
+
+1. knocked backwards off his feet, flying back, body tilted 75 degrees backwards, almost horizontal
+2. falling flat on his back in the air, body horizontal
+3. the back of his shoulders hitting the ground, legs up
+4. bouncing off the ground on his back, legs up
+5. bouncing off the ground on his back, legs coming down
+6. lying flat on his back on the ground, dazed
+7. tumbling backwards in the air, head lower than feet
+8. tumbling backwards in the air, body horizontal, face up
+
+Every figure: the same face, outfit, radar-dish gauntlet, tool belt, colours and inked comic style as image 1; the same scale throughout (a standing figure fills most of the row height); facing right like image 1; whole body visible, nothing cropped; a clear gap between figures, no overlap. Only draw what each pose asks for (no opponent, no effects, no motion lines). Background: flat solid magenta #FF00FF everywhere, no shadows, no floor, no text, no numbers, no borders.

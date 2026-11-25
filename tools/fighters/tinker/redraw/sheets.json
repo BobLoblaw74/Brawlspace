@@ -1,425 +1,1027 @@
 {
  "sheet_00": [
-  [
-   "0_0",
-   "0_1",
-   "0_2",
-   "0_3",
-   "0_4",
-   "0_5"
-  ],
-  [
-   "5_0",
-   "6_0",
-   "11_0",
-   "11_1",
-   "11_2",
-   "20_0"
-  ]
+  {
+   "pose": "his fighting stance exactly as in image 1, chest slightly raised (breathing in)",
+   "frames": [
+    "0_0"
+   ]
+  },
+  {
+   "pose": "his fighting stance exactly as in image 1",
+   "frames": [
+    "0_1",
+    "0_2",
+    "1052_0",
+    "1052_3",
+    "1400_0",
+    "1400_7"
+   ]
+  },
+  {
+   "pose": "his fighting stance exactly as in image 1, shoulders slightly lowered (breathing out)",
+   "frames": [
+    "0_3"
+   ]
+  },
+  {
+   "pose": "his fighting stance exactly as in image 1, shoulders lowered further (breathing out)",
+   "frames": [
+    "0_4",
+    "0_5"
+   ]
+  },
+  {
+   "pose": "turning around: body seen from the front, mid-turn, fists up",
+   "frames": [
+    "5_0"
+   ]
+  },
+  {
+   "pose": "turning around while crouching: body seen from the front, knees bent, fists up",
+   "frames": [
+    "6_0"
+   ]
+  },
+  {
+   "pose": "half crouch, knees bent, lowering his body",
+   "frames": [
+    "11_0"
+   ]
+  },
+  {
+   "pose": "crouching low, knees deeply bent, back fist up by his chin, gauntlet arm forward",
+   "frames": [
+    "11_1",
+    "11_2"
+   ]
+  }
  ],
  "sheet_01": [
-  [
-   "20_1",
-   "20_2",
-   "20_3",
-   "20_4",
-   "20_5",
-   "20_6"
-  ],
-  [
-   "20_7",
-   "20_8",
-   "20_9",
-   "20_10",
-   "20_11",
-   "20_12"
-  ]
+  {
+   "pose": "walking forward in his guard, front foot planted ahead, back foot pushing off behind (right leg in front)",
+   "frames": [
+    "20_0",
+    "20_1"
+   ]
+  },
+  {
+   "pose": "walking forward in his guard, weight dropping onto the front foot, knees bent (right leg in front)",
+   "frames": [
+    "20_2",
+    "20_3"
+   ]
+  },
+  {
+   "pose": "walking forward in his guard, back leg swinging through beside the standing leg (right leg in front)",
+   "frames": [
+    "20_4",
+    "20_5"
+   ]
+  },
+  {
+   "pose": "walking forward in his guard, rising on the standing leg, swinging leg reaching ahead (right leg in front)",
+   "frames": [
+    "20_6",
+    "20_7"
+   ]
+  },
+  {
+   "pose": "walking forward in his guard, front foot planted ahead, back foot pushing off behind (left leg in front)",
+   "frames": [
+    "20_8",
+    "20_9"
+   ]
+  },
+  {
+   "pose": "walking forward in his guard, weight dropping onto the front foot, knees bent (left leg in front)",
+   "frames": [
+    "20_10",
+    "20_11"
+   ]
+  },
+  {
+   "pose": "walking forward in his guard, back leg swinging through beside the standing leg (left leg in front)",
+   "frames": [
+    "20_12",
+    "20_13"
+   ]
+  },
+  {
+   "pose": "walking forward in his guard, rising on the standing leg, swinging leg reaching ahead (left leg in front)",
+   "frames": [
+    "20_14",
+    "20_15"
+   ]
+  }
  ],
  "sheet_02": [
-  [
-   "20_13",
-   "20_14",
-   "20_15",
-   "21_0",
-   "21_1",
-   "21_2"
-  ],
-  [
-   "21_3",
-   "21_4",
-   "21_5",
-   "21_6",
-   "21_7",
-   "21_8"
-  ]
+  {
+   "pose": "stepping backward cautiously, guard up, leaning back, front foot planted ahead, back foot pushing off behind (right leg in front)",
+   "frames": [
+    "21_0",
+    "21_1"
+   ]
+  },
+  {
+   "pose": "stepping backward cautiously, guard up, leaning back, weight dropping onto the front foot, knees bent (right leg in front)",
+   "frames": [
+    "21_2",
+    "21_3"
+   ]
+  },
+  {
+   "pose": "stepping backward cautiously, guard up, leaning back, back leg swinging through beside the standing leg (right leg in front)",
+   "frames": [
+    "21_4",
+    "21_5"
+   ]
+  },
+  {
+   "pose": "stepping backward cautiously, guard up, leaning back, rising on the standing leg, swinging leg reaching ahead (right leg in front)",
+   "frames": [
+    "21_6",
+    "21_7"
+   ]
+  },
+  {
+   "pose": "stepping backward cautiously, guard up, leaning back, front foot planted ahead, back foot pushing off behind (left leg in front)",
+   "frames": [
+    "21_8",
+    "21_9"
+   ]
+  },
+  {
+   "pose": "stepping backward cautiously, guard up, leaning back, weight dropping onto the front foot, knees bent (left leg in front)",
+   "frames": [
+    "21_10",
+    "21_11"
+   ]
+  },
+  {
+   "pose": "stepping backward cautiously, guard up, leaning back, back leg swinging through beside the standing leg (left leg in front)",
+   "frames": [
+    "21_12",
+    "21_13"
+   ]
+  },
+  {
+   "pose": "stepping backward cautiously, guard up, leaning back, rising on the standing leg, swinging leg reaching ahead (left leg in front)",
+   "frames": [
+    "21_14",
+    "21_15"
+   ]
+  }
  ],
  "sheet_03": [
-  [
-   "21_9",
-   "21_10",
-   "21_11",
-   "21_12",
-   "21_13",
-   "21_14"
-  ],
-  [
-   "21_15",
-   "41_0",
-   "41_1",
-   "41_2",
-   "41_3",
-   "41_4"
-  ]
+  {
+   "pose": "crouched, about to jump straight up",
+   "frames": [
+    "41_0"
+   ]
+  },
+  {
+   "pose": "pushing off the ground, legs straightening",
+   "frames": [
+    "41_1"
+   ]
+  },
+  {
+   "pose": "in mid-air, knees tucked up, fists up",
+   "frames": [
+    "41_2",
+    "41_3",
+    "41_4",
+    "600_0",
+    "610_0",
+    "610_3",
+    "630_1",
+    "640_0",
+    "640_2"
+   ]
+  },
+  {
+   "pose": "at the top of a jump, legs hanging loose, arms out for balance",
+   "frames": [
+    "41_5"
+   ]
+  },
+  {
+   "pose": "falling, legs extending down to land",
+   "frames": [
+    "41_6",
+    "41_7",
+    "41_8"
+   ]
+  },
+  {
+   "pose": "forward somersault: diving forward, tucking into a ball",
+   "frames": [
+    "42_0"
+   ]
+  },
+  {
+   "pose": "forward somersault: tucked in a ball, rotated a quarter turn",
+   "frames": [
+    "42_1"
+   ]
+  },
+  {
+   "pose": "forward somersault: tucked in a ball, upside down",
+   "frames": [
+    "42_2"
+   ]
+  }
  ],
  "sheet_04": [
-  [
-   "41_5",
-   "41_6",
-   "41_7",
-   "41_8",
-   "42_0",
-   "42_1"
-  ],
-  [
-   "42_2",
-   "42_3",
-   "42_4",
-   "42_5",
-   "43_0",
-   "43_1"
-  ]
+  {
+   "pose": "forward somersault: tucked in a ball, three-quarter turn",
+   "frames": [
+    "42_3"
+   ]
+  },
+  {
+   "pose": "forward somersault: uncurling, legs swinging under him",
+   "frames": [
+    "42_4"
+   ]
+  },
+  {
+   "pose": "end of a forward somersault: upright in the air, legs reaching down to land",
+   "frames": [
+    "42_5"
+   ]
+  },
+  {
+   "pose": "jumping backwards: leaning back in mid-air, knees tucked",
+   "frames": [
+    "43_0",
+    "43_1"
+   ]
+  },
+  {
+   "pose": "running hard, leaning forward, right foot striking the ground",
+   "frames": [
+    "100_0"
+   ]
+  },
+  {
+   "pose": "running hard, leaning forward, both feet off the ground, left knee driving forward",
+   "frames": [
+    "100_1"
+   ]
+  },
+  {
+   "pose": "running hard, leaning forward, left leg reaching forward",
+   "frames": [
+    "100_2"
+   ]
+  },
+  {
+   "pose": "running hard, leaning forward, left foot striking the ground",
+   "frames": [
+    "100_3"
+   ]
+  }
  ],
  "sheet_05": [
-  [
-   "100_0",
-   "100_1",
-   "100_2",
-   "100_3",
-   "100_4",
-   "100_5"
-  ],
-  [
-   "120_0",
-   "120_1",
-   "120_2",
-   "121_0",
-   "122_0",
-   "181_0"
-  ]
+  {
+   "pose": "running hard, leaning forward, both feet off the ground, right knee driving forward",
+   "frames": [
+    "100_4"
+   ]
+  },
+  {
+   "pose": "running hard, leaning forward, right leg reaching forward",
+   "frames": [
+    "100_5"
+   ]
+  },
+  {
+   "pose": "standing block: both forearms raised in front of his face, gauntlet as a shield",
+   "frames": [
+    "120_0",
+    "120_1",
+    "120_2"
+   ]
+  },
+  {
+   "pose": "crouching block: knees deeply bent, both forearms raised in front of his face",
+   "frames": [
+    "121_0"
+   ]
+  },
+  {
+   "pose": "blocking in mid-air: knees tucked, both forearms crossed in front of his face",
+   "frames": [
+    "122_0"
+   ]
+  },
+  {
+   "pose": "victory: standing tall, starting to raise the radar gauntlet",
+   "frames": [
+    "181_0",
+    "181_6"
+   ]
+  },
+  {
+   "pose": "victory: radar gauntlet raised to shoulder height, other fist pumping",
+   "frames": [
+    "181_1",
+    "181_5"
+   ]
+  },
+  {
+   "pose": "victory: radar gauntlet raised high overhead, grinning",
+   "frames": [
+    "181_2",
+    "181_4"
+   ]
+  }
  ],
  "sheet_06": [
-  [
-   "181_1",
-   "181_2",
-   "181_3",
-   "181_4",
-   "181_5",
-   "181_6"
-  ],
-  [
-   "191_0",
-   "191_1",
-   "191_2",
-   "191_3",
-   "192_0",
-   "192_1"
-  ]
+  {
+   "pose": "victory: radar gauntlet thrust straight up overhead, other fist pumping, big grin",
+   "frames": [
+    "181_3"
+   ]
+  },
+  {
+   "pose": "intro: standing, adjusting the dials on his gauntlet with his other hand, eyes on it",
+   "frames": [
+    "191_0",
+    "191_2"
+   ]
+  },
+  {
+   "pose": "intro: standing, twisting the radar dish into position with his other hand",
+   "frames": [
+    "191_1",
+    "191_3"
+   ]
+  },
+  {
+   "pose": "intro: holding the radar gauntlet up proudly beside his face, dish pointed forward",
+   "frames": [
+    "192_0",
+    "192_1"
+   ]
+  },
+  {
+   "pose": "starting a jab: leaning forward, back fist moving forward",
+   "frames": [
+    "200_0",
+    "200_2"
+   ]
+  },
+  {
+   "pose": "light jab: back fist fully extended straight forward at head height",
+   "frames": [
+    "200_1"
+   ]
+  },
+  {
+   "pose": "winding up a heavy punch: shoulders twisted back, gauntlet fist pulled back",
+   "frames": [
+    "210_0",
+    "210_5"
+   ]
+  },
+  {
+   "pose": "heavy punch halfway: hips turning, gauntlet fist driving forward",
+   "frames": [
+    "210_1",
+    "210_4"
+   ]
+  }
  ],
  "sheet_07": [
-  [
-   "200_0",
-   "200_1",
-   "200_2",
-   "210_0",
-   "210_1",
-   "210_2"
-  ],
-  [
-   "210_3",
-   "210_4",
-   "210_5",
-   "230_0",
-   "230_1",
-   "230_2"
-  ]
+  {
+   "pose": "heavy punch at full reach: gauntlet arm locked straight forward, body leaning in",
+   "frames": [
+    "210_2",
+    "210_3"
+   ]
+  },
+  {
+   "pose": "chambering a kick: front knee raised to waist height",
+   "frames": [
+    "230_0",
+    "230_2"
+   ]
+  },
+  {
+   "pose": "quick front kick: front leg straight out at stomach height",
+   "frames": [
+    "230_1"
+   ]
+  },
+  {
+   "pose": "chambering a heavy kick: front knee raised high, leaning back",
+   "frames": [
+    "240_0",
+    "240_5"
+   ]
+  },
+  {
+   "pose": "heavy kick rising: front leg swinging up and out",
+   "frames": [
+    "240_1",
+    "240_4"
+   ]
+  },
+  {
+   "pose": "high roundhouse kick: boot at head height, leg fully straight, arms out for balance",
+   "frames": [
+    "240_2",
+    "240_3"
+   ]
+  },
+  {
+   "pose": "crouching jab starting: crouching low, knees deeply bent, back fist up by his chin, gauntlet arm forward, fist moving forward",
+   "frames": [
+    "400_0"
+   ]
+  },
+  {
+   "pose": "crouching jab: crouched low, back fist fully extended forward",
+   "frames": [
+    "400_1"
+   ]
+  }
  ],
  "sheet_08": [
-  [
-   "240_0",
-   "240_1",
-   "240_2",
-   "240_3",
-   "240_4",
-   "240_5"
-  ],
-  [
-   "400_0",
-   "400_1",
-   "410_0",
-   "410_1",
-   "410_2",
-   "410_3"
-  ]
+  {
+   "pose": "crouching heavy punch wind-up: crouched low, gauntlet fist pulled back",
+   "frames": [
+    "410_0",
+    "410_4"
+   ]
+  },
+  {
+   "pose": "crouching heavy punch halfway: crouched low, gauntlet fist driving forward",
+   "frames": [
+    "410_1",
+    "410_3"
+   ]
+  },
+  {
+   "pose": "crouching heavy punch: crouched low, gauntlet arm locked straight forward",
+   "frames": [
+    "410_2"
+   ]
+  },
+  {
+   "pose": "crouching low kick: crouched, front foot sliding forward",
+   "frames": [
+    "430_0",
+    "430_3"
+   ]
+  },
+  {
+   "pose": "crouching low kick: crouched, front leg straight out along the floor",
+   "frames": [
+    "430_1",
+    "430_2"
+   ]
+  },
+  {
+   "pose": "low sweep starting: crouched low, one hand on the floor, starting to spin",
+   "frames": [
+    "440_0",
+    "440_6"
+   ]
+  },
+  {
+   "pose": "low sweep: spinning on one knee, leg swinging round",
+   "frames": [
+    "440_1",
+    "440_5"
+   ]
+  },
+  {
+   "pose": "low sweep: spinning on one knee, leg swinging forward along the floor",
+   "frames": [
+    "440_2",
+    "440_4"
+   ]
+  }
  ],
  "sheet_09": [
-  [
-   "410_4",
-   "430_0",
-   "430_1",
-   "430_2",
-   "430_3",
-   "440_0"
-  ],
-  [
-   "440_1",
-   "440_2",
-   "440_3",
-   "440_4",
-   "440_5",
-   "440_6"
-  ]
+  {
+   "pose": "low sweep at full reach: one hand on the floor, leg fully extended forward along the floor",
+   "frames": [
+    "440_3"
+   ]
+  },
+  {
+   "pose": "jumping jab: in mid-air, knees tucked, back fist extended forward",
+   "frames": [
+    "600_1"
+   ]
+  },
+  {
+   "pose": "jumping heavy punch: in mid-air, gauntlet fist punching forward and down",
+   "frames": [
+    "610_1",
+    "610_2"
+   ]
+  },
+  {
+   "pose": "jumping kick: in mid-air, front leg kicking straight forward",
+   "frames": [
+    "630_2"
+   ]
+  },
+  {
+   "pose": "flying kick: in mid-air, front leg fully extended diagonally down and forward, back leg tucked",
+   "frames": [
+    "640_1"
+   ]
+  },
+  {
+   "pose": "throw: reaching forward with both hands to grab",
+   "frames": [
+    "800_0"
+   ]
+  },
+  {
+   "pose": "throw: gripping an opponent's collar with both hands (draw no opponent)",
+   "frames": [
+    "800_1"
+   ]
+  },
+  {
+   "pose": "throw: lifting with both hands, leaning back",
+   "frames": [
+    "800_2"
+   ]
+  }
  ],
  "sheet_10": [
-  [
-   "600_0",
-   "600_1",
-   "610_0",
-   "610_1",
-   "610_2",
-   "610_3"
-  ],
-  [
-   "630_1",
-   "630_2",
-   "640_0",
-   "640_1",
-   "640_2",
-   "800_0"
-  ]
+  {
+   "pose": "throw: twisting his hips, hands swinging to his side",
+   "frames": [
+    "800_3"
+   ]
+  },
+  {
+   "pose": "throw: hands swinging over his shoulder",
+   "frames": [
+    "800_4"
+   ]
+  },
+  {
+   "pose": "throw: hurling something behind him, arms over his shoulder",
+   "frames": [
+    "800_5"
+   ]
+  },
+  {
+   "pose": "throw: follow-through, arms behind him, body twisted",
+   "frames": [
+    "800_6",
+    "800_7"
+   ]
+  },
+  {
+   "pose": "after a throw: bent forward, catching his breath",
+   "frames": [
+    "800_8",
+    "800_9"
+   ]
+  },
+  {
+   "pose": "after a throw: straightening up",
+   "frames": [
+    "800_10",
+    "800_11"
+   ]
+  },
+  {
+   "pose": "after a throw: almost back in his stance",
+   "frames": [
+    "800_12"
+   ]
+  },
+  {
+   "pose": "radar pulse: pulling the radar gauntlet back to his hip",
+   "frames": [
+    "1000_0",
+    "1000_7"
+   ]
+  }
  ],
  "sheet_11": [
-  [
-   "800_1",
-   "800_2",
-   "800_3",
-   "800_4",
-   "800_5",
-   "800_6"
-  ],
-  [
-   "800_7",
-   "800_8",
-   "800_9",
-   "800_10",
-   "800_11",
-   "800_12"
-  ]
+  {
+   "pose": "radar pulse: thrusting the radar gauntlet forward",
+   "frames": [
+    "1000_1",
+    "1000_6"
+   ]
+  },
+  {
+   "pose": "radar pulse: gauntlet arm locked straight forward, dish aimed at the enemy",
+   "frames": [
+    "1000_2",
+    "1000_5"
+   ]
+  },
+  {
+   "pose": "radar pulse: gauntlet arm locked straight forward, dish aimed at the enemy, other hand bracing his forearm",
+   "frames": [
+    "1000_3",
+    "1000_4"
+   ]
+  },
+  {
+   "pose": "boot knee: dipping low, ready to dash",
+   "frames": [
+    "1050_0",
+    "1050_7"
+   ]
+  },
+  {
+   "pose": "boot knee: dashing forward low",
+   "frames": [
+    "1050_1",
+    "1050_6"
+   ]
+  },
+  {
+   "pose": "boot knee: leaping forward, knee rising",
+   "frames": [
+    "1050_2",
+    "1050_5"
+   ]
+  },
+  {
+   "pose": "boot knee: flying knee, front knee driven forward at chest height, fists back",
+   "frames": [
+    "1050_3",
+    "1050_4"
+   ]
+  },
+  {
+   "pose": "landing from a jump: knees bent, absorbing the landing",
+   "frames": [
+    "1052_1",
+    "1052_2"
+   ]
+  }
  ],
  "sheet_12": [
-  [
-   "1000_0",
-   "1000_1",
-   "1000_2",
-   "1000_3",
-   "1000_4",
-   "1000_5"
-  ],
-  [
-   "1000_6",
-   "1000_7",
-   "1050_0",
-   "1050_1",
-   "1050_2",
-   "1050_3"
-  ]
+  {
+   "pose": "knee strike: crouching, ready to spring up",
+   "frames": [
+    "1055_0",
+    "1055_7"
+   ]
+  },
+  {
+   "pose": "knee strike: springing up off one foot",
+   "frames": [
+    "1055_1",
+    "1055_6"
+   ]
+  },
+  {
+   "pose": "knee strike: knee rising, body airborne",
+   "frames": [
+    "1055_2",
+    "1055_5"
+   ]
+  },
+  {
+   "pose": "knee strike: airborne, knee thrust straight up at head height, fists pulled down",
+   "frames": [
+    "1055_3",
+    "1055_4"
+   ]
+  },
+  {
+   "pose": "antenna uppercut: crouching very low, gauntlet fist down by the floor",
+   "frames": [
+    "1100_0",
+    "1100_9"
+   ]
+  },
+  {
+   "pose": "antenna uppercut: springing up, gauntlet fist swinging upward",
+   "frames": [
+    "1100_1",
+    "1100_8"
+   ]
+  },
+  {
+   "pose": "antenna uppercut: rising uppercut, gauntlet fist at chin height",
+   "frames": [
+    "1100_2",
+    "1100_7"
+   ]
+  },
+  {
+   "pose": "antenna uppercut: leaving the ground, gauntlet arm stretched straight up",
+   "frames": [
+    "1100_3",
+    "1100_6"
+   ]
+  }
  ],
  "sheet_13": [
-  [
-   "1050_4",
-   "1050_5",
-   "1050_6",
-   "1050_7",
-   "1052_0",
-   "1052_1"
-  ],
-  [
-   "1052_2",
-   "1052_3",
-   "1055_0",
-   "1055_1",
-   "1055_2",
-   "1055_3"
-  ]
+  {
+   "pose": "antenna uppercut: in the air, whole body stretched straight up, gauntlet fist high overhead",
+   "frames": [
+    "1100_4",
+    "1100_5"
+   ]
+  },
+  {
+   "pose": "wrench swing: drawing a big wrench from his toolbelt, raised behind his head",
+   "frames": [
+    "1210_0",
+    "1210_6"
+   ]
+  },
+  {
+   "pose": "wrench swing: swinging the big wrench forward and down",
+   "frames": [
+    "1210_1",
+    "1210_5"
+   ]
+  },
+  {
+   "pose": "wrench swing: big wrench straight out in front at full reach",
+   "frames": [
+    "1210_2",
+    "1210_4"
+   ]
+  },
+  {
+   "pose": "wrench swing: follow-through, big wrench swung low past his front knee",
+   "frames": [
+    "1210_3"
+   ]
+  },
+  {
+   "pose": "high parry: gauntlet forearm raised at head height, deflecting",
+   "frames": [
+    "1300_0",
+    "1300_1",
+    "1300_2"
+   ]
+  },
+  {
+   "pose": "low parry: crouching, gauntlet forearm lowered to deflect at shin height",
+   "frames": [
+    "1320_0",
+    "1320_1",
+    "1320_2"
+   ]
+  },
+  {
+   "pose": "air parry: in mid-air, knees tucked, gauntlet forearm raised to deflect",
+   "frames": [
+    "1340_0",
+    "1340_1"
+   ]
+  }
  ],
  "sheet_14": [
-  [
-   "1055_4",
-   "1055_5",
-   "1055_6",
-   "1055_7",
-   "1100_0",
-   "1100_1"
-  ],
-  [
-   "1100_2",
-   "1100_3",
-   "1100_4",
-   "1100_5",
-   "1100_6",
-   "1100_7"
-  ]
+  {
+   "pose": "shoulder charge: launching forward low, shoulder first",
+   "frames": [
+    "1400_1"
+   ]
+  },
+  {
+   "pose": "shoulder charge: body nearly horizontal, front shoulder driving forward, back leg stretched out behind",
+   "frames": [
+    "1400_2",
+    "1400_3",
+    "1400_4",
+    "1400_5"
+   ]
+  },
+  {
+   "pose": "shoulder charge: slowing, straightening up",
+   "frames": [
+    "1400_6"
+   ]
+  },
+  {
+   "pose": "hit in the face, head snapped back",
+   "frames": [
+    "5000_0",
+    "5000_21",
+    "5001_0",
+    "5002_0"
+   ]
+  },
+  {
+   "pose": "hit in the face, leaning back, recoiling",
+   "frames": [
+    "5000_10",
+    "5000_20",
+    "5001_10",
+    "5001_20",
+    "5002_10",
+    "5002_20"
+   ]
+  },
+  {
+   "pose": "hit in the face, leaning far back, recoiling",
+   "frames": [
+    "5000_11"
+   ]
+  },
+  {
+   "pose": "hit in the stomach, flinching forward",
+   "frames": [
+    "5010_0",
+    "5010_21",
+    "5011_0",
+    "5012_0"
+   ]
+  },
+  {
+   "pose": "hit in the stomach, doubled over",
+   "frames": [
+    "5010_10",
+    "5010_20",
+    "5011_10",
+    "5011_20",
+    "5012_10",
+    "5012_20"
+   ]
+  }
  ],
  "sheet_15": [
-  [
-   "1100_8",
-   "1100_9",
-   "1210_0",
-   "1210_1",
-   "1210_2",
-   "1210_3"
-  ],
-  [
-   "1210_4",
-   "1210_5",
-   "1210_6",
-   "1300_0",
-   "1300_1",
-   "1300_2"
-  ]
+  {
+   "pose": "hit while crouching, crouched, flinching",
+   "frames": [
+    "5020_0",
+    "5020_20"
+   ]
+  },
+  {
+   "pose": "hit while crouching, crouched, recoiling back",
+   "frames": [
+    "5020_10"
+   ]
+  },
+  {
+   "pose": "knocked backwards off his feet, feet leaving the ground, body arching back",
+   "frames": [
+    "5030_0",
+    "5031_0",
+    "5032_0"
+   ]
+  },
+  {
+   "pose": "knocked backwards off his feet, flying back, arms flailing",
+   "frames": [
+    "5030_10",
+    "5031_10",
+    "5032_10"
+   ]
+  },
+  {
+   "pose": "knocked backwards off his feet, flying back, body tilted 30 degrees backwards",
+   "frames": [
+    "5030_20",
+    "5031_20",
+    "5032_20"
+   ]
+  },
+  {
+   "pose": "knocked backwards off his feet, flying back, body tilted 45 degrees backwards",
+   "frames": [
+    "5030_30",
+    "5031_30",
+    "5032_30"
+   ]
+  },
+  {
+   "pose": "knocked backwards off his feet, flying back, body tilted 50 degrees backwards",
+   "frames": [
+    "5030_31"
+   ]
+  },
+  {
+   "pose": "knocked backwards off his feet, flying back, body tilted 60 degrees backwards",
+   "frames": [
+    "5030_40",
+    "5031_40",
+    "5032_40"
+   ]
+  }
  ],
  "sheet_16": [
-  [
-   "1320_0",
-   "1320_1",
-   "1320_2",
-   "1340_0",
-   "1340_1",
-   "1400_0"
-  ],
-  [
-   "1400_1",
-   "1400_2",
-   "1400_3"
-  ]
+  {
+   "pose": "knocked backwards off his feet, flying back, body tilted 75 degrees backwards, almost horizontal",
+   "frames": [
+    "5030_50",
+    "5031_50",
+    "5032_50"
+   ]
+  },
+  {
+   "pose": "falling flat on his back in the air, body horizontal",
+   "frames": [
+    "5040_0",
+    "5041_0",
+    "5042_0"
+   ]
+  },
+  {
+   "pose": "the back of his shoulders hitting the ground, legs up",
+   "frames": [
+    "5040_1"
+   ]
+  },
+  {
+   "pose": "bouncing off the ground on his back, legs up",
+   "frames": [
+    "5040_10",
+    "5041_10",
+    "5042_10"
+   ]
+  },
+  {
+   "pose": "bouncing off the ground on his back, legs coming down",
+   "frames": [
+    "5040_11"
+   ]
+  },
+  {
+   "pose": "lying flat on his back on the ground, dazed",
+   "frames": [
+    "5040_20",
+    "5041_20",
+    "5042_20"
+   ]
+  },
+  {
+   "pose": "tumbling backwards in the air, head lower than feet",
+   "frames": [
+    "5060_0",
+    "5060_1",
+    "5061_0",
+    "5062_0"
+   ]
+  },
+  {
+   "pose": "tumbling backwards in the air, body horizontal, face up",
+   "frames": [
+    "5060_10",
+    "5061_10",
+    "5062_10",
+    "5070_20",
+    "5071_20",
+    "5072_20"
+   ]
+  }
  ],
  "sheet_17": [
-  [
-   "1400_4",
-   "1400_5",
-   "1400_6"
-  ],
-  [
-   "1400_7",
-   "5000_0",
-   "5000_10",
-   "5000_11",
-   "5000_20",
-   "5000_21"
-  ]
- ],
- "sheet_18": [
-  [
-   "5001_0",
-   "5001_10",
-   "5001_20",
-   "5002_0",
-   "5002_10",
-   "5002_20"
-  ],
-  [
-   "5010_0",
-   "5010_10",
-   "5010_20",
-   "5010_21",
-   "5011_0",
-   "5011_10"
-  ]
- ],
- "sheet_19": [
-  [
-   "5011_20",
-   "5012_0",
-   "5012_10",
-   "5012_20",
-   "5020_0",
-   "5020_10"
-  ],
-  [
-   "5020_20",
-   "5030_0",
-   "5030_10",
-   "5030_20",
-   "5030_30",
-   "5030_31"
-  ]
- ],
- "sheet_20": [
-  [
-   "5030_40",
-   "5030_50",
-   "5031_0",
-   "5031_10",
-   "5031_20",
-   "5031_30"
-  ],
-  [
-   "5031_40",
-   "5031_50",
-   "5032_0",
-   "5032_10",
-   "5032_20",
-   "5032_30"
-  ]
- ],
- "sheet_21": [
-  [
-   "5032_40",
-   "5032_50",
-   "5040_0",
-   "5040_1",
-   "5040_10",
-   "5040_11"
-  ],
-  [
-   "5040_20",
-   "5041_0",
-   "5041_10",
-   "5041_20",
-   "5042_0",
-   "5042_10"
-  ]
- ],
- "sheet_22": [
-  [
-   "5042_20",
-   "5060_0",
-   "5060_1",
-   "5060_10",
-   "5061_0",
-   "5061_10"
-  ],
-  [
-   "5062_0",
-   "5062_10",
-   "5070_0",
-   "5070_10",
-   "5070_20",
-   "5071_0"
-  ]
- ],
- "sheet_23": [
-  [
-   "5071_10",
-   "5071_20",
-   "5072_0",
-   "5072_10",
-   "5072_20",
-   "5300_0"
-  ],
-  [
-   "5300_1",
-   "5300_2",
-   "5300_3"
-  ]
+  {
+   "pose": "tripped: legs swept out from under him, falling back",
+   "frames": [
+    "5070_0",
+    "5071_0",
+    "5072_0"
+   ]
+  },
+  {
+   "pose": "tripped: falling backwards, body tilted 60 degrees",
+   "frames": [
+    "5070_10",
+    "5071_10",
+    "5072_10"
+   ]
+  },
+  {
+   "pose": "dizzy: swaying to the left, arms limp, eyes spinning",
+   "frames": [
+    "5300_0"
+   ]
+  },
+  {
+   "pose": "dizzy: slumped, knees buckling, eyes spinning",
+   "frames": [
+    "5300_1"
+   ]
+  },
+  {
+   "pose": "dizzy: swaying to the right, arms limp, eyes spinning",
+   "frames": [
+    "5300_2"
+   ]
+  },
+  {
+   "pose": "dizzy: wobbling upright, arms limp, eyes spinning",
+   "frames": [
+    "5300_3"
+   ]
+  }
  ]
 }

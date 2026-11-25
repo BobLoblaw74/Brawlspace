@@ -1,0 +1,12 @@
+Image 1 is the character Tinker. Draw a sprite sheet of him for a 2D fighting game: 8 separate full-body figures in 2 row(s) of up to 4, numbered left to right, top to bottom, with these poses:
+
+1. radar pulse: thrusting the radar gauntlet forward
+2. radar pulse: gauntlet arm locked straight forward, dish aimed at the enemy
+3. radar pulse: gauntlet arm locked straight forward, dish aimed at the enemy, other hand bracing his forearm
+4. boot knee: dipping low, ready to dash
+5. boot knee: dashing forward low
+6. boot knee: leaping forward, knee rising
+7. boot knee: flying knee, front knee driven forward at chest height, fists back
+8. landing from a jump: knees bent, absorbing the landing
+
+Every figure: the same face, outfit, radar-dish gauntlet, tool belt, colours and inked comic style as image 1; the same scale throughout (a standing figure fills most of the row height); facing right like image 1; whole body visible, nothing cropped; a clear gap between figures, no overlap. Only draw what each pose asks for (no opponent, no effects, no motion lines). Background: flat solid magenta #FF00FF everywhere, no shadows, no floor, no text, no numbers, no borders.

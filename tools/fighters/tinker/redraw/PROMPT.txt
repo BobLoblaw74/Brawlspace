@@ -1,7 +1,0 @@
-Image 1 is the character Tinker. Image 2 is a sheet of crude, distorted animation frames of him.
-Redraw every figure on image 2 as a clean, hand-drawn fighting-game sprite: keep exactly the
-same number of figures in exactly the same order and layout, and give each one exactly the same
-pose, limb positions, body proportions, size and facing direction as on image 2, but with the
-face, outfit, gadgets, colours and inked comic style of image 1, with no warping or smearing.
-Keep every figure complete and separate from its neighbours, nothing cropped.
-Background: flat solid magenta #FF00FF everywhere, no shadows, no floor, no text, no borders.
