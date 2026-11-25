@@ -1,8 +1,7 @@
 """Cut Gemini's redrawn sheets (redraw/sheet_NN.png, see make_sheets.py) into Tinker's frames.
 
 Each figure is written to every frame sheets.json lists for it, replacing the warped frame:
-scaled by one factor per sheet (old frame height / new figure height of its tallest
-figure, so a sheet keeps its own proportions), bottom-aligned to the old frame and with its body centre
+scaled by SCALE, bottom-aligned to the old frame and with its body centre
 where the old body centre was, so axes, motion and hitboxes keep working.
 
 Usage (repo root):
@@ -25,6 +24,10 @@ import greensheet  # noqa: E402
 
 ART = os.path.join(HERE, "art")
 RD = os.path.join(HERE, "redraw")
+# Gemini draws Tinker the same size on every 1376x768 sheet; measured on sheet_00's stance
+# (figure 2, 353 px) against the original stance frame (423 px). Per-sheet scales from the
+# old warped frames were off by up to 30% on sheets of falls and uppercuts.
+SCALE = 423 / 353
 
 
 def body_x(im):
@@ -39,14 +42,9 @@ def cut(sheet, manifest, out_dir, axes):
     if len(figs) != len(want):
         sys.exit("%s: %d figures, expected %d: redo it in Gemini" % (sheet, len(figs), len(want)))
     old = {f: Image.open(os.path.join(ART, f + ".png")).convert("RGBA") for w in want for f in w["frames"]}
-    # one scale per sheet, from its tallest figure in use (the most upright pose: Gemini's
-    # crouches and tucks don't match the old frames' squashed heights)
-    fig, w = max(((f, w) for (f, _), w in zip(figs, want) if w["frames"]), key=lambda p: p[0].height)
-    b = body_x(old[w["frames"][0]])[0]
-    s = (b[3] - b[1]) / fig.height
     pairs = []
     for (fig, _), w in zip(figs, want):
-        fig = fig.resize((round(fig.width * s), round(fig.height * s)), Image.LANCZOS)
+        fig = fig.resize((round(fig.width * SCALE), round(fig.height * SCALE)), Image.LANCZOS)
         _, nbx = body_x(fig)
         for name in w["frames"]:
             (_, _, _, ob), obx = body_x(old[name])
