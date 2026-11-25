@@ -1,12 +1,12 @@
 Image 1 is the character Tinker. Draw a sprite sheet of him for a 2D fighting game: 8 separate full-body figures in 2 row(s) of up to 4, numbered left to right, top to bottom, with these poses:
 
-1. stepping backward cautiously, guard up, leaning back, front foot planted ahead, back foot pushing off behind (right leg in front)
-2. stepping backward cautiously, guard up, leaning back, weight dropping onto the front foot, knees bent (right leg in front)
-3. stepping backward cautiously, guard up, leaning back, back leg swinging through beside the standing leg (right leg in front)
-4. stepping backward cautiously, guard up, leaning back, rising on the standing leg, swinging leg reaching ahead (right leg in front)
-5. stepping backward cautiously, guard up, leaning back, front foot planted ahead, back foot pushing off behind (left leg in front)
-6. stepping backward cautiously, guard up, leaning back, weight dropping onto the front foot, knees bent (left leg in front)
-7. stepping backward cautiously, guard up, leaning back, back leg swinging through beside the standing leg (left leg in front)
-8. stepping backward cautiously, guard up, leaning back, rising on the standing leg, swinging leg reaching ahead (left leg in front)
+1. stepping backward cautiously, guard up, leaning back, long stride: feet far apart, near (closer to the viewer) foot flat on the ground ahead, the other foot behind on its toes; upper body and arms the same as in his stance
+2. stepping backward cautiously, guard up, leaning back, weight down on the near (closer to the viewer) foot ahead, both knees bent, feet still apart; upper body and arms the same as in his stance
+3. stepping backward cautiously, guard up, leaning back, passing: feet close together under his hips, the other knee lifted forward past the near (closer to the viewer) leg, that foot off the ground; upper body and arms the same as in his stance
+4. stepping backward cautiously, guard up, leaning back, the other leg reaching forward ahead of the near (closer to the viewer) leg, heel about to touch down; upper body and arms the same as in his stance
+5. stepping backward cautiously, guard up, leaning back, long stride: feet far apart, far foot flat on the ground ahead, the other foot behind on its toes; upper body and arms the same as in his stance
+6. stepping backward cautiously, guard up, leaning back, weight down on the far foot ahead, both knees bent, feet still apart; upper body and arms the same as in his stance
+7. stepping backward cautiously, guard up, leaning back, passing: feet close together under his hips, the other knee lifted forward past the far leg, that foot off the ground; upper body and arms the same as in his stance
+8. stepping backward cautiously, guard up, leaning back, the other leg reaching forward ahead of the far leg, heel about to touch down; upper body and arms the same as in his stance
 
-Every figure: the same face, outfit, radar-dish gauntlet, tool belt, colours and inked comic style as image 1; the same scale throughout (a standing figure fills most of the row height); facing right like image 1; whole body visible, nothing cropped; a clear gap between figures, no overlap. Only draw what each pose asks for (no opponent, no effects, no motion lines). Background: flat solid magenta #FF00FF everywhere, no shadows, no floor, no text, no numbers, no borders.
+Every figure: the radar dish on his front gauntlet exactly as in image 1 (never left out); the same face, outfit, tool belt, colours and inked comic style as image 1; the same scale throughout (a standing figure fills most of the row height); facing right like image 1; whole body visible, nothing cropped; a clear gap between figures, no overlap. Only draw what each pose asks for (no opponent, no effects, no motion lines). Background: flat solid magenta #FF00FF everywhere, no shadows, no floor, no text, no numbers, no borders.

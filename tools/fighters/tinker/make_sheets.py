@@ -35,15 +35,18 @@ def sym(*poses, hold=1):
 
 
 def walk(how):
-    steps = ["front foot planted ahead, back foot pushing off behind",
-             "weight dropping onto the front foot, knees bent",
-             "back leg swinging through beside the standing leg",
-             "rising on the standing leg, swinging leg reaching ahead"]
-    legs = [("right", "left"), ("left", "right")]
+    """Two steps of 4 phases, each held 2 frames. The phases differ by stride width (what
+    reads at game size); the upper body stays the same so only the legs move."""
+    steps = ["long stride: feet far apart, %s foot flat on the ground ahead, the other foot "
+             "behind on its toes",
+             "weight down on the %s foot ahead, both knees bent, feet still apart",
+             "passing: feet close together under his hips, the other knee lifted forward past "
+             "the %s leg, that foot off the ground",
+             "the other leg reaching forward ahead of the %s leg, heel about to touch down"]
     out = []
-    for a, b in legs:
-        for s in steps:
-            out += ["%s, %s (%s leg in front)" % (how, s, a)] * 2
+    for leg in ("near (closer to the viewer)", "far"):
+        for st in steps:
+            out += ["%s, %s; upper body and arms the same as in his stance" % (how, st % leg)] * 2
     return out
 
 
@@ -205,7 +208,8 @@ with these poses:
 
 {list}
 
-Every figure: the same face, outfit, radar-dish gauntlet, tool belt, colours and inked comic \
+Every figure: the radar dish on his front gauntlet exactly as in image 1 (never left \
+out); the same face, outfit, tool belt, colours and inked comic \
 style as image 1; the same scale throughout (a standing figure fills most of the row height); \
 facing right like image 1; whole body visible, nothing cropped; a clear gap between figures, no \
 overlap. Only draw what each pose asks for (no opponent, no effects, no motion lines). \
